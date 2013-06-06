@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>function Blog() {};</title>
+  <title>Railsでassetのログを出力しない - function Blog() {};</title>
   <meta name="author" content="Daisuke Masuyama">
 
   
@@ -23,7 +23,7 @@ Rails 3.2.13 Issues development環境で作業を行う際、 &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lunchub.github.com">
+  <link rel="canonical" href="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
@@ -63,15 +63,12 @@ Rails 3.2.13 Issues development環境で作業を行う際、 &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/06/05/do-not-log-requesting-assets-on-rails/">Railsでassetのログを出力しない</a></h1>
+      <h1 class="entry-title">Railsでassetのログを出力しない</h1>
     
     
       <p class="meta">
@@ -108,7 +105,7 @@ Categories:
   </header>
 
 
-  <div class="entry-content"><h2>Environment</h2>
+<div class="entry-content"><h2>Environment</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -194,22 +191,16 @@ assetsのログが邪魔すぎる・・・</p>
 </ul>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/21/first-commit/">&#8216;First-commit&#8217;</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Daisuke Masuyama</span></span>
+
+      
 
 
 
@@ -221,14 +212,8 @@ assetsのログが邪魔すぎる・・・</p>
   
 
 
-<time datetime="2013-05-21T21:24:00+09:00" pubdate data-updated="true">May 21<span>st</span>, 2013</time>
-
-        
-
-      </p>
-    
-
-    
+<time datetime="2013-06-05T17:11:00+09:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+      
 
 <span class="categories">
 Categories: 
@@ -238,24 +223,49 @@ Categories:
 </span>
 
 
+    </p>
 
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
-  <div class="pagination">
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+
+  <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" data-via="lunchub" data-counturl="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+
+    
+      <div class="related_posts">
+<h1>Related Posts</h1>
+<ul>
+
+</ul>
+</div>
+
+      
+
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/21/first-commit/" title="Previous Post: 'first-commit'">&laquo; 'first-commit'</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -282,7 +292,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </li>
         
         <li class="post">
-            <a href="/blog/2013/05/21/first-commit/">&#8216;first-commit&#8217;</a>
+            <a href="/blog/2013/05/21/first-commit/">'first-commit'</a>
         </li>
         
     </ul>
@@ -296,7 +306,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/21/first-commit/">&#8216;First-commit&#8217;</a>
+        <a href="/blog/2013/05/21/first-commit/">'First-commit'</a>
       </li>
     
   </ul>
@@ -305,7 +315,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/lunchub">@lunchub</a> on GitHub
@@ -318,6 +328,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
   
 </aside>
+
 
     </div>
   </div>
@@ -333,7 +344,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       var disqus_shortname = 'lunchub';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
+        var disqus_url = 'http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

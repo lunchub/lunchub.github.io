@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[function Blog() {};]]></title>
+  <link href="http://lunchub.github.com/atom.xml" rel="self"/>
+  <link href="http://lunchub.github.com/"/>
+  <updated>2013-06-06T18:24:14+09:00</updated>
+  <id>http://lunchub.github.com/</id>
+  <author>
+    <name><![CDATA[Daisuke Masuyama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Railsでassetのログを出力しない]]></title>
+    <link href="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/"/>
+    <updated>2013-06-05T17:11:00+09:00</updated>
+    <id>http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p>development環境で作業を行う際、下の画像のように<code>tail -f log/development.log</code>で<br/>
+ログを垂れ流しているのだけど、画面生成の際走るSQLなんかを確認したい時に<br/>
+assetsのログが邪魔すぎる・・・</p>
+
+<p><a href="http://lunchub.github.com/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg"><img src="http://lunchub.github.com/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg" alt="rails assets log" /></a></p>
+
+<h2>Solution</h2>
+
+<p>ログを見ると、</p>
+
+<ul>
+<li>assetに対するGETログ</li>
+<li>assetの処理ログ</li>
+</ul>
+
+
+<p>の2種類が表示されていることがわかる。<br/>
+これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
+
+<ul>
+<li>assetに対するGETログ
+
+<ul>
+<li><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Rack</span><span class="o">::</span><span class="no">Logger</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">call_with_quiet_assets</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">previous_level</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span class='line'>    <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="ss">Logger</span><span class="p">:</span><span class="ss">:ERROR</span> <span class="k">if</span> <span class="n">env</span><span class="o">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="o">].</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;/assets/&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="n">call_without_quiet_assets</span><span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span>
+</span><span class='line'>      <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">previous_level</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">alias_method_chain</span> <span class="ss">:call</span><span class="p">,</span> <span class="ss">:quiet_assets</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>assetの処理ログ
+
+<ul>
+<li><code>enviroments/development.rb</code> に以下のコードを追記する。</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/rails/rails/issues/4569">config.assets.logger not working</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA['first-commit']]></title>
+    <link href="http://lunchub.github.com/blog/2013/05/21/first-commit/"/>
+    <updated>2013-05-21T21:24:00+09:00</updated>
+    <id>http://lunchub.github.com/blog/2013/05/21/first-commit</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Rails | function Blog() {};]]></title>
+  <link href="http://lunchub.github.com/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://lunchub.github.com/"/>
+  <updated>2013-06-06T18:24:14+09:00</updated>
+  <id>http://lunchub.github.com/</id>
+  <author>
+    <name><![CDATA[Daisuke Masuyama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Railsでassetのログを出力しない]]></title>
+    <link href="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/"/>
+    <updated>2013-06-05T17:11:00+09:00</updated>
+    <id>http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+</code></p>
+
+<h2>Issues</h2>
+
+<p>development環境で作業を行う際、下の画像のように<code>tail -f log/development.log</code>で<br/>
+ログを垂れ流しているのだけど、画面生成の際走るSQLなんかを確認したい時に<br/>
+assetsのログが邪魔すぎる・・・</p>
+
+<p><a href="/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg"><img src="/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg" alt="rails assets log" /></a></p>
+
+<h2>Solution</h2>
+
+<p>ログを見ると、</p>
+
+<ul>
+<li>assetに対するGETログ</li>
+<li>assetの処理ログ</li>
+</ul>
+
+
+<p>の2種類が表示されていることがわかる。<br/>
+これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
+
+<ul>
+<li>assetに対するGETログ
+
+<ul>
+<li><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</li>
+</ul>
+</li>
+</ul>
+
+
+<p>``` ruby
+Rails::Rack::Logger.class_eval do
+  def call_with_quiet_assets(env)</p>
+
+<pre><code>previous_level = Rails.logger.level
+Rails.logger.level = Logger::ERROR if env['PATH_INFO'].index("/assets/") == 0 
+call_without_quiet_assets(env).tap do
+  Rails.logger.level = previous_level
+end 
+</code></pre>
+
+<p>  end
+  alias_method_chain :call, :quiet_assets
+end
+```</p>
+
+<ul>
+<li>assetの処理ログ
+
+<ul>
+<li><code>enviroments/development.rb</code> に以下のコードを追記する。
+<code>ruby
+config.assets.logger = false
+</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/rails/rails/issues/4569">config.assets.logger not working</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA['first-commit']]></title>
+    <link href="http://lunchub.github.com/blog/2013/05/21/first-commit/"/>
+    <updated>2013-05-21T21:24:00+09:00</updated>
+    <id>http://lunchub.github.com/blog/2013/05/21/first-commit</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>
