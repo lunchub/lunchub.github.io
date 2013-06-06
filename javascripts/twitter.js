@@ -62,7 +62,7 @@ function showTwitterFeed(tweets, twitter_user) {
       content = '';
 
   for (var t in tweets) {
-    content += '<li>'+'<p>'+'<a href="https://twitter.com/'+twitter_user+'/status/'+tweets[t].id_str+'">'+prettyDate(tweets[t].created_at)+'</a>'+linkifyTweet(tweets[t].text.replace(/\n/g, '<br>'), tweets[t].entities.urls)+'</p>'+'</li>';
+    content += '<li>'+'<p>'+'<a href="https://twitter.com/'+twitter_user+'/status/'+tweets[t].id_str+'">'+prettyDate(tweets[t].created_at)+'</a><img src="'+tweets[t].user.profile_image_url+'" />'+linkifyTweet(tweets[t].text.replace(/\n/g, '<br>'), tweets[t].entities.urls)+'</p>'+'</li>';
   }
   timeline.innerHTML = content;
 }
@@ -70,7 +70,7 @@ function showTwitterFeed(tweets, twitter_user) {
 function getTwitterFeed(user, count, replies) {
   count = parseInt(count, 10);
   $.ajax({
-      url: "https://api.twitter.com/1/statuses/user_timeline/" + user + ".json?trim_user=true&count=" + (count + 20) + "&include_entities=1&exclude_replies=" + (replies ? "0" : "1") + "&callback=?"
+    url: "https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+user+"&count=" + (count + 20) + "&include_entities=1"
     , dataType: 'jsonp'
     , error: function (err) { $('#tweets li.loading').addClass('error').text("Twitter's busted"); }
     , success: function(data) { showTwitterFeed(data.slice(0, count), user); }
