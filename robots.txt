@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://lunchub.github.com/sitemap.xml 
+Sitemap: http://lunchub.github.io/sitemap.xml 

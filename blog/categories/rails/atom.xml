@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Rails | function Blog() {};]]></title>
-  <link href="http://lunchub.github.com/blog/categories/rails/atom.xml" rel="self"/>
-  <link href="http://lunchub.github.com/"/>
-  <updated>2013-06-06T18:24:14+09:00</updated>
-  <id>http://lunchub.github.com/</id>
+  <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://lunchub.github.io/"/>
+  <updated>2013-06-06T18:44:33+09:00</updated>
+  <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Railsでassetのログを出力しない]]></title>
-    <link href="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/"/>
+    <link href="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/"/>
     <updated>2013-06-05T17:11:00+09:00</updated>
-    <id>http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails</id>
+    <id>http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails</id>
     <content type="html"><![CDATA[<h2>Environment</h2>
 
 <p><code>
@@ -48,14 +48,11 @@ assetsのログが邪魔すぎる・・・</p>
 これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
 
 <ul>
-<li>assetに対するGETログ
-
-<ul>
-<li><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</li>
-</ul>
-</li>
+<li>assetに対するGETログ</li>
 </ul>
 
+
+<p><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</p>
 
 <p>``` ruby
 Rails::Rack::Logger.class_eval do
@@ -74,17 +71,14 @@ end
 ```</p>
 
 <ul>
-<li>assetの処理ログ
+<li>assetの処理ログ</li>
+</ul>
 
-<ul>
-<li><code>enviroments/development.rb</code> に以下のコードを追記する。
+
+<p><code>enviroments/development.rb</code> に以下のコードを追記する。
 <code>ruby
 config.assets.logger = false
-</code></li>
-</ul>
-</li>
-</ul>
-
+</code></p>
 
 <h2>References</h2>
 
@@ -97,9 +91,9 @@ config.assets.logger = false
   
   <entry>
     <title type="html"><![CDATA['first-commit']]></title>
-    <link href="http://lunchub.github.com/blog/2013/05/21/first-commit/"/>
+    <link href="http://lunchub.github.io/blog/2013/05/21/first-commit/"/>
     <updated>2013-05-21T21:24:00+09:00</updated>
-    <id>http://lunchub.github.com/blog/2013/05/21/first-commit</id>
+    <id>http://lunchub.github.io/blog/2013/05/21/first-commit</id>
     <content type="html"><![CDATA[
 ]]></content>
   </entry>

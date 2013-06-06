@@ -23,7 +23,7 @@ Rails 3.2.13 Issues development環境で作業を行う際、 &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails">
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
@@ -49,7 +49,7 @@ Rails 3.2.13 Issues development環境で作業を行う際、 &hellip;">
   
 <form action="http://google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:lunchub.github.com" />
+    <input type="hidden" name="q" value="site:lunchub.github.io" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
@@ -137,14 +137,11 @@ assetsのログが邪魔すぎる・・・</p>
 これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
 
 <ul>
-<li>assetに対するGETログ
-
-<ul>
-<li><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</li>
-</ul>
-</li>
+<li>assetに対するGETログ</li>
 </ul>
 
+
+<p><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -170,14 +167,11 @@ assetsのログが邪魔すぎる・・・</p>
 
 
 <ul>
-<li>assetの処理ログ
-
-<ul>
-<li><code>enviroments/development.rb</code> に以下のコードを追記する。</li>
-</ul>
-</li>
+<li>assetの処理ログ</li>
 </ul>
 
+
+<p><code>enviroments/development.rb</code> に以下のコードを追記する。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="kp">false</span>
@@ -231,7 +225,7 @@ Categories:
   <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
 
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" data-via="lunchub" data-counturl="http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" >Tweet</a>
   
   
   
@@ -345,8 +339,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
-        var disqus_url = 'http://lunchub.github.com/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
+        var disqus_identifier = 'http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
+        var disqus_url = 'http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
         var disqus_script = 'embed.js';
       
     (function () {
@@ -388,14 +382,14 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 
 
-<script src="/javascripts/modernizr-2.0.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
 
-<script src="/javascripts/octopress.js" type="text/javascript"></script>
 <script src="/javascripts/github.js" type="text/javascript"> </script>
 <script src="/javascripts/twitter.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){
