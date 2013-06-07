@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-07T10:42:41+09:00</updated>
+  <updated>2013-06-07T12:40:27+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopressで関連エントリを表示する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/"/>
+    <updated>2013-06-07T12:15:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress</id>
+    <content type="html"><![CDATA[<h2>Issues</h2>
+
+<p>参考サイトの手順通りにプラグインを導入しても、<br/>
+関連エントリが表示されない。</p>
+
+<h2>Solution</h2>
+
+<p>プラグインの仕様が変わっていました・・ｗ<br/>
+<a href="https:%20//github.com/LawrenceWoodman/related_posts-jekyll_plugin/commit/bcef5ff59e038d3276c66f710ba2ccc99a9a495e">[GitHub] Switch from categories to tags</a><br/>
+カテゴリではなく、タグを使って関連エントリを探してくるように変更されたようです。<br/>
+なので、tagsにキーワードを登録していけば問題なく関連エントリが表示されます。</p>
+
+<p>カテゴリだと大雑把すぎるということなのかな・・？</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http:%20//blog.glidenote.com/blog/2012/01/04/octopress-related-posts/">OctopressでRelated Posts(関連エントリー)を表示させるようにした</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Railsでassetのログを出力しない]]></title>
@@ -105,7 +133,7 @@ assetsのログが邪魔すぎる・・・</p>
     <link href="http://lunchub.github.io/blog/2013/05/21/first-commit/"/>
     <updated>2013-05-21T21:24:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/05/21/first-commit</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>this is first commit</p>
 ]]></content>
   </entry>
   

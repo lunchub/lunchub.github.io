@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-07T10:42:41+09:00</updated>
+  <updated>2013-06-07T12:40:27+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -86,15 +86,6 @@ config.assets.logger = false
 <li><a href="https://github.com/rails/rails/issues/4569">config.assets.logger not working</a></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA['first-commit']]></title>
-    <link href="http://lunchub.github.io/blog/2013/05/21/first-commit/"/>
-    <updated>2013-05-21T21:24:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/05/21/first-commit</id>
-    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
