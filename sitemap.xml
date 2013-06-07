@@ -2,17 +2,17 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://lunchub.github.io/blog/2013/05/21/first-commit/</loc>
-        <lastmod>2013-06-07T14:04:58+09:00</lastmod>
+        <lastmod>2013-06-07T14:11:52+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/</loc>
-        <lastmod>2013-06-07T14:04:58+09:00</lastmod>
+        <lastmod>2013-06-07T14:11:52+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/
         </loc>
-        <lastmod>2013-06-07T14:04:58+09:00</lastmod>
+        <lastmod>2013-06-07T14:11:52+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/archives/</loc>
