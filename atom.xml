@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-10T17:52:14+09:00</updated>
+  <updated>2013-06-10T17:53:04+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -75,7 +75,7 @@
 </span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
 </span><span class='line'>    <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
 </span><span class='line'>      <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
-</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fire!&#39;</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span>
 </span><span class='line'>      <span class="k">return</span>
 </span></code></pre></td></tr></table></div></figure>
 
