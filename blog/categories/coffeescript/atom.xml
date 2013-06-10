@@ -4,7 +4,7 @@
   <title><![CDATA[Category: CoffeeScript | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/coffeescript/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-10T16:39:40+09:00</updated>
+  <updated>2013-06-10T17:52:14+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CoffeeScript メモ]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/"/>
+    <updated>2013-06-10T17:23:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+CoffeeScript version 1.6.3
+</code></p>
+
+<h2>Tips</h2>
+
+<h3>if文評価後の処理の書き方</h3>
+
+<h4>if の前に書く</h4>
+
+<p>``` coffeescript before if</p>
+
+<h1>pattern 1: put defiend function name</h1>
+
+<p>a_function &ndash;>
+  alert &lsquo;test!&rsquo;
+  console.log &lsquo;fired!&rsquo;;
+  return</p>
+
+<p>$(&lsquo;#target&rsquo;)
+  .on &lsquo;keyup&rsquo;, (e) &ndash;></p>
+
+<pre><code>a_function if e.which is 13
+</code></pre>
+
+<h1>pattern 2: wrap with () and separate row by ;</h1>
+
+<p>$(&lsquo;#target&rsquo;)
+  .on &lsquo;keyup&rsquo;, (e) &ndash;></p>
+
+<pre><code>(alert 'test!';console.log 'fired!';return) if e.which is 13
+</code></pre>
+
+<p>```</p>
+
+<h4>if の次の行からインデントして書く</h4>
+
+<p>``` coffeescript after if
+$(&lsquo;#target&rsquo;)
+  .on &lsquo;keyup&rsquo;, (e) &ndash;></p>
+
+<pre><code>if e.which is 13
+  alert 'test!' 
+  console.log 'fire!'
+  return
+</code></pre>
+
+<p>```</p>
+
+<p>出力後の結果はそれぞれ同じになる。<br/>
+前者は<code>if</code>の前を関数として評価しているのだろうか。<br/>
+直感的なのは後者のやり方かなあ。<br/>
+booleanの返却程度の簡単な処理なら1行にできる前者でも良いか。</p>
+
+<p>変換後のソースチェックはここでできます。 &ndash;> <a href="http://js2coffee.org/">js2coffee</a></p>
+
+<h2>References</h2>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[VimでCoffeeScriptのシンタックスチェックを行う方法]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-10T16:39:40+09:00</updated>
+  <updated>2013-06-10T17:52:14+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CoffeeScript メモ]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/"/>
+    <updated>2013-06-10T17:23:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>CoffeeScript version 1.6.3</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Tips</h2>
+
+<h3>if文評価後の処理の書き方</h3>
+
+<h4>if の前に書く</h4>
+
+<figure class='code'><figcaption><span>before if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># pattern 1: put defiend function name</span>
+</span><span class='line'><span class="nx">a_function</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">a_function</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># pattern 2: wrap with () and separate row by ;</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="p">(</span><span class="nx">alert</span> <span class="s">&#39;test!&#39;</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span><span class="p">;</span><span class="k">return</span><span class="p">)</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>if の次の行からインデントして書く</h4>
+
+<figure class='code'><figcaption><span>after if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
+</span><span class='line'>      <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
+</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fire!&#39;</span>
+</span><span class='line'>      <span class="k">return</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>出力後の結果はそれぞれ同じになる。<br/>
+前者は<code>if</code>の前を関数として評価しているのだろうか。<br/>
+直感的なのは後者のやり方かなあ。<br/>
+booleanの返却程度の簡単な処理なら1行にできる前者でも良いか。</p>
+
+<p>変換後のソースチェックはここでできます。 &ndash;> <a href="http://js2coffee.org/">js2coffee</a></p>
+
+<h2>References</h2>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[VimでCoffeeScriptのシンタックスチェックを行う方法]]></title>
