@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Octopressで関連エントリを表示する方法 - function Blog() {};</title>
+  <title>Octopressのコードブロックでテンプレートタグをエスケープする方法 - function Blog() {};</title>
   <meta name="author" content="Daisuke Masuyama">
 
   
-  <meta name="description" content="Octopressで関連エントリを表示する方法 Jun 7th, 2013 Categories: [ Octopress ] Issues 参考サイトの手順通りにプラグインを導入しても、
-関連エントリが表示されない。 Solution プラグインの仕様が変わっていました・・ｗ
-[GitHub &hellip;">
+  <meta name="description" content="Octopressのコードブロックでテンプレートタグをエスケープする方法 Jun 11th, 2013 Categories: [ Octopress ] Issues OctopressでJekyllテンプレートのコードブロックを表示する際、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress">
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
@@ -65,7 +63,7 @@
     
   <header>
     
-      <h1 class="entry-title">Octopressで関連エントリを表示する方法</h1>
+      <h1 class="entry-title">Octopressのコードブロックでテンプレートタグをエスケープする方法</h1>
     
     
       <p class="meta">
@@ -81,7 +79,7 @@
   
 
 
-<time datetime="2013-06-07T12:15:00+09:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+<time datetime="2013-06-11T18:57:00+09:00" pubdate data-updated="true">Jun 11<span>th</span>, 2013</time>
 
         
 
@@ -105,24 +103,31 @@ Categories: [
 
 <div class="entry-content"><h2>Issues</h2>
 
-<p>参考サイトの手順通りにプラグインを導入しても、<br/>
-関連エントリが表示されない。</p>
+<p>OctopressでJekyllテンプレートのコードブロックを表示する際、<br/>
+Jekyllのテンプレートタグが非表示になってしまう。</p>
 
 <h2>Solution</h2>
 
-<p>プラグインの仕様が変わっていました・・ｗ<br/>
-<a href="https:%20//github.com/LawrenceWoodman/related_posts-jekyll_plugin/commit/bcef5ff59e038d3276c66f710ba2ccc99a9a495e">[GitHub] Switch from categories to tags</a><br/>
-カテゴリではなく、タグを使って関連エントリを探してくるように変更されたようです。<br/>
-なので、tagsにキーワードを登録していけば問題なく関連エントリが表示されます。</p>
+<h3>エスケープタグを使う</h3>
 
-<p>カテゴリだと大雑把すぎるということなのかな・・？</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{% \raw %}
+</span><span class='line'>エスケープしたいソース
+</span><span class='line'>{% \endraw %}
+</span><span class='line'>
+</span><span class='line'>*rawの前のバックスラッシュは不要です。（rawのエスケープができないので仕方なく・・）</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Jekyllの公式ドキュメントがわかりづらくて探せなかった・・<br/>
+やっぱりStackoverflowは便利。</p>
 
 <h2>References</h2>
 
-<ul>
-<li><a href="http:%20//blog.glidenote.com/blog/2012/01/04/octopress-related-posts/">OctopressでRelated Posts(関連エントリー)を表示させるようにした</a></li>
-</ul>
-
+<p><a href="http://stackoverflow.com/questions/15786144/how-to-escape-in-markdown-on-octopress">How to escape {{ in markdown on Octopress?</a></p>
 </div>
 
 
@@ -134,7 +139,7 @@ Categories: [
   <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
 
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/" >Tweet</a>
   
   
   
@@ -151,10 +156,8 @@ Categories: [
 
       <p class="meta">
         
-          <a class="basic-alignment left previous-link" href="/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" title="Previous Post: Railsでassetのログを出力しない">&laquo; Railsでassetのログを出力しない</a>
+          <a class="basic-alignment left previous-link" href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/" title="Previous Post: OctopressにDISQUSのコメントウィジェットを設置する方法">&laquo; OctopressにDISQUSのコメントウィジェットを設置する方法</a>
         
-        
-          <a class="basic-alignment right next-link" href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" title="Next Post: VimでCoffeeScriptのシンタックスチェックを行う方法">VimでCoffeeScriptのシンタックスチェックを行う方法 &raquo;</a>
         
       </p>
     </section>
@@ -166,9 +169,9 @@ Categories: [
     <h1>Related Posts</h1>
     <ul>
     
-      <li><a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressのコードブロックでテンプレートタグをエスケープする方法</a></li>
-    
       <li><a href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/">OctopressにDISQUSのコメントウィジェットを設置する方法</a></li>
+    
+      <li><a href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/">Octopressで関連エントリを表示する方法</a></li>
     
     </ul>
     </div>
@@ -322,8 +325,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/';
-        var disqus_url = 'http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/';
+        var disqus_identifier = 'http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/';
+        var disqus_url = 'http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-11T18:56:41+09:00</updated>
+  <updated>2013-06-11T19:14:28+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopressのコードブロックでテンプレートタグをエスケープする方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/"/>
+    <updated>2013-06-11T18:57:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag</id>
+    <content type="html"><![CDATA[<h2>Issues</h2>
+
+<p>OctopressでJekyllテンプレートのコードブロックを表示する際、<br/>
+Jekyllのテンプレートタグが非表示になってしまう。</p>
+
+<h2>Solution</h2>
+
+<h3>エスケープタグを使う</h3>
+
+<p>
+```
+{% \raw %}
+エスケープしたいソース
+{% \endraw %}</p>
+
+<p>*rawの前のバックスラッシュは不要です。（rawのエスケープができないので仕方なく・・）
+```
+</p>
+
+<p>Jekyllの公式ドキュメントがわかりづらくて探せなかった・・<br/>
+やっぱりStackoverflowは便利。</p>
+
+<h2>References</h2>
+
+<p>
+<a href="http://stackoverflow.com/questions/15786144/how-to-escape-in-markdown-on-octopress">How to escape {{ in markdown on Octopress?</a>
+</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OctopressにDISQUSのコメントウィジェットを設置する方法]]></title>

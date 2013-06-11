@@ -9,14 +9,15 @@
   <meta name="author" content="Daisuke Masuyama">
 
   
-  <meta name="description" content="Issues OctopressのサイドバーにDISQUSの最近のコメント一覧を表示させたい。 Solution 以下の手順で設置できたのでメモ。 サイドバー表示用HTMLの作成 custom/asides/disqus_recent_comments.html1
+  <meta name="description" content="Issues OctopressでJekyllテンプレートのコードブロックを表示する際、
+Jekyllのテンプレートタグが非表示になってしまう。 Solution エスケープタグを使う 1
 2
 3
 4
 5
-6
-7
-8 &hellip;">
+{% \raw %}
+エスケープしたいソース
+{% \endraw %} * &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +68,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressのコードブロックでテンプレートタグをエスケープする方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-11T18:57:00+09:00" pubdate data-updated="true">Jun 11<span>th</span>, 2013</time>
+
+        
+
+      </p>
+    
+
+    
+
+<span class="categories">
+Categories: [
+  
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+  
+]
+</span>
+
+
+
+  </header>
+
+
+  <div class="entry-content"><h2>Issues</h2>
+
+<p>OctopressでJekyllテンプレートのコードブロックを表示する際、<br/>
+Jekyllのテンプレートタグが非表示になってしまう。</p>
+
+<h2>Solution</h2>
+
+<h3>エスケープタグを使う</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{% \raw %}
+</span><span class='line'>エスケープしたいソース
+</span><span class='line'>{% \endraw %}
+</span><span class='line'>
+</span><span class='line'>*rawの前のバックスラッシュは不要です。（rawのエスケープができないので仕方なく・・）</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Jekyllの公式ドキュメントがわかりづらくて探せなかった・・<br/>
+やっぱりStackoverflowは便利。</p>
+
+<h2>References</h2>
+
+<p><a href="http://stackoverflow.com/questions/15786144/how-to-escape-in-markdown-on-octopress">How to escape {{ in markdown on Octopress?</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -643,6 +721,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </li>
         
         <li class="post">
+            <a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressのコードブロックでテンプレートタグをエスケープする方法</a>
+        </li>
+        
+        <li class="post">
             <a href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/">OctopressにDISQUSのコメントウィジェットを設置する方法</a>
         </li>
         
@@ -661,6 +743,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressのコードブロックでテンプレートタグをエスケープする方法</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/">OctopressにDISQUSのコメントウィジェットを設置する方法</a>
       </li>
     
@@ -674,10 +760,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     
       <li class="post">
         <a href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/">Octopressで関連エントリを表示する方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/05/do-not-log-requesting-assets-on-rails/">Railsでassetのログを出力しない</a>
       </li>
     
   </ul>
