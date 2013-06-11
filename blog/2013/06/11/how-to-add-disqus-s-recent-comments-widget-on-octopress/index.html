@@ -338,7 +338,9 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 <section>
   <h1>Tweets</h1>
-  <ul id="tweets"></ul>
+  <a class="twitter-timeline" href="https://twitter.com/lunchub" data-widget-id="344425365097295872">
+    Tweets by @lunchub
+  </a>
 </section>
 
 
@@ -423,7 +425,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <script src="/javascripts/modernizr-2.0.js"></script>
 
 <script src="/javascripts/github.js" type="text/javascript"> </script>
-<script src="/javascripts/twitter.js" type="text/javascript"></script>
 <script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 <script src="/javascripts/octopress.js" type="text/javascript"></script>
 
@@ -444,7 +445,19 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
           target: '#gh_repos'
       });
 
-      getTwitterFeed('lunchub', 5, true);
+      !function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(
+            s)[0],
+          p = /^http:/.test(d.location) ?
+            'http' : 'https';
+        if (!d.getElementById(id)) {
+          js = d.createElement(s);
+          js.id = id;
+          js.src = p + "://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }
+      }(document, "script", "twitter-wjs");
+      
   });
 </script>
 
