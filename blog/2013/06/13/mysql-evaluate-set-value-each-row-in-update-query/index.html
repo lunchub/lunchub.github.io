@@ -5,15 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Railsでassetのログを出力しない - function Blog() {};</title>
+  <title>MySQLでUPDATE文のSETの値は行ごとに評価されている - function Blog() {};</title>
   <meta name="author" content="Daisuke Masuyama">
 
   
-  <meta name="description" content="Railsでassetのログを出力しない Jun 5th, 2013 Categories: [ Rails ] Environment 1
-2
-3
-Mac OSX 10.7.5 (Lion)
-ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64- &hellip;">
+  <meta name="description" content="MySQLでUPDATE文のSETの値は行ごとに評価されている Jun 13th, 2013 Categories: [ MySQL ] Issues あるテーブルのカラムの値を書き換えたい場合は、
+単純に 1
+UPDATE `table` SET `column` = &#39;value&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +20,7 @@ ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64- &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails">
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query">
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
@@ -67,7 +65,7 @@ ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64- &hellip;">
     
   <header>
     
-      <h1 class="entry-title">Railsでassetのログを出力しない</h1>
+      <h1 class="entry-title">MySQLでUPDATE文のSETの値は行ごとに評価されている</h1>
     
     
       <p class="meta">
@@ -83,7 +81,7 @@ ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64- &hellip;">
   
 
 
-<time datetime="2013-06-05T17:11:00+09:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+<time datetime="2013-06-13T19:56:00+09:00" pubdate data-updated="true">Jun 13<span>th</span>, 2013</time>
 
         
 
@@ -95,7 +93,7 @@ ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64- &hellip;">
 <span class="categories">
 Categories: [
   
-    <a class='category' href='/blog/categories/rails/'>Rails</a>
+    <a class='category' href='/blog/categories/mysql/'>MySQL</a>
   
 ]
 </span>
@@ -105,84 +103,52 @@ Categories: [
   </header>
 
 
-<div class="entry-content"><h2>Environment</h2>
+<div class="entry-content"><h2>Issues</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
-</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
+<p>あるテーブルのカラムの値を書き換えたい場合は、<br/>
+単純に</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">UPDATE</span> <span class="ss">`table`</span> <span class="kt">SET</span> <span class="ss">`column`</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Issues</h2>
+<p>という形でSQLを実行すれば良い。</p>
 
-<p>development環境で作業を行う際、下の画像のように<code>tail -f log/development.log</code>で<br/>
-ログを垂れ流しているのだけど、画面生成の際走るSQLなんかを確認したい時に<br/>
-assetsのログが邪魔すぎる・・・</p>
+<p>ここでvalueをランダムな値にしたい場合は、<br/>
+サブクエリを使って</p>
 
-<p><a href="/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg"><img src="/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg" alt="rails assets log" /></a></p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">UPDATE</span> <span class="ss">`table`</span> <span class="kt">SET</span> <span class="ss">`column`</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nf">ROUND</span><span class="p">(</span><span class="nf">RAND</span><span class="p">()</span><span class="o">*</span><span class="mi">10</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h2>Solution</h2>
 
-<p>ログを見ると、</p>
+<p>にするのだけど、<br/>
+問題はこのサブクエリって行ごとに評価されるのかなという疑問があった。</p>
+
+<p>結論としては行ごとに評価されるのだけど、マニュアルみてもいまいちしっくりしない。
+Referencesに載せた内容だとなんとなく行ごとに評価されるんだなというのはわかるのだけど。。</p>
+
+<p>すごく基礎的なところがわかっていない気がする・・</p>
+
+<h2>References</h2>
 
 <ul>
-<li>assetに対するGETログ</li>
-<li>assetの処理ログ</li>
+<li><a href="http://dev.mysql.com/doc/refman/5.1/ja/update.html">UPDATE 構文</a></li>
 </ul>
 
-
-<p>の2種類が表示されていることがわかる。<br/>
-これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
-
-<ul>
-<li>assetに対するGETログ</li>
-</ul>
-
-
-<p><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Rack</span><span class="o">::</span><span class="no">Logger</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_with_quiet_assets</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">previous_level</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span>
-</span><span class='line'>    <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="ss">Logger</span><span class="p">:</span><span class="ss">:ERROR</span> <span class="k">if</span> <span class="n">env</span><span class="o">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="o">].</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;/assets/&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">call_without_quiet_assets</span><span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span>
-</span><span class='line'>      <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">previous_level</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>  <span class="n">alias_method_chain</span> <span class="ss">:call</span><span class="p">,</span> <span class="ss">:quiet_assets</span>
-</span><span class='line'><span class="k">end</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>もし式の中で tbl_name からカラムにアクセスするなら、UPDATE はカラムの現在の値を利用します。
+</span><span class='line'>例えば、次のステートメントは age カラムを現在の値よりも1大きく設定します。
+</span><span class='line'>UPDATE persondata SET age=age+1;
+</span><span class='line'>単一テーブル UPDATE 割り当ては通常左から右に評価されます。
+</span><span class='line'>複合テーブルの更新に関しては、割り当てが特定の順番で行われるという保証はありません。
 </span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>assetの処理ログ</li>
-</ul>
-
-
-<p><code>enviroments/development.rb</code> に以下のコードを追記する。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="kp">false</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/rails/rails/issues/4569">config.assets.logger not working</a></li>
-</ul>
 
 </div>
 
@@ -195,7 +161,7 @@ assetsのログが邪魔すぎる・・・</p>
   <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
 
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/" >Tweet</a>
   
   
   
@@ -212,8 +178,8 @@ assetsのログが邪魔すぎる・・・</p>
 
       <p class="meta">
         
+          <a class="basic-alignment left previous-link" href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/" title="Previous Post: Octopressのコードブロックでテンプレートタグをエスケープする方法">&laquo; Octopressのコードブロックでテンプレートタグをエスケープする方法</a>
         
-          <a class="basic-alignment right next-link" href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/" title="Next Post: Octopressで関連エントリを表示する方法">Octopressで関連エントリを表示する方法 &raquo;</a>
         
       </p>
     </section>
@@ -372,8 +338,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
-        var disqus_url = 'http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
+        var disqus_identifier = 'http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/';
+        var disqus_url = 'http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/';
         var disqus_script = 'embed.js';
       
     (function () {
