@@ -4,7 +4,7 @@
   <title><![CDATA[Category: GitHub | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-14T19:03:51+09:00</updated>
+  <updated>2013-06-14T19:04:54+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -24,7 +24,7 @@
 
 <p>GitHubを眺めていてちょっとしたCSSのテクニックを発見した。<br/>
 ページ上部のアイコンのそばに表示されているPUBLICという文字列がある。<br/>
-この文字列が、ブラウザの画面サイズによって横書き&lt;&ndash;>縦書きと変化する。</p>
+この文字列が、画面サイズ（横）によって横書き&lt;&ndash;>縦書きと変化する。</p>
 
 <p><a href="/images/posts/2013/06/2013-06-14-16-59-42.jpg"><img src="/images/posts/2013/06/2013-06-14-16-59-42.jpg" alt="GitHub css trick1" /></a></p>
 
