@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-14T16:52:44+09:00</updated>
+  <updated>2013-06-14T18:58:06+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -27,7 +27,7 @@ Jekyllのテンプレートタグが非表示になってしまう。</p>
 
 <h3>エスケープタグを使う</h3>
 
-<p>{% raw %}
+<p>
 ```
 {% \raw %}
 エスケープしたいソース
@@ -35,16 +35,16 @@ Jekyllのテンプレートタグが非表示になってしまう。</p>
 
 <p>*rawの前のバックスラッシュは不要です。（rawのエスケープができないので仕方なく・・）
 ```
-{% endraw %}</p>
+</p>
 
 <p>Jekyllの公式ドキュメントがわかりづらくて探せなかった・・<br/>
 やっぱりStackoverflowは便利。</p>
 
 <h2>References</h2>
 
-<p>{% raw %}
+<p>
 <a href="http://stackoverflow.com/questions/15786144/how-to-escape-in-markdown-on-octopress">How to escape {{ in markdown on Octopress?</a>
-{% endraw %}</p>
+</p>
 ]]></content>
   </entry>
   
@@ -63,7 +63,7 @@ Jekyllのテンプレートタグが非表示になってしまう。</p>
 
 <h3>サイドバー表示用HTMLの作成</h3>
 
-<p>{% raw %}
+<p>
 ``` html custom/asides/disqus_recent_comments.html
 {% if site.disqus_short_name %}
 <section>
@@ -77,7 +77,7 @@ Jekyllのテンプレートタグが非表示になってしまう。</p>
 </section>
 {% endif %}
 ```
-{% endraw %}</p>
+</p>
 
 <h3>_config.ymlの編集</h3>
 
