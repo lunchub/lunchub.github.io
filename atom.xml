@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-17T16:06:01+09:00</updated>
+  <updated>2013-06-17T16:33:30+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -637,7 +637,7 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 <h2>Solution</h2>
 
 <p>プラグインの仕様が変わっていました・・ｗ<br/>
-<a href="https:%20//github.com/LawrenceWoodman/related_posts-jekyll_plugin/commit/bcef5ff59e038d3276c66f710ba2ccc99a9a495e">[GitHub] Switch from categories to tags</a><br/>
+<a href="https://github.com/LawrenceWoodman/related_posts-jekyll_plugin/commit/bcef5ff59e038d3276c66f710ba2ccc99a9a495e">[GitHub] Switch from categories to tags</a><br/>
 カテゴリではなく、タグを使って関連エントリを探してくるように変更されたようです。<br/>
 なので、tagsにキーワードを登録していけば問題なく関連エントリが表示されます。</p>
 
@@ -646,7 +646,7 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 <h2>References</h2>
 
 <ul>
-<li><a href="http:%20//blog.glidenote.com/blog/2012/01/04/octopress-related-posts/">OctopressでRelated Posts(関連エントリー)を表示させるようにした</a></li>
+<li><a href="http://blog.glidenote.com/blog/2012/01/04/octopress-related-posts/">OctopressでRelated Posts(関連エントリー)を表示させるようにした</a></li>
 </ul>
 
 ]]></content>
