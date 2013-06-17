@@ -239,12 +239,6 @@ assetsのログが邪魔すぎる・・・</p>
       
 
     
-      <section>
-        <h1>Comments</h1>
-        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-      </section>
-    
 
     <section>
       <script type="text/javascript"><!--
@@ -290,6 +284,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </li>
         
         <li class="post">
+            <a href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/">VimでCoffeeScriptのシンタックスチェックを行う方法</a>
+        </li>
+        
+        <li class="post">
             <a href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/">Octopressで関連エントリを表示する方法</a>
         </li>
         
@@ -298,19 +296,15 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         </li>
         
         <li class="post">
+            <a href="/blog/2013/06/10/hamari-on-coffeescript/">CoffeeScript メモ</a>
+        </li>
+        
+        <li class="post">
             <a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressのコードブロックでテンプレートタグをエスケープする方法</a>
         </li>
         
         <li class="post">
             <a href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/">OctopressにDISQUSのコメントウィジェットを設置する方法</a>
-        </li>
-        
-        <li class="post">
-            <a href="/blog/2013/06/10/hamari-on-coffeescript/">CoffeeScript メモ</a>
-        </li>
-        
-        <li class="post">
-            <a href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/">VimでCoffeeScriptのシンタックスチェックを行う方法</a>
         </li>
         
         <li class="post">
@@ -349,12 +343,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     
   </ul>
 </section>
-
-<section>
-  <h1>Recent Comments</h1>
-  <div id="dsq-recentcomments" class="dsq-widget"><script type="text/javascript" src="http://disqus.com/forums/lunchub/recent_comments_widget.js?hide_avatars=0"></script></div>
-</section>
-
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='/blog/categories/coffeescript'>CoffeeScript (2)</a></li><li><a href='/blog/categories/css3'>CSS3 (1)</a></li><li><a href='/blog/categories/github'>GitHub (1)</a></li><li><a href='/blog/categories/hamari'>hamari (2)</a></li><li><a href='/blog/categories/mysql'>MySQL (1)</a></li><li><a href='/blog/categories/octopress'>Octopress (3)</a></li><li><a href='/blog/categories/rails'>Rails (2)</a></li><li><a href='/blog/categories/vim'>Vim (1)</a></li></ul>
@@ -365,17 +353,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     Tweets by @lunchub
   </a>
 </section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/lunchub">@lunchub</a> on GitHub
-  
-</section>
-
 
 
 
@@ -393,22 +370,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 </footer>
   
-
-<script type="text/javascript">
-      var disqus_shortname = 'lunchub';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
-        var disqus_url = 'http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 
@@ -464,9 +425,9 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       }
 
       github.showRepos({
-          user: 'lunchub',
-          count: 0,
-          skip_forks: false,
+          user: '',
+          count: ,
+          skip_forks: ,
           target: '#gh_repos'
       });
 
