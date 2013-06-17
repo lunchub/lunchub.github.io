@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Rails | function Blog() {};]]></title>
-  <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
+  <title><![CDATA[Category: hamari | function Blog() {};]]></title>
+  <link href="http://lunchub.github.io/blog/categories/hamari/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
   <updated>2013-06-17T16:06:01+09:00</updated>
   <id>http://lunchub.github.io/</id>
@@ -143,78 +143,70 @@ assetsの中身を書き換えたい場合はどうすればいいんだろう�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Railsでassetのログを出力しない]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/"/>
-    <updated>2013-06-05T17:11:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails</id>
+    <title type="html"><![CDATA[CoffeeScript メモ]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/"/>
+    <updated>2013-06-10T17:23:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript</id>
     <content type="html"><![CDATA[<h2>Environment</h2>
 
 <p><code>
 Mac OSX 10.7.5 (Lion)
-ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
-Rails 3.2.13
+CoffeeScript version 1.6.3
 </code></p>
 
-<h2>Issues</h2>
+<h2>Tips</h2>
 
-<p>development環境で作業を行う際、下の画像のように<code>tail -f log/development.log</code>で<br/>
-ログを垂れ流しているのだけど、画面生成の際走るSQLなんかを確認したい時に<br/>
-assetsのログが邪魔すぎる・・・</p>
+<h3>if文評価後の処理の書き方</h3>
 
-<p><a href="/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg"><img src="/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg" alt="rails assets log" /></a></p>
+<h4>if の前に書く</h4>
 
-<h2>Solution</h2>
+<p>``` coffeescript before if</p>
 
-<p>ログを見ると、</p>
+<h1>pattern 1: put defiend function name</h1>
 
-<ul>
-<li>assetに対するGETログ</li>
-<li>assetの処理ログ</li>
-</ul>
+<p>a_function &ndash;>
+  alert &lsquo;test!&rsquo;
+  console.log &lsquo;fired!&rsquo;;
+  return</p>
 
+<p>$(&lsquo;#target&rsquo;)
+  .on &lsquo;keyup&rsquo;, (e) &ndash;></p>
 
-<p>の2種類が表示されていることがわかる。<br/>
-これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
-
-<ul>
-<li>assetに対するGETログ</li>
-</ul>
-
-
-<p><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</p>
-
-<p>``` ruby
-Rails::Rack::Logger.class_eval do
-  def call_with_quiet_assets(env)</p>
-
-<pre><code>previous_level = Rails.logger.level
-Rails.logger.level = Logger::ERROR if env['PATH_INFO'].index("/assets/") == 0 
-call_without_quiet_assets(env).tap do
-  Rails.logger.level = previous_level
-end 
+<pre><code>a_function if e.which is 13
 </code></pre>
 
-<p>  end
-  alias_method_chain :call, :quiet_assets
-end
-```</p>
+<h1>pattern 2: wrap with () and separate row by ;</h1>
 
-<ul>
-<li>assetの処理ログ</li>
-</ul>
+<p>$(&lsquo;#target&rsquo;)
+  .on &lsquo;keyup&rsquo;, (e) &ndash;></p>
 
+<pre><code>(alert 'test!';console.log 'fired!';return) if e.which is 13
+</code></pre>
 
-<p><code>enviroments/development.rb</code> に以下のコードを追記する。
-<code>ruby
-config.assets.logger = false
-</code></p>
+<p>```</p>
+
+<h4>if の次の行からインデントして書く</h4>
+
+<p>``` coffeescript after if
+$(&lsquo;#target&rsquo;)
+  .on &lsquo;keyup&rsquo;, (e) &ndash;></p>
+
+<pre><code>if e.which is 13
+  alert 'test!' 
+  console.log 'fired!'
+  return
+</code></pre>
+
+<p>```</p>
+
+<p>出力後の結果はそれぞれ同じになる。<br/>
+前者は<code>if</code>の前を関数として評価しているのだろうか。<br/>
+直感的なのは後者のやり方かなあ。<br/>
+booleanの返却程度の簡単な処理なら1行にできる前者でも良いか。</p>
+
+<p>変換後のソースチェックはここでできます。 &ndash;> <a href="http://js2coffee.org/">js2coffee</a></p>
 
 <h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/rails/rails/issues/4569">config.assets.logger not working</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
