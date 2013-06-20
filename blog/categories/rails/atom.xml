@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-20T19:24:00+09:00</updated>
+  <updated>2013-06-20T19:28:03+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -38,8 +38,11 @@ debugger-ruby_core_source (1.1.9)
 
 <h2>Issues</h2>
 
-<p><code>rails c</code>しようとすると、<code>uninitialized constant Debugger::LocalInterface::Readline (NameError)</code>と<br/>
-表示されてコンソールに入れなくなっていた。</p>
+<p><code>rails c</code>しようとすると、
+<code>bash
+uninitialized constant Debugger::LocalInterface::Readline (NameError)
+</code>
+と表示されてコンソールに入れなくなっていた。</p>
 
 <p>エラー内容から、<code>debugger</code>の問題を疑い、<code>Gemfile</code>から外してみる。<br/>
 すると今度は<code>pry</code>が<code>Debugger</code>の部分だけ<code>Pry</code>に変わった同じエラーが出力される。<br/>

@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-20T19:24:00+09:00</updated>
+  <updated>2013-06-20T19:28:03+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -50,8 +50,14 @@
 
 <h2>Issues</h2>
 
-<p><code>rails c</code>しようとすると、<code>uninitialized constant Debugger::LocalInterface::Readline (NameError)</code>と<br/>
-表示されてコンソールに入れなくなっていた。</p>
+<p><code>rails c</code>しようとすると、</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>uninitialized constant Debugger::LocalInterface::Readline <span class="o">(</span>NameError<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>と表示されてコンソールに入れなくなっていた。</p>
 
 <p>エラー内容から、<code>debugger</code>の問題を疑い、<code>Gemfile</code>から外してみる。<br/>
 すると今度は<code>pry</code>が<code>Debugger</code>の部分だけ<code>Pry</code>に変わった同じエラーが出力される。<br/>
@@ -98,10 +104,11 @@ Rubyだけで完結させようって主旨なのかな？<br/>
 
 <p>ちなみにMacなら</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew install readline
-</span><span class='line'>CONFIGURE_OPTS="--disable-install-doc --with-readline-dir=$(brew --prefix readline)" rbenv install $VERSION</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install readline
+</span><span class='line'><span class="nv">CONFIGURE_OPTS</span><span class="o">=</span><span class="s2">&quot;--disable-install-doc --with-readline-dir=$(brew --prefix readline)&quot;</span> rbenv install <span class="nv">$VERSION</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>でビルドしなおせばOK!<br/>
