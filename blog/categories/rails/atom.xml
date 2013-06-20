@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-17T17:55:53+09:00</updated>
+  <updated>2013-06-20T16:26:10+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[uninitialized constant Readline (NameError)]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/20/uninitialized-constant-readline-nameerror/"/>
+    <updated>2013-06-20T15:56:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/20/uninitialized-constant-readline-nameerror</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p>```
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+rb-readline (0.5.0)</p>
+
+<p>debugger (1.3.1)
+  columnize (>= 0.3.1)
+  debugger-linecache (~> 1.1.1)
+  debugger-ruby_core_source (~> 1.1.8)
+debugger-linecache (1.1.2)
+  debugger-ruby_core_source (>= 1.1.1)
+debugger-ruby_core_source (1.1.9)
+```</p>
+
+<h2>Issues</h2>
+
+<p><code>rails c</code>しようとすると、<code>uninitialized constant Debugger::LocalInterface::Readline (NameError)</code>と<br/>
+表示されてコンソールに入れなくなっていた。</p>
+
+<p>エラー内容から、<code>debugger</code>の問題を疑い、<code>Gemfile</code>から外してみる。<br/>
+すると今度は<code>pry</code>が<code>Debugger</code>の部分だけ<code>Pry</code>に変わっただけの同じエラーが出力される。<br/>
+そこで<code>pry</code>を<code>Gemfile</code>から外し・・・ｒｙ</p>
+
+<p>これを繰り返しても同じエラーが続く・・・<br/>
+どうやら共通して<code>readline</code>に問題があるらしい。</p>
+
+<p>システムに<code>readline</code>がインストールされていないのかと思ったが、<br/>
+<code>homebrew</code>でちゃんとインストールしてある・・</p>
+
+<p><code>Gemfile</code>を眺めていると、<code>rb-readline</code>なるものが追加されている。<br/>
+どうやらこいつが怪しい・・・</p>
+
+<h2>Solution</h2>
+
+<p>で、解決策は2つ</p>
+
+<ul>
+<li><code>rb-readline</code>のバージョン指定を<code>'~&gt; 0.4.2'</code>にする</li>
+<li><code>rb-readline</code>を削除する（）</li>
+</ul>
+
+
+<p>問題は<code>rb-readline</code>が<code>0.5.0</code>からシステム上の<code>readline</code>を<code>remove_const</code>しちゃうこと。<br/>
+どうもこのgemはC言語で実装された<code>readline</code>とは別に、<br/>
+Rubyだけで完結させようって主旨なのかな？<br/>
+それで既に<code>readline</code>があると再定義の警告が出るんで、<br/>
+一度<code>remove_const</code>しちゃうぜってことらしい。<br/>
+しかし他のgemのエラーからして、明らかにシステム上に<code>readline</code>があることを期待している気がする・・。<br/>
+これってどうなんだろう・・。<br/>
+一応<code>Readline</code>を呼んでいるgemを全て<code>RbReadline</code>に置換すれば動くっぽいけど・・ｗ</p>
+
+<h3><code>rb-readline</code>のバージョン指定を<code>'~&gt; 0.4.2'</code>にする</h3>
+
+<p>前述の<code>remove_const</code>が入るのはバージョン<code>0.5.0</code>から。<br/>
+なので、この変更が入る前の<code>0.4.2</code>にしてあげればエラーはなくなる。</p>
+
+<h3><code>rb-readline</code>を削除する（）</h3>
+
+<p>こちらはシステム上に<code>readline</code>がインストールされていて、<br/>
+かつRubyのビルドオプションで<code>--with-readline</code>をつけてビルドしている場合に有効。
+システム上の<code>readline</code>を使ってくれるので<code>rb-readline</code>は不要になります。</p>
+
+<p>ちなみにMacなら
+<code>
+brew install readline
+CONFIGURE_OPTS="--disable-install-doc --with-readline-dir=$(brew --prefix readline)" rbenv install $VERSION
+</code>
+でビルドしなおせばOK!<br/>
+<code>$VERSION</code>はお好みで。</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/luislavena/rb-readline/commit/d8b49a061eeb710c47bc92cc610e8f489c4fd447">[GitHub] Unload Readline before loading rb-readline</a></li>
+<li><a href="http://stackoverflow.com/questions/16288331/rails-3-uninitialized-constant-irbreadlineinputmethodreadline-nameerror-i">[stackoverflow] Rails 3: uninitialized constant IRB::ReadlineInputMethod::Readline (NameError) in Heroku</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Rails] Active_adminのインストールと初期設定でハマったこと]]></title>
