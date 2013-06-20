@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-20T16:26:10+09:00</updated>
+  <updated>2013-06-20T16:29:00+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -42,11 +42,11 @@ debugger-ruby_core_source (1.1.9)
 表示されてコンソールに入れなくなっていた。</p>
 
 <p>エラー内容から、<code>debugger</code>の問題を疑い、<code>Gemfile</code>から外してみる。<br/>
-すると今度は<code>pry</code>が<code>Debugger</code>の部分だけ<code>Pry</code>に変わっただけの同じエラーが出力される。<br/>
+すると今度は<code>pry</code>が<code>Debugger</code>の部分だけ<code>Pry</code>に変わった同じエラーが出力される。<br/>
 そこで<code>pry</code>を<code>Gemfile</code>から外し・・・ｒｙ</p>
 
 <p>これを繰り返しても同じエラーが続く・・・<br/>
-どうやら共通して<code>readline</code>に問題があるらしい。</p>
+どうやら共通して<code>readline</code>辺りに問題があるらしい。</p>
 
 <p>システムに<code>readline</code>がインストールされていないのかと思ったが、<br/>
 <code>homebrew</code>でちゃんとインストールしてある・・</p>
@@ -71,7 +71,7 @@ Rubyだけで完結させようって主旨なのかな？<br/>
 一度<code>remove_const</code>しちゃうぜってことらしい。<br/>
 しかし他のgemのエラーからして、明らかにシステム上に<code>readline</code>があることを期待している気がする・・。<br/>
 これってどうなんだろう・・。<br/>
-一応<code>Readline</code>を呼んでいるgemを全て<code>RbReadline</code>に置換すれば動くっぽいけど・・ｗ</p>
+一応<code>Readline</code>を呼んでいる部分を全て<code>RbReadline</code>に置換すれば動くっぽいけど・・ｗ</p>
 
 <h3><code>rb-readline</code>のバージョン指定を<code>'~&gt; 0.4.2'</code>にする</h3>
 
