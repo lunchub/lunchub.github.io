@@ -2,53 +2,53 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/</loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/
         </loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/</loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/</loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/
         </loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/</loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/
         </loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/14/github-s-small-css-trick/</loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/
         </loc>
-        <lastmod>2013-06-20T17:03:00+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/20/uninitialized-constant-readline-nameerror/
         </loc>
-        <lastmod>2013-06-20T19:27:40+09:00</lastmod>
+        <lastmod>2013-06-21T13:24:02+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/archives/</loc>
