@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-26T19:55:45+09:00</updated>
+  <updated>2013-06-26T19:56:09+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -48,7 +48,7 @@
 
 <h2>Solution</h2>
 
-<p>これは<code>Unicorn</code>を使っている場合に発生する問題で、以下の手段で解決できます。
+<p>これは<code>Unicorn</code>を使っている場合に発生する問題で、以下の手段で解決できます。<br/>
 今回は後者の手段で解決しました。</p>
 
 <p>なぜ<code>Unicorn</code>の<code>preload_app</code>が必要なのかは理解出来ませんでした・・</p>
