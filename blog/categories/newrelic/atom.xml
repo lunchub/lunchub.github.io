@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Newrelic | function Blog() {};]]></title>
+  <link href="http://lunchub.github.io/blog/categories/newrelic/atom.xml" rel="self"/>
+  <link href="http://lunchub.github.io/"/>
+  <updated>2013-06-26T17:05:22+09:00</updated>
+  <id>http://lunchub.github.io/</id>
+  <author>
+    <name><![CDATA[Daisuke Masuyama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RailsにNew Relicをインストールする]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-rails-and-centos/"/>
+    <updated>2013-06-26T16:01:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-rails-and-centos</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+CentOS 6.4
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+</code></p>
+
+<h2>Issues</h2>
+
+<ul>
+<li>Railsのパフォーマンスを簡単に計測したい</li>
+<li>ついでにサーバーのモニタリングもしたい</li>
+<li>Muninとか自分で導入するのがめんどくさい</li>
+</ul>
+
+
+<h2>Solution</h2>
+
+<p><a href="https://newrelic.com/">New Relic</a>というサービスを利用する。<br/>
+<code>New Relic</code>は簡単に導入が出来て、無料で使えるモニタリングサービス。<br/>
+*但し無料版はログの保存期間が24時間しかない。</p>
+
+<p>別途プラグインの導入を行うことで、サーバーのモニタリングも簡単にできます。</p>
+
+<h3>Railsに<code>New Relic</code>を導入する</h3>
+
+<ul>
+<li><code>New Relic</code>のサイトで<a href="https://newrelic.com/">会員登録</a>を行う。</li>
+<li>Gemをインストールする</li>
+</ul>
+
+
+<p><code>ruby Gemfile
+gem 'newrelic_rpm'
+</code>
+設定ファイルで<code>Environment</code>に応じたモニタリングのON/OFFができるので、<br/>
+ここでは<code>production</code>グループに纏めたりしなくても良いと思います。</p>
+
+<ul>
+<li>configディレクトリに<code>newrelic.yml</code>を配置する</li>
+</ul>
+
+
+<p><code>newrelic.yml</code>は<code>New Relic</code>にログイン後、サイドバーから<code>Applications</code>を選択し、さらに<code>Add more</code>を選択するとダウンロード出来る画面へ遷移する。</p>
+
+<p><a href="/images/posts/2013/06/2013-06-26-16-38-43.jpg"><img src="/images/posts/2013/06/2013-06-26-16-38-43.jpg" alt="newrelic admin panel image" /></a></p>
+
+<p>画面遷移した後に、<code>Installation instructions for</code>で<code>Ruby</code>を選択すると、<br/>
+下の画像のようにダウンロードボタンが出現する。</p>
+
+<p><a href="/images/posts/2013/06/2013-06-26-16-50-31.jpg"><img src="/images/posts/2013/06/2013-06-26-16-50-31.jpg" alt="newrelic admin panel image" /></a></p>
+
+<p>ダウンロードしてきた<code>newrelic.yml</code>を<code>RAILS_APP_ROOT/config</code>に配置すればOK!</p>
+
+<p>ちなみに<code>newrelic.yml</code>の以下の部分を書き換えることで、<br/>
+管理画面に表示されるアプリ名を変更できます。
+<code>yaml newrelic.yml
+app_name: My Application
+</code></p>
+
+<h2>References</h2>
+]]></content>
+  </entry>
+  
+</feed>
