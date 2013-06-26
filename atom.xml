@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-26T19:53:47+09:00</updated>
+  <updated>2013-06-26T19:55:45+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -57,7 +57,7 @@
 
 <h3>Unicornの設定に追記する</h3>
 
-<p><code>app/config</code>ディレクトリにある<code>Unicorn</code>の設定ファイルに以下のディレクティブを追記する。</p>
+<p><code>RAILS_APP_ROOT/config</code>ディレクトリにある<code>Unicorn</code>の設定ファイルに以下のディレクティブを追記する。</p>
 
 <figure class='code'><figcaption><span>unicorn.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='text'><span class='line'>preload_app true
@@ -66,7 +66,7 @@
 
 <h3>Railsのinitializerを追加する</h3>
 
-<p><code>app/config/initializers/</code>ディレクトリに以下のファイルを追加する</p>
+<p><code>RAILS_APP_ROOT/config/initializers/</code>ディレクトリに以下のファイルを追加する</p>
 
 <figure class='code'><figcaption><span>new_relic.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
