@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Newrelic | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/newrelic/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-26T17:05:22+09:00</updated>
+  <updated>2013-06-26T17:10:24+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -30,7 +30,7 @@ Rails 3.2.13
 
 <ul>
 <li>Railsのパフォーマンスを簡単に計測したい</li>
-<li>ついでにサーバーのモニタリングもしたい</li>
+<li>ついでにサーバーのモニタリングもしたい &ndash;> <a href="">CentOSへの導入記事はこちら</a></li>
 <li>Muninとか自分で導入するのがめんどくさい</li>
 </ul>
 
@@ -43,13 +43,11 @@ Rails 3.2.13
 
 <p>別途プラグインの導入を行うことで、サーバーのモニタリングも簡単にできます。</p>
 
-<h3>Railsに<code>New Relic</code>を導入する</h3>
+<h2>How to</h2>
 
-<ul>
-<li><code>New Relic</code>のサイトで<a href="https://newrelic.com/">会員登録</a>を行う。</li>
-<li>Gemをインストールする</li>
-</ul>
+<h3><code>New Relic</code>のサイトで<a href="https://newrelic.com/">会員登録</a>を行う。</h3>
 
+<h3>Gemをインストールする</h3>
 
 <p><code>ruby Gemfile
 gem 'newrelic_rpm'
@@ -57,10 +55,7 @@ gem 'newrelic_rpm'
 設定ファイルで<code>Environment</code>に応じたモニタリングのON/OFFができるので、<br/>
 ここでは<code>production</code>グループに纏めたりしなくても良いと思います。</p>
 
-<ul>
-<li>configディレクトリに<code>newrelic.yml</code>を配置する</li>
-</ul>
-
+<h3>configディレクトリに<code>newrelic.yml</code>を配置する</h3>
 
 <p><code>newrelic.yml</code>は<code>New Relic</code>にログイン後、サイドバーから<code>Applications</code>を選択し、さらに<code>Add more</code>を選択するとダウンロード出来る画面へ遷移する。</p>
 
@@ -73,7 +68,9 @@ gem 'newrelic_rpm'
 
 <p>ダウンロードしてきた<code>newrelic.yml</code>を<code>RAILS_APP_ROOT/config</code>に配置すればOK!</p>
 
-<p>ちなみに<code>newrelic.yml</code>の以下の部分を書き換えることで、<br/>
+<h2>Tips</h2>
+
+<p><code>newrelic.yml</code>の以下の部分を書き換えることで、<br/>
 管理画面に表示されるアプリ名を変更できます。
 <code>yaml newrelic.yml
 app_name: My Application
