@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-06-26T17:46:15+09:00</updated>
+  <updated>2013-06-26T19:53:47+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -14,7 +14,91 @@
 
   
   <entry>
-    <title type="html"><![CDATA[CeontOSにNew Relicをインストールする]]></title>
+    <title type="html"><![CDATA[Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/"/>
+    <updated>2013-06-26T18:38:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>お名前VPS
+</span><span class='line'>CentOS 6.4
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13
+</span><span class='line'>Unicorn v4.5.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p>前回までの記事で、</p>
+
+<ul>
+<li><a href="http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-rails/">RailsにNew Relicをインストールする</a></li>
+<li><a href="http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-centos/">CeontOSにNew Relicをインストールする</a></li>
+</ul>
+
+
+<p>と、簡単に<code>New Relic</code>のインストールを行なってきたものの、問題が発生した。</p>
+
+<p><code>Rails + Unicorn</code>の環境で、何時まで経っても<code>New Relic</code>にRailsのデータが送信されていないというもの。</p>
+
+<h2>Solution</h2>
+
+<p>これは<code>Unicorn</code>を使っている場合に発生する問題で、以下の手段で解決できます。
+今回は後者の手段で解決しました。</p>
+
+<p>なぜ<code>Unicorn</code>の<code>preload_app</code>が必要なのかは理解出来ませんでした・・</p>
+
+<h2>How to</h2>
+
+<h3>Unicornの設定に追記する</h3>
+
+<p><code>app/config</code>ディレクトリにある<code>Unicorn</code>の設定ファイルに以下のディレクティブを追記する。</p>
+
+<figure class='code'><figcaption><span>unicorn.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>preload_app true
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Railsのinitializerを追加する</h3>
+
+<p><code>app/config/initializers/</code>ディレクトリに以下のファイルを追加する</p>
+
+<figure class='code'><figcaption><span>new_relic.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Ensure the agent is started using Unicorn.</span>
+</span><span class='line'><span class="c1"># This is needed when using Unicorn and preload_app is not set to true.</span>
+</span><span class='line'><span class="c1"># See https://newrelic.com/docs/ruby/no-data-with-unicorn</span>
+</span><span class='line'><span class="k">if</span> <span class="n">defined?</span> <span class="no">Unicorn</span>
+</span><span class='line'>  <span class="o">::</span><span class="ss">NewRelic</span><span class="p">:</span><span class="ss">:Agent</span><span class="o">.</span><span class="n">manual_start</span><span class="p">()</span>
+</span><span class='line'>  <span class="o">::</span><span class="ss">NewRelic</span><span class="p">:</span><span class="ss">:Agent</span><span class="o">.</span><span class="n">after_fork</span><span class="p">(</span><span class="ss">:force_reconnect</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ファイル名は何でもOKです。</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://newrelic.com/docs/ruby/no-data-with-unicorn">No Data with Unicorn</a></li>
+<li><a href="http://unicorn.bogomips.org/Unicorn/Configurator.html#method-i-preload_app">Unicorn::Configurator</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CentOSにNew Relicをインストールする]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-centos/"/>
     <updated>2013-06-26T17:12:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-centos</id>

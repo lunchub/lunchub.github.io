@@ -56,15 +56,21 @@
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-centos/</loc>
-        <lastmod>2013-06-26T17:41:37+09:00</lastmod>
+        <lastmod>2013-06-26T19:29:36+09:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/
+        </loc>
+        <lastmod>2013-06-26T19:49:04+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/archives/</loc>
-        <lastmod>2013-06-26T17:41:37+09:00</lastmod>
+        <lastmod>2013-06-26T19:49:04+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/</loc>
-        <lastmod>2013-06-26T17:41:37+09:00</lastmod>
+        <lastmod>2013-06-26T19:49:04+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/profile/</loc>
