@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Newrelic | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/newrelic/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-09T01:46:06+09:00</updated>
+  <updated>2013-07-09T02:16:40+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -182,7 +182,7 @@ newrelic-sysmond-1.2.0.257-1.x86_64.rpm                                         
 warning: rpmts_HdrFromFdno: Header V3 DSA/SHA1 Signature, key ID 548c16bf: NOKEY
 Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-NewRelic
 Importing GPG key 0x548C16BF:
- Userid : New Relic <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#115;&#117;&#x70;&#x70;&#111;&#114;&#x74;&#64;&#110;&#x65;&#119;&#x72;&#x65;&#108;&#105;&#99;&#x2e;&#99;&#111;&#x6d;">&#115;&#117;&#x70;&#112;&#x6f;&#x72;&#x74;&#64;&#x6e;&#x65;&#119;&#114;&#101;&#108;&#x69;&#99;&#46;&#x63;&#111;&#109;</a>
+ Userid : New Relic <a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x73;&#117;&#x70;&#x70;&#x6f;&#114;&#116;&#x40;&#x6e;&#x65;&#x77;&#114;&#x65;&#x6c;&#105;&#99;&#x2e;&#99;&#x6f;&#109;">&#x73;&#117;&#x70;&#x70;&#x6f;&#x72;&#116;&#64;&#110;&#101;&#119;&#x72;&#x65;&#x6c;&#x69;&#99;&#46;&#x63;&#x6f;&#x6d;</a>
  Package: newrelic-repo-5-3.noarch (installed)
  From   : /etc/pki/rpm-gpg/RPM-GPG-KEY-NewRelic
 Is this ok [y/N]: y
