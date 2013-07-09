@@ -5,26 +5,26 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>function Blog() {};</title>
   <meta name="author" content="Daisuke Masuyama">
-
-  
-  <meta name="description" content="VimでCoffeeScriptのシンタックスチェックを行う方法 Jun 10th, 2013 Categories: [ CoffeeScript, Vim ] Tweet VimでSyntasticを導入しているものの、CoffeeScriptの保存時に シンタックスチェックが走らない。 &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://lunchub.github.io/blog/page/2">
+  <meta name="description" content="CoffeeScript メモ Jun 10th, 2013 Categories: [ CoffeeScript, hamari ] いろんな書き方ができて不安になる Tweet Read on &rarr; VimでCoffeeScriptのシンタックスチェックを行う方法 Jun 10th &hellip;">
+  
+
+  <title>function Blog() {};</title>
+
+  
+  <link rel="canonical" href="http://lunchub.github.io/blog/page/2/">
+
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -74,6 +74,73 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/06/10/hamari-on-coffeescript/">CoffeeScript メモ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-10T17:23:00+09:00" pubdate data-updated="true">Jun 10<span>th</span>, 2013</time>
+
+        
+
+      </p>
+    
+
+    
+
+<span class="categories">
+Categories: [
+  
+    <a class='category' href='/blog/categories/coffeescript/'>CoffeeScript</a>, <a class='category' href='/blog/categories/hamari/'>hamari</a>
+  
+]
+</span>
+
+
+
+    
+
+  </header>
+
+
+
+  <div class="entry-excerpt"> いろんな書き方ができて不安になる </div>
+  <footer>
+    <div class="sharing sharing_above">
+
+  <a href="http://b.hatena.ne.jp/entry/http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/" class="pocket-btn" data-lang="en"></a>
+
+</div>
+
+    <a rel="full-article" href="/blog/2013/06/10/hamari-on-coffeescript/">Read on &rarr;</a>
+  </footer>
+
+
+
+
+
+    </article>
+  
+    
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/">VimでCoffeeScriptのシンタックスチェックを行う方法</a></h1>
     
     
@@ -110,16 +177,6 @@ Categories: [
 
 
     
-      <div class="sharing sharing_above">
-
-  <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
-
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/page/2/index.html" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/page/2/index.html" >Tweet</a>
-
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-</div>
-
-    
 
   </header>
 
@@ -127,6 +184,16 @@ Categories: [
 
   <div class="entry-excerpt"> VimでSyntasticを導入しているものの、CoffeeScriptの保存時に シンタックスチェックが走らない。 </div>
   <footer>
+    <div class="sharing sharing_above">
+
+  <a href="http://b.hatena.ne.jp/entry/http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" class="pocket-btn" data-lang="en"></a>
+
+</div>
+
     <a rel="full-article" href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/">Read on &rarr;</a>
   </footer>
 
@@ -177,16 +244,6 @@ Categories: [
 
 
     
-      <div class="sharing sharing_above">
-
-  <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
-
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/page/2/index.html" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/page/2/index.html" >Tweet</a>
-
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-</div>
-
-    
 
   </header>
 
@@ -194,6 +251,16 @@ Categories: [
 
   <div class="entry-excerpt"> 参考サイトの手順通りにプラグインを導入しても、 関連エントリが表示されない。 </div>
   <footer>
+    <div class="sharing sharing_above">
+
+  <a href="http://b.hatena.ne.jp/entry/http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/" class="pocket-btn" data-lang="en"></a>
+
+</div>
+
     <a rel="full-article" href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/">Read on &rarr;</a>
   </footer>
 
@@ -244,16 +311,6 @@ Categories: [
 
 
     
-      <div class="sharing sharing_above">
-
-  <a href="http://b.hatena.ne.jp/entry/lunchub.github.io" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
-
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/page/2/index.html" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/page/2/index.html" >Tweet</a>
-
-  <a data-pocket-label="pocket" data-pocket-count="horizontal" class="pocket-btn" data-lang="en"></a>
-</div>
-
-    
 
   </header>
 
@@ -261,6 +318,16 @@ Categories: [
 
   <div class="entry-excerpt"> development環境で作業を行う時にassetsのログは邪魔すぎる。 </div>
   <footer>
+    <div class="sharing sharing_above">
+
+  <a href="http://b.hatena.ne.jp/entry/http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" data-via="lunchub" data-counturl="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/" class="pocket-btn" data-lang="en"></a>
+
+</div>
+
     <a rel="full-article" href="/blog/2013/06/05/do-not-log-requesting-assets-on-rails/">Read on &rarr;</a>
   </footer>
 
@@ -329,6 +396,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/07/09/how-to-compress-html-and-assets-on-octopress/">OctopressでHTML, CSS, JSを圧縮する方法</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/">Rails + Unicornの環境でNew Relicにデータが送信されない</a>
       </li>
     
@@ -342,10 +413,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     
       <li class="post">
         <a href="/blog/2013/06/20/uninitialized-constant-readline-nameerror/">Uninitialized Constant Readline (NameError)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/">[Rails] Active_adminのインストールと初期設定でハマったこと</a>
       </li>
     
   </ul>
