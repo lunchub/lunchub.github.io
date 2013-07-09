@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-09T20:03:54+09:00</updated>
+  <updated>2013-07-09T20:04:14+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,37 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[OctopressでHTML, CSS, JSを圧縮する方法]]></title>
-    <link href="http://lunchub.github.io/blog/2013/07/09/how-to-compress-html-and-assets-on-octopress/"/>
-    <updated>2013-07-09T17:23:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/07/09/how-to-compress-html-and-assets-on-octopress</id>
-    <content type="html"><![CDATA[<h2>Environment</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
-</span><span class='line'>[Gems]
-</span><span class='line'>  jekyll (0.12.0)
-</span><span class='line'>  jekyll-press (0.2.1)
-</span><span class='line'>  cssminify (1.0.2)</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Issues</h2>
-
-<h2>Solution</h2>
-
-<p><a href="http://lunchub.github.io/images/posts/2013/06/2013-06-26-16-38-43.jpg"><img src="http://lunchub.github.io/images/posts/2013/06/2013-06-26-16-38-43.jpg" alt="" /></a></p>
-
-<h2>References</h2>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
