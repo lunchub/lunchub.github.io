@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-10T03:17:10+09:00</updated>
+  <updated>2013-07-11T19:20:11+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,179 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OctopressでHTML, CSS, JSを圧縮する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/09/how-to-compress-html-and-assets-on-octopress/"/>
+    <updated>2013-07-09T17:23:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/09/how-to-compress-html-and-assets-on-octopress</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>[Gems]
+</span><span class='line'>  jekyll (0.12.0)
+</span><span class='line'>  jekyll-press (0.2.1)
+</span><span class='line'>  cssminify (1.0.2)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<h2>Solution</h2>
+
+<p><a href="http://lunchub.github.io/images/posts/2013/06/2013-06-26-16-38-43.jpg"><img src="http://lunchub.github.io/images/posts/2013/06/2013-06-26-16-38-43.jpg" alt="" /></a></p>
+
+<h2>References</h2>
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[hamari install sqlite3 gem on heroku]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/08/hamari-install-sqlite3-gem-on-heroku/"/>
+    <updated>2013-07-08T18:06:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/08/hamari-install-sqlite3-gem-on-heroku</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  Installing rails (3.2.11)
+</span><span class='line'>   Installing activeadmin (0.6.0)
+</span><span class='line'>   Installing carrierwave (0.8.0)
+</span><span class='line'>   Installing coffee-script-source (1.6.2)
+</span><span class='line'>   Installing execjs (1.4.0)
+</span><span class='line'>   Installing coffee-script (2.2.0)
+</span><span class='line'>   Installing coffee-rails (3.2.2)
+</span><span class='line'>   Installing haml (4.0.3)
+</span><span class='line'>   Installing haml-rails (0.4)
+</span><span class='line'>   Installing jquery-ui-rails (4.0.3)
+</span><span class='line'>   Installing magic_encoding (0.0.2)
+</span><span class='line'>   Installing quiet_assets (1.0.2)
+</span><span class='line'>   Installing sass-rails (3.2.6)
+</span><span class='line'>   Installing sqlite3 (1.3.7)
+</span><span class='line'>   Gem::Installer::ExtensionBuildError: ERROR: Failed to build gem native extension.
+</span><span class='line'>
+</span><span class='line'>   /tmp/build_1fte9xtl6jr74/vendor/ruby-2.0.0/bin/ruby extconf.rb
+</span><span class='line'>   checking for sqlite3.h... no
+</span><span class='line'>   sqlite3.h is missing. Try 'port install sqlite3 +universal'
+</span><span class='line'>   or 'yum install sqlite-devel' and check your shared library search path (the
+</span><span class='line'>   location where your sqlite3 shared library is located).
+</span><span class='line'>   *** extconf.rb failed ***
+</span><span class='line'>   Could not create Makefile due to some reason, probably lack of necessary
+</span><span class='line'>   libraries and/or headers.  Check the mkmf.log file for more details.  You may
+</span><span class='line'>   need configuration options.</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[how to install new relic plugins]]></title>
+    <link href="http://lunchub.github.io/blog/2013/06/26/how-to-install-new-relic-plugins/"/>
+    <updated>2013-06-26T19:57:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/06/26/how-to-install-new-relic-plugins</id>
+    <content type="html"><![CDATA[<p>newrelic plugin</p>
+
+<p>Python 2.6.6
+pipが必要(Python版gem?)
+pip requires setuptools.</p>
+
+<h1>solution</h1>
+
+<p>wget <a href="https://bitbucket.org/pypa/setuptools/raw/0.7.4/ez_setup.py">https://bitbucket.org/pypa/setuptools/raw/0.7.4/ez_setup.py</a> -O &ndash; | python</p>
+
+<p>curl -O <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py">https://raw.github.com/pypa/pip/master/contrib/get-pip.py</a>
+sudo python get-pip.py</p>
+
+<h3>newrelicのプラグインエージェントのインストール</h3>
+
+<h4>pipコマンドでnewrelic-plugin-agentをインストールする</h4>
+
+<p>pip install newrelic-plugin-agent</p>
+
+<h4>設定ファイルを/etc/newrelicに配置する</h4>
+
+<p>cp /opt/newrelic_plugin_agent/etc/newrelic/newrelic_plugin_agent.cfg /etc/newrelic/newrelic_plugin_agent.cfg</p>
+
+<h4>設定ファイルにライセンスキーを追記する</h4>
+
+<p>vim /etc/newrelic/newrelic_plugin_agent.cfg</p>
+
+<h2>%YAML 1.2</h2>
+
+<p>Application:
+  license_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  poll_interval: 60</p>
+
+<h4>ユーザ権限の確認</h4>
+
+<p>これらのディレクトリが書き込み可能か、所有者であることを確認する
+[root@v157-7-143-69 newrelic-pluguins]# ls -la /var/run/newrelic/
+total 12
+drwxr-xr-x  2 newrelic newrelic 4096 Jun 26 12:32 .
+drwxr-xr-x 18 root     root     4096 Jun 26 12:11 ..
+-rw-r&mdash;r&mdash;  1 newrelic newrelic    5 Jun 26 12:12 nrsysmond.pid
+-rw-r&mdash;r&mdash;  1 root     root        0 Jun 26 12:32 safe_to_delete.txt</p>
+
+<p>[root@v157-7-143-69 newrelic-pluguins]# ls -la /var/log/newrelic/
+total 20
+drwxr-xr-x  2 newrelic newrelic 4096 Jun 26 12:32 .
+drwxr-xr-x 11 root     root     4096 Jun 26 12:11 ..
+-rw&mdash;&mdash;&mdash;&ndash;  1 root     root      270 Jun 26 12:11 newrelic-daemon.log
+-rw-r&mdash;r&mdash;  1 newrelic newrelic  367 Jun 26 12:13 nrsysmond.log
+-rw&mdash;&mdash;&mdash;&ndash;  1 apache   apache    270 Jun 26 12:11 php_agent.log
+-rw-r&mdash;r&mdash;  1 root     root        0 Jun 26 12:32 safe_to_delete.txt</p>
+
+<h4>newrelic-plugin-agentを起動する</h4>
+
+<p>newrelic_plugin_agent -c PATH-TO-CONF-FILE [-f]</p>
+
+<p>*<code>-f</code>オプションはdeamonではなくforegroundで実行したい時に使う。</p>
+
+<h1>ref</h1>
+
+<p><a href="https://github.com/MeetMe/newrelic-plugin-agent#installation-instructions">[GitHub]newrelic-plugin-agent</a>
+<a href="http://www.pip-installer.org/en/latest/installing.html">pip installation</a>
+<a href="https://pypi.python.org/pypi/setuptools/0.7.4#installation-instructions">python setuptools</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
@@ -314,7 +487,7 @@
 
 <p><a href="https://newrelic.com/">New Relic</a>というサービスを利用する。<br/>
 <code>New Relic</code>は簡単に導入が出来て、無料で使えるモニタリングサービス。<br/>
-*但し無料版はログの保存期間が24時間しかない。</p>
+※但し無料版はログの保存期間が24時間しかない。</p>
 
 <p>別途プラグインの導入を行うことで、サーバーのモニタリングも簡単にできます。</p>
 
@@ -473,7 +646,7 @@ Rubyだけで完結させようって主旨なのかな？<br/>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[[Rails] Active_adminのインストールと初期設定でハマったこと]]></title>
+    <title type="html"><![CDATA[[Rails] ActiveAdminのインストールと初期設定でハマったこと]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/"/>
     <updated>2013-06-17T12:43:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails</id>
@@ -780,7 +953,7 @@ Media Queriesで指定されているプロパティでオーバーライドさ�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[MySQLでUPDATE文のSETの値は行ごとに評価されている]]></title>
+    <title type="html"><![CDATA[MySQLでUPDATE文のSETの値は行ごとに評価されている?]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/"/>
     <updated>2013-06-13T19:56:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query</id>
@@ -835,7 +1008,7 @@ Referencesに載せた内容だとなんとなく行ごとに評価されるん�
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Octopressのコードブロックでテンプレートタグをエスケープする方法]]></title>
+    <title type="html"><![CDATA[Octopressでテンプレートタグをエスケープする方法]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag/"/>
     <updated>2013-06-11T18:57:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/11/how-to-espace-jekyll-template-tag</id>
@@ -953,7 +1126,7 @@ JavaScriptの呼び出しクエリに適宜付加してください。</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[CoffeeScript メモ]]></title>
+    <title type="html"><![CDATA[CoffeeScriptの書き方がでハマったところ]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/"/>
     <updated>2013-06-10T17:23:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript</id>

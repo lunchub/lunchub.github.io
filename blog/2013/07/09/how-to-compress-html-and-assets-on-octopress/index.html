@@ -11,13 +11,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <meta name="description" content="CoffeeScriptの書き方でハマった・・ベストプラクティスが知りたい">
-  <meta name="keywords" content="CoffeeScript, ハマった">
+  <meta name="description" content="ページの表示を少しでも高速化するために，OctopressでHTML，CSS，JSを圧縮する方法">
+  <meta name="keywords" content="Octopress, Jekyll, minify, 高速化, Perfomance">
 
-  <title>CoffeeScriptの書き方がでハマったところ - function Blog() {};</title>
+  <title>OctopressでHTML, CSS, JSを圧縮する方法 - function Blog() {};</title>
 
   
-  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/"/>
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/07/09/how-to-compress-html-and-assets-on-octopress/"/>
 
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -71,7 +71,7 @@
     
   <header>
     
-      <h1 class="entry-title">CoffeeScriptの書き方がでハマったところ</h1>
+      <h1 class="entry-title">OctopressでHTML, CSS, JSを圧縮する方法</h1>
     
     
       <p class="meta">
@@ -87,7 +87,7 @@
   
 
 
-<time datetime="2013-06-10T17:23:00+09:00" pubdate data-updated="true">Jun 10<span>th</span>, 2013</time>
+<time datetime="2013-07-09T17:23:00+09:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
 
         
 
@@ -99,7 +99,7 @@
 <span class="categories">
 Categories: [
   
-    <a class='category' href='/blog/categories/coffeescript/'>CoffeeScript</a>, <a class='category' href='/blog/categories/hamari/'>hamari</a>
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
   
 ]
 </span>
@@ -127,72 +127,37 @@ Categories: [
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>CoffeeScript version 1.6.3</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>[Gems]
+</span><span class='line'>  jekyll (0.12.0)
+</span><span class='line'>  jekyll-press (0.2.1)
+</span><span class='line'>  cssminify (1.0.2)</span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Tips</h2>
+<h2>Issues</h2>
 
-<h3>if文評価後の処理の書き方</h3>
+<h2>Solution</h2>
 
-<h4>if の前に書く</h4>
-
-<figure class='code'><figcaption><span>before if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># pattern 1: put defiend function name</span>
-</span><span class='line'><span class="nx">a_function</span> <span class="nf">-&gt;</span>
-</span><span class='line'>  <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
-</span><span class='line'>    <span class="nx">a_function</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># pattern 2: wrap with () and separate row by ;</span>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
-</span><span class='line'>    <span class="p">(</span><span class="nx">alert</span> <span class="s">&#39;test!&#39;</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span><span class="p">;</span><span class="k">return</span><span class="p">)</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>if の次の行からインデントして書く</h4>
-
-<figure class='code'><figcaption><span>after if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
-</span><span class='line'>      <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
-</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span>
-</span><span class='line'>      <span class="k">return</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>出力後の結果はそれぞれ同じになる。<br/>
-前者は<code>if</code>の前を関数として評価しているのだろうか。<br/>
-直感的なのは後者のやり方かなあ。<br/>
-booleanの返却程度の簡単な処理なら1行にできる前者でも良いか。</p>
-
-<p>変換後のソースチェックはここでできます。 &ndash;> <a href="http://js2coffee.org/">js2coffee</a></p>
+<p><a href="/images/posts/2013/06/2013-06-26-16-38-43.jpg"><img src="/images/posts/2013/06/2013-06-26-16-38-43.jpg" alt="" /></a></p>
 
 <h2>References</h2>
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
 </div>
 
 
@@ -237,17 +202,6 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 
     
       
-  <section>
-    <div class="related_posts">
-    <h1>Related Posts</h1>
-    <ul>
-    
-      <li><a href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/">VimでCoffeeScriptのシンタックスチェックを行う方法</a></li>
-    
-    </ul>
-    </div>
-  </section>
-
 
       
 
@@ -266,10 +220,8 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
     <section>
       <p class="meta">
         
-          <a class="basic-alignment left previous-link" href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" title="Previous Post: VimでCoffeeScriptのシンタックスチェックを行う方法">&laquo; VimでCoffeeScriptのシンタックスチェックを行う方法</a>
+          <a class="basic-alignment left previous-link" href="/blog/2013/07/08/hamari-install-sqlite3-gem-on-heroku/" title="Previous Post: hamari install sqlite3 gem on heroku">&laquo; hamari install sqlite3 gem on heroku</a>
         
-        
-          <a class="basic-alignment right next-link" href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/" title="Next Post: OctopressにDISQUSのコメントウィジェットを設置する方法">OctopressにDISQUSのコメントウィジェットを設置する方法 &raquo;</a>
         
       </p>
     </section>

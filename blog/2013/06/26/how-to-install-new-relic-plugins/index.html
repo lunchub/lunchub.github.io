@@ -11,13 +11,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <meta name="description" content="CoffeeScriptの書き方でハマった・・ベストプラクティスが知りたい">
-  <meta name="keywords" content="CoffeeScript, ハマった">
+  <meta name="description" content="How to Install New Relic Plugins Jun 26th, 2013 Tweet newrelic plugin Python 2.6.6
+pipが必要(Python版gem?)
+pip requires setuptools. solution wget https &hellip;">
+  
 
-  <title>CoffeeScriptの書き方がでハマったところ - function Blog() {};</title>
+  <title>how to install new relic plugins - function Blog() {};</title>
 
   
-  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/"/>
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/26/how-to-install-new-relic-plugins/"/>
 
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -71,7 +73,7 @@
     
   <header>
     
-      <h1 class="entry-title">CoffeeScriptの書き方がでハマったところ</h1>
+      <h1 class="entry-title">How to Install New Relic Plugins</h1>
     
     
       <p class="meta">
@@ -87,7 +89,7 @@
   
 
 
-<time datetime="2013-06-10T17:23:00+09:00" pubdate data-updated="true">Jun 10<span>th</span>, 2013</time>
+<time datetime="2013-06-26T19:57:00+09:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time>
 
         
 
@@ -95,14 +97,6 @@
     
 
     
-
-<span class="categories">
-Categories: [
-  
-    <a class='category' href='/blog/categories/coffeescript/'>CoffeeScript</a>, <a class='category' href='/blog/categories/hamari/'>hamari</a>
-  
-]
-</span>
 
 
 
@@ -123,76 +117,69 @@ Categories: [
 
 
 
-<div class="entry-content"><h2>Environment</h2>
+<div class="entry-content"><p>newrelic plugin</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>CoffeeScript version 1.6.3</span></code></pre></td></tr></table></div></figure>
+<p>Python 2.6.6
+pipが必要(Python版gem?)
+pip requires setuptools.</p>
 
+<h1>solution</h1>
 
-<h2>Tips</h2>
+<p>wget <a href="https://bitbucket.org/pypa/setuptools/raw/0.7.4/ez_setup.py">https://bitbucket.org/pypa/setuptools/raw/0.7.4/ez_setup.py</a> -O &ndash; | python</p>
 
-<h3>if文評価後の処理の書き方</h3>
+<p>curl -O <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py">https://raw.github.com/pypa/pip/master/contrib/get-pip.py</a>
+sudo python get-pip.py</p>
 
-<h4>if の前に書く</h4>
+<h3>newrelicのプラグインエージェントのインストール</h3>
 
-<figure class='code'><figcaption><span>before if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># pattern 1: put defiend function name</span>
-</span><span class='line'><span class="nx">a_function</span> <span class="nf">-&gt;</span>
-</span><span class='line'>  <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
-</span><span class='line'>    <span class="nx">a_function</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># pattern 2: wrap with () and separate row by ;</span>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
-</span><span class='line'>    <span class="p">(</span><span class="nx">alert</span> <span class="s">&#39;test!&#39;</span><span class="p">;</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span><span class="p">;</span><span class="k">return</span><span class="p">)</span> <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
-</span></code></pre></td></tr></table></div></figure>
+<h4>pipコマンドでnewrelic-plugin-agentをインストールする</h4>
 
+<p>pip install newrelic-plugin-agent</p>
 
-<h4>if の次の行からインデントして書く</h4>
+<h4>設定ファイルを/etc/newrelicに配置する</h4>
 
-<figure class='code'><figcaption><span>after if</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#target&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">.</span><span class="nx">on</span> <span class="s">&#39;keyup&#39;</span><span class="p">,</span> <span class="nf">(e) -&gt;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">which</span> <span class="o">is</span> <span class="mi">13</span>
-</span><span class='line'>      <span class="nx">alert</span> <span class="s">&#39;test!&#39;</span>
-</span><span class='line'>      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s">&#39;fired!&#39;</span>
-</span><span class='line'>      <span class="k">return</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>cp /opt/newrelic_plugin_agent/etc/newrelic/newrelic_plugin_agent.cfg /etc/newrelic/newrelic_plugin_agent.cfg</p>
 
+<h4>設定ファイルにライセンスキーを追記する</h4>
 
-<p>出力後の結果はそれぞれ同じになる。<br/>
-前者は<code>if</code>の前を関数として評価しているのだろうか。<br/>
-直感的なのは後者のやり方かなあ。<br/>
-booleanの返却程度の簡単な処理なら1行にできる前者でも良いか。</p>
+<p>vim /etc/newrelic/newrelic_plugin_agent.cfg</p>
 
-<p>変換後のソースチェックはここでできます。 &ndash;> <a href="http://js2coffee.org/">js2coffee</a></p>
+<h2>%YAML 1.2</h2>
 
-<h2>References</h2>
+<p>Application:
+  license_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  poll_interval: 60</p>
+
+<h4>ユーザ権限の確認</h4>
+
+<p>これらのディレクトリが書き込み可能か、所有者であることを確認する
+[root@v157-7-143-69 newrelic-pluguins]# ls -la /var/run/newrelic/
+total 12
+drwxr-xr-x  2 newrelic newrelic 4096 Jun 26 12:32 .
+drwxr-xr-x 18 root     root     4096 Jun 26 12:11 ..
+-rw-r&mdash;r&mdash;  1 newrelic newrelic    5 Jun 26 12:12 nrsysmond.pid
+-rw-r&mdash;r&mdash;  1 root     root        0 Jun 26 12:32 safe_to_delete.txt</p>
+
+<p>[root@v157-7-143-69 newrelic-pluguins]# ls -la /var/log/newrelic/
+total 20
+drwxr-xr-x  2 newrelic newrelic 4096 Jun 26 12:32 .
+drwxr-xr-x 11 root     root     4096 Jun 26 12:11 ..
+-rw&mdash;&mdash;&mdash;&ndash;  1 root     root      270 Jun 26 12:11 newrelic-daemon.log
+-rw-r&mdash;r&mdash;  1 newrelic newrelic  367 Jun 26 12:13 nrsysmond.log
+-rw&mdash;&mdash;&mdash;&ndash;  1 apache   apache    270 Jun 26 12:11 php_agent.log
+-rw-r&mdash;r&mdash;  1 root     root        0 Jun 26 12:32 safe_to_delete.txt</p>
+
+<h4>newrelic-plugin-agentを起動する</h4>
+
+<p>newrelic_plugin_agent -c PATH-TO-CONF-FILE [-f]</p>
+
+<p>*<code>-f</code>オプションはdeamonではなくforegroundで実行したい時に使う。</p>
+
+<h1>ref</h1>
+
+<p><a href="https://github.com/MeetMe/newrelic-plugin-agent#installation-instructions">[GitHub]newrelic-plugin-agent</a>
+<a href="http://www.pip-installer.org/en/latest/installing.html">pip installation</a>
+<a href="https://pypi.python.org/pypi/setuptools/0.7.4#installation-instructions">python setuptools</a></p>
 </div>
 
 
@@ -237,17 +224,6 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 
     
       
-  <section>
-    <div class="related_posts">
-    <h1>Related Posts</h1>
-    <ul>
-    
-      <li><a href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/">VimでCoffeeScriptのシンタックスチェックを行う方法</a></li>
-    
-    </ul>
-    </div>
-  </section>
-
 
       
 
@@ -266,10 +242,10 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
     <section>
       <p class="meta">
         
-          <a class="basic-alignment left previous-link" href="/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/" title="Previous Post: VimでCoffeeScriptのシンタックスチェックを行う方法">&laquo; VimでCoffeeScriptのシンタックスチェックを行う方法</a>
+          <a class="basic-alignment left previous-link" href="/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/" title="Previous Post: Rails + Unicornの環境でNew Relicにデータが送信されない">&laquo; Rails + Unicornの環境でNew Relicにデータが送信されない</a>
         
         
-          <a class="basic-alignment right next-link" href="/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/" title="Next Post: OctopressにDISQUSのコメントウィジェットを設置する方法">OctopressにDISQUSのコメントウィジェットを設置する方法 &raquo;</a>
+          <a class="basic-alignment right next-link" href="/blog/2013/07/08/hamari-install-sqlite3-gem-on-heroku/" title="Next Post: hamari install sqlite3 gem on heroku">hamari install sqlite3 gem on heroku &raquo;</a>
         
       </p>
     </section>
