@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-14T17:33:49+09:00</updated>
+  <updated>2013-07-14T18:14:21+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -88,12 +88,12 @@
 <span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CarrierWave</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
 </span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_credentials</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="ss">:provider</span>               <span class="o">=&gt;</span> <span class="s1">&#39;AWS&#39;</span><span class="p">,</span>   <span class="c1"># required</span>
-</span><span class='line'>    <span class="ss">:aws_access_key_id</span>      <span class="o">=&gt;</span> <span class="s1">&#39;xxx&#39;</span><span class="p">,</span>   <span class="c1"># required</span>
-</span><span class='line'>    <span class="ss">:aws_secret_access_key</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yyy&#39;</span><span class="p">,</span>   <span class="c1"># required</span>
-</span><span class='line'>    <span class="ss">:region</span>                 <span class="o">=&gt;</span> <span class="s1">&#39;tokyo&#39;</span><span class="p">,</span> <span class="c1"># optional,  defaults to &#39;us-east-1&#39;</span>
-</span><span class='line'>    <span class="ss">:host</span>                   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>      <span class="c1"># optional,  defaults to nil</span>
-</span><span class='line'>    <span class="ss">:endpoint</span>               <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span>       <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>    <span class="ss">:provider</span>               <span class="o">=&gt;</span> <span class="s1">&#39;AWS&#39;</span><span class="p">,</span>                           <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:aws_access_key_id</span>      <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;AWS_S3_KEY_ID&quot;</span><span class="o">]</span><span class="p">,</span>            <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:aws_secret_access_key</span>  <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;AWS_S3_SECRET_ACCESS_KEY&quot;</span><span class="o">]</span><span class="p">,</span> <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:region</span>                 <span class="o">=&gt;</span> <span class="s1">&#39;ap-northeast-1&#39;</span><span class="p">,</span>                <span class="c1"># optional,  defaults to &#39;us-east-1&#39;</span>
+</span><span class='line'>    <span class="ss">:host</span>                   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>                              <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>    <span class="ss">:endpoint</span>               <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span>                               <span class="c1"># optional,  defaults to nil</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_directory</span>  <span class="o">=</span> <span class="s1">&#39;myapp-carrierwave&#39;</span>                <span class="c1"># required</span>
 </span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_public</span>     <span class="o">=</span> <span class="kp">false</span>                              <span class="c1"># optional,  defaults to true</span>
@@ -103,7 +103,13 @@
 
 
 <ul>
-<li><code>:region</code>の入力は任意ですが，&#8217;tokyo&#8217;リージョンを使用している場合は変更が必要です．</li>
+<li>IDとシークレットアクセスキーは，環境変数に設定しておいたほうが良いです．
+
+<ul>
+<li>ベタ書きだとGitHubにソースコードをアップしている際等に危険です．</li>
+</ul>
+</li>
+<li><code>:region</code>の入力は任意ですが，&#8217;tokyo&#8217;リージョンを使用している場合は変更が必要です． => <code>ap-northeast-1</code></li>
 <li><code>config.fog_directory</code>はBucketの名前です．</li>
 <li><code>config.fog_public</code>は<code>false</code>に設定しておくことで，Rails経由でのアクセスしか<code>Amazon S3</code>上のファイルにアクセスできなくなります．</li>
 </ul>
