@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-14T17:13:13+09:00</updated>
+  <updated>2013-07-14T17:27:30+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,137 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CarrierWaveでアップロード先をAmazon S3に設定する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/"/>
+    <updated>2013-07-14T17:25:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13
+</span><span class='line'>[Gems]
+</span><span class='line'>  CarrierWave (0.8.0)
+</span><span class='line'>  fog (1.12.1)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Precondition</h2>
+
+<ul>
+<li><p><code>Amazon S3</code>を利用するためには，<code>Amazon Web Services (AWS)</code>への登録が必要です．</p>
+
+<ul>
+<li><a href="http://lunchub.github.io/blog/2013/07/13/how-to-register-for-aws/">AWSへの登録記事はこちら</a></li>
+</ul>
+</li>
+<li><p><code>CarrierWave</code>の設定時に，<code>Amazon S3</code>のBucket情報が必要なため，Bucketが作成されていなければなりません．</p>
+
+<ul>
+<li><a href="http://lunchub.github.io/blog/2013/07/14/how-to-create-bucket-on-amazon-s3/">Amazon S3にBucketを作成する方法はこちら</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Issues</h2>
+
+<p>CarrierWaveのアップロード先をAmazon S3に設定したい．</p>
+
+<p>Herokuを使ってRailsアプリを運用しているものの, Herokuではファイルをサーバ上に保存することができないため，<br/>
+画像アップロード等は別のサーバに行う必要があります．<br/>
+そこで今回は，非常に低価格でクラウドストレージを扱うことのできる<code>Amazon S3</code>をアップロード先に指定しました．</p>
+
+<h2>How to</h2>
+
+<h3>Gemを追加する</h3>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>gem &quot;fog&quot;,  &quot;~&gt; 1.3.1&quot;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>initializerを追加する</h3>
+
+<p>ここに<code>Amazon S3</code>の情報を設定します．</p>
+
+<figure class='code'><figcaption><span>config/initializer/carrierwave.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CarrierWave</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_credentials</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="ss">:provider</span>               <span class="o">=&gt;</span> <span class="s1">&#39;AWS&#39;</span><span class="p">,</span>   <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:aws_access_key_id</span>      <span class="o">=&gt;</span> <span class="s1">&#39;xxx&#39;</span><span class="p">,</span>   <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:aws_secret_access_key</span>  <span class="o">=&gt;</span> <span class="s1">&#39;yyy&#39;</span><span class="p">,</span>   <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:region</span>                 <span class="o">=&gt;</span> <span class="s1">&#39;tokyo&#39;</span><span class="p">,</span> <span class="c1"># optional,  defaults to &#39;us-east-1&#39;</span>
+</span><span class='line'>    <span class="ss">:host</span>                   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>      <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>    <span class="ss">:endpoint</span>               <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span>       <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_directory</span>  <span class="o">=</span> <span class="s1">&#39;myapp-carrierwave&#39;</span>                <span class="c1"># required</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_public</span>     <span class="o">=</span> <span class="kp">false</span>                              <span class="c1"># optional,  defaults to true</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cache-Control&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;max-age=82800&#39;</span><span class="p">}</span> <span class="c1"># optional,  defaults to {}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>:region</code>の入力は任意ですが，&#8217;tokyo&#8217;リージョンを使用している場合は変更が必要です．</li>
+<li><code>config.fog_directory</code>はBucketの名前です．</li>
+<li><code>config.fog_public</code>は<code>false</code>に設定しておくことで，Rails経由でのアクセスしか<code>Amazon S3</code>上のファイルにアクセスできなくなります．</li>
+</ul>
+
+
+<h3>Uploaderクラスのプロパティ値を変更する</h3>
+
+<figure class='code'><figcaption><span>APP_ROOT_PATH/app/uploaders/image_uploader.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">ImageUploader</span> <span class="o">&lt;</span> <span class="ss">CarrierWave</span><span class="p">:</span><span class="ss">:Uploader</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="c1"># storage :file</span>
+</span><span class='line'>  <span class="n">storage</span> <span class="ss">:fog</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<p><a href="https://github.com/carrierwaveuploader/carrierwave">[GitHub] carrierwave</a></p>
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AWSのアクセス情報を確認する方法]]></title>
