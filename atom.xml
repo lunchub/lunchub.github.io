@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-13T20:09:09+09:00</updated>
+  <updated>2013-07-14T16:32:19+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Amazon S3にBucket（ストレージ）を作成する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/14/how-to-create-bucket-on-amazon-s3/"/>
+    <updated>2013-07-14T13:24:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/14/how-to-create-bucket-on-amazon-s3</id>
+    <content type="html"><![CDATA[<h2>Precondition</h2>
+
+<p><code>Amazon S3</code>を利用するためには，<code>Amazon Web Services (AWS)</code>への登録が必要です．</p>
+
+<p><a href="http://lunchub.github.io/blog/2013/07/13/how-to-register-for-aws/">AWSへの登録記事はこちら</a></p>
+
+<h2>How to</h2>
+
+<ul>
+<li><p><a href="https://console.aws.amazon.com/console/home">AWS Management Console</a>にアクセスする</p></li>
+<li><p><code>S3</code>を選択する</p></li>
+</ul>
+
+
+<p><a href="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-35-24.jpg"><img src="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-35-24.jpg" alt="S3 を選択する" /></a></p>
+
+<ul>
+<li><code>Create Bucket</code>をクリックする</li>
+</ul>
+
+
+<p><a href="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-38-30.jpg"><img src="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-38-30.jpg" alt="Create Bucket Button" /></a></p>
+
+<ul>
+<li>ポップアップパネルが開くので，作成したいBucketの名前と，リージョンを選択する
+
+<ul>
+<li>ここでは<code>Tokyo</code>リージョンを選択</li>
+<li><code>Create</code>をクリックする</li>
+</ul>
+</li>
+</ul>
+
+
+<p><a href="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-40-09.jpg"><img src="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-40-09.jpg" alt="Create Bucket PopUp" /></a></p>
+
+<ul>
+<li>作成に成功すると，Bucketの一覧画面へ遷移する
+
+<ul>
+<li>今作成したBucketが表示されていることがわかる</li>
+</ul>
+</li>
+</ul>
+
+
+<p><a href="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-45-28.jpg"><img src="http://lunchub.github.io/images/posts/2013/07/2013-07-14-13-45-28.jpg" alt="" /></a></p>
+
+<h2>Recommended</h2>
+
+<ul>
+<li><code>Rails</code> + <code>Carrierwave</code> でアップロード先を<code>Amazon S3</code>に設定したい
+
+<ul>
+<li><a href="http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3">CarrierWaveでアップロード先をAmazon S3に設定する方法</a></li>
+</ul>
+</li>
+</ul>
+
+
+<p><section class="ads">
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AWSに会員登録する方法]]></title>
@@ -127,10 +197,11 @@
 
 <ul>
 <li>管理画面右上に表示されている<code>Global</code>というプルダウンで，リージョンの選択ができるサービス（Amazon EC2等）は，
-できるだけ<code>Asia Pacific (Tokyo)</code>を選択したほうがいいと思います．
+できるだけ<code>Asia Pacific (Tokyo)</code>を選択したほうがいいと思います
 
 <ul>
-<li>物理的な距離が離れているほど，レスポンスが悪化するので・・</li>
+<li>リージョンとは，AWSのサーバが置かれている場所です</li>
+<li>サーバとの物理的な距離が離れているほど，レスポンスが悪化するので・・</li>
 </ul>
 </li>
 </ul>
