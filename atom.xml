@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-14T18:14:21+09:00</updated>
+  <updated>2013-07-14T20:41:56+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,139 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[CarrierWaveからAmazon S3に画像アップロードできない]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/"/>
+    <updated>2013-07-14T20:18:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13
+</span><span class='line'>[Gems]
+</span><span class='line'>  CarrierWave (0.8.0)
+</span><span class='line'>  fog (1.12.1)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p><a href="http://lunchub.github.io/blog/2013/07/13/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a>等という記事を書いておきながら，<br/>
+以下のエラーが表示され，全くアップロードができない．</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>bad URI(is not URI?)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Solution</h2>
+
+<p>Carrierwaveの設定(initializer)を見直す．</p>
+
+<ul>
+<li><code>fog_credentials</code>の<code>:host</code>と<code>:endpoint</code>は特に指定がない場合はコメントアウトする</li>
+</ul>
+
+
+<p>例えば以下の設定ファイルだとエラーで死にます．</p>
+
+<figure class='code'><figcaption><span>config/initializer/carrierwave.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">CarrierWave</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_credentials</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="ss">:provider</span>               <span class="o">=&gt;</span> <span class="s1">&#39;AWS&#39;</span><span class="p">,</span>                           <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:aws_access_key_id</span>      <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;AWS_S3_KEY_ID&quot;</span><span class="o">]</span><span class="p">,</span>            <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:aws_secret_access_key</span>  <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;AWS_S3_SECRET_ACCESS_KEY&quot;</span><span class="o">]</span><span class="p">,</span> <span class="c1"># required</span>
+</span><span class='line'>    <span class="ss">:region</span>                 <span class="o">=&gt;</span> <span class="s1">&#39;ap-northeast-1&#39;</span><span class="p">,</span>                <span class="c1"># optional,  defaults to &#39;us-east-1&#39;</span>
+</span><span class='line'>    <span class="ss">:host</span>                   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>                              <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>    <span class="ss">:endpoint</span>               <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span>                               <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_directory</span>  <span class="o">=</span> <span class="s1">&#39;myapp-carrierwave&#39;</span>                <span class="c1"># required</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_public</span>     <span class="o">=</span> <span class="kp">false</span>                              <span class="c1"># optional,  defaults to true</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Cache-Control&#39;</span><span class="o">=&gt;</span><span class="s1">&#39;max-age=82800&#39;</span><span class="p">}</span> <span class="c1"># optional,  defaults to {}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これのどこが問題かというと，<code>fog_credentials</code>の<code>:host</code>と<code>:endpoint</code>が<code>empty string</code>であるところ，<br/>
+ソースのコメントを見ると（元ソースはCarrierWaveのドキュメントから），<br/>
+optionalと書いてある．<br/>
+つまりここは何も書かなくても動くんだ！という認識だったのだけど，そこが甘かった．<br/>
+<code>何も書かなくていい ≠ empty string</code>ということなので，ここには<code>nil</code>を指定するか，<br/>
+行ごとコメントアウトしておかなければならない．</p>
+
+<p>CarrierwaveからFogへのエラースタックを追いかけて行くと，</p>
+
+<figure class='code'><figcaption><span>lib/fog/aws/storage.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="mi">411</span>             <span class="vi">@scheme</span>     <span class="o">=</span> <span class="n">options</span><span class="o">[</span><span class="ss">:scheme</span><span class="o">]</span>      <span class="o">||</span> <span class="no">DEFAULT_SCHEME</span>
+</span><span class='line'>  <span class="mi">412</span>             <span class="vi">@port</span>       <span class="o">=</span> <span class="n">options</span><span class="o">[</span><span class="ss">:port</span><span class="o">]</span>        <span class="o">||</span> <span class="no">DEFAULT_SCHEME_PORT</span><span class="o">[</span><span class="vi">@scheme</span><span class="o">]</span>
+</span><span class='line'>  <span class="mi">413</span>             <span class="vi">@path_style</span> <span class="o">=</span> <span class="n">options</span><span class="o">[</span><span class="ss">:path_style</span><span class="o">]</span>  <span class="o">||</span> <span class="kp">false</span>
+</span><span class='line'>  <span class="mi">414</span>           <span class="k">end</span>
+</span><span class='line'>  <span class="mi">415</span>
+</span><span class='line'>  <span class="mi">416</span>           <span class="vi">@connection</span> <span class="o">=</span> <span class="ss">Fog</span><span class="p">:</span><span class="ss">:Connection</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@scheme</span><span class="si">}</span><span class="s2">://</span><span class="si">#{</span><span class="vi">@host</span><span class="si">}</span><span class="s2">:</span><span class="si">#{</span><span class="vi">@port</span><span class="si">}#{</span><span class="vi">@path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="vi">@persistent</span><span class="p">,</span>  <span class="vi">@connection_options</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">417</span>         <span class="k">end</span>
+</span><span class='line'>  <span class="mi">418</span>
+</span><span class='line'>  <span class="mi">419</span>         <span class="k">def</span> <span class="nf">reload</span>
+</span><span class='line'>  <span class="mi">420</span>           <span class="vi">@connection</span><span class="o">.</span><span class="n">reset</span>
+</span><span class='line'>  <span class="mi">421</span>         <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>options</code>で渡ってくる値が<code>nil</code>であれば<code>DEFAULT_</code>値が指定される．<br/>
+しかしここで<code>empty string</code>が渡ってくると，<code>@scheme</code>等の値が<code>empty string</code>になってしまう．<br/>
+その結果<code>@connection</code>の組立に失敗して，アップロード先が見つからねーと怒られるみたいです．</p>
+
+<p>私の場合は，特にこれらの値の指定は不要だったため，<br/>
+行ごとコメントアウトしたところ，うまくアップロードできるようになりました！:)</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/15717368/uploading-image-to-s3-using-carrierwave-and-fogs-bad-uri">[Stackoverflow] uploading image to s3 using carrierwave and fogs bad uri</a></li>
+<li><a href="https://github.com/carrierwaveuploader/carrierwave">[GitHub] CarrierWave</a></li>
+</ul>
+
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CarrierWaveでアップロード先をAmazon S3に設定する方法]]></title>
@@ -92,8 +225,8 @@
 </span><span class='line'>    <span class="ss">:aws_access_key_id</span>      <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;AWS_S3_KEY_ID&quot;</span><span class="o">]</span><span class="p">,</span>            <span class="c1"># required</span>
 </span><span class='line'>    <span class="ss">:aws_secret_access_key</span>  <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;AWS_S3_SECRET_ACCESS_KEY&quot;</span><span class="o">]</span><span class="p">,</span> <span class="c1"># required</span>
 </span><span class='line'>    <span class="ss">:region</span>                 <span class="o">=&gt;</span> <span class="s1">&#39;ap-northeast-1&#39;</span><span class="p">,</span>                <span class="c1"># optional,  defaults to &#39;us-east-1&#39;</span>
-</span><span class='line'>    <span class="ss">:host</span>                   <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>                              <span class="c1"># optional,  defaults to nil</span>
-</span><span class='line'>    <span class="ss">:endpoint</span>               <span class="o">=&gt;</span> <span class="s1">&#39;&#39;</span>                               <span class="c1"># optional,  defaults to nil</span>
+</span><span class='line'>    <span class="c1"># :host                   =&gt; &#39;&#39;,                              # optional,  defaults to nil</span>
+</span><span class='line'>    <span class="c1"># :endpoint               =&gt; &#39;&#39;                               # optional,  defaults to nil</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_directory</span>  <span class="o">=</span> <span class="s1">&#39;myapp-carrierwave&#39;</span>                <span class="c1"># required</span>
 </span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">fog_public</span>     <span class="o">=</span> <span class="kp">false</span>                              <span class="c1"># optional,  defaults to true</span>
