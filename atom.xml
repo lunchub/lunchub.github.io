@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-16T10:13:37+09:00</updated>
+  <updated>2013-07-16T20:33:16+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,80 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[iterm2 + tmux上で，Vimの画面のズレを直す方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/"/>
+    <updated>2013-07-16T19:14:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>Vim 7.3.923
+</span><span class='line'>tmux 1.6
+</span><span class='line'>iterm2 Build 1.0.0.20130624</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p><code>iterm2 + tmux</code>の環境で，<code>Vim</code>を使用してファイルの保存等を行ったタイミングで画面がズレてしまう．<br/>
+具体的には下のスクリーンショットのような表示になる．</p>
+
+<p><a href="http://lunchub.github.io/images/posts/2013/07/2013-07-16-20-17-10.jpg"><img src="http://lunchub.github.io/images/posts/2013/07/2013-07-16-20-17-10.jpg" alt="shear in Vim" /></a></p>
+
+<p>ステータスライン部分が崩れて１行余計に増えているだけでなく，<br/>
+編集画面全てが１行ずつズレていて，カーソルがある行を上下させるか，<br/>
+<code>iterm2</code>のウインドウ最小化，ウインドウ最大化を繰り返して無理やり直すというのを繰り返していた．</p>
+
+<h2>Solution</h2>
+
+<p><code>Vim</code>の<code>redraw</code>機能を使う</p>
+
+<h2>How to</h2>
+
+<p>デフォルトのキーバインドを変更していなければ，<br/>
+<code>ノーマルモード</code>で以下のキーバインドで<code>redraw</code>できます．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="p">&lt;</span>C<span class="p">-</span><span class="k">l</span><span class="p">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>もし，キーバインドを別の機能に割り当てているのであれば，<br/>
+（例えばウインドウ間移動）<br/>
+<code>コマンドモード</code>で以下のコマンドを叩くか，<br/>
+別のキーバインドに以下のコマンドを割り振ってください．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'># コマンドモード
+</span><span class='line'><span class="p">:</span><span class="k">redraw</span><span class="p">!</span>
+</span><span class='line'>
+</span><span class='line'># 別のキーバインド<span class="p">(</span>ここでは<span class="p">&lt;</span>C<span class="p">-</span><span class="k">r</span><span class="p">&gt;)</span>
+</span><span class='line'><span class="nb">nnoremap</span> <span class="p">&lt;</span>C<span class="p">-</span><span class="k">r</span><span class="p">&gt;</span> :<span class="k">redraw</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>後者の場合，<code>redraw</code>と<code>redraw!</code>がありますが，<code>redraw!</code>でないと，<br/>
+現在の画面を破棄しないため，今回の現象を直すことができません．</p>
+
+<h2>References</h2>
+
+<div class='embed tweet'><blockquote class="twitter-tweet"><p><a href="https://twitter.com/d_masuyama">@d_masuyama</a> 最大化最小化しなくても Ctrl-l (←エルです)の再描画で戻るんじゃないですかね？</p>&mdash; ɐʇnɥsɐpoʇ (@todashuta) <a href="https://twitter.com/todashuta/statuses/357059805220839424">July 16, 2013</a></blockquote>
+<script async src="http://lunchub.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+
+
+<p><section class="ads">
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[CarrierWaveからAmazon S3に画像アップロードできない]]></title>
