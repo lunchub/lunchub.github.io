@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-16T20:33:16+09:00</updated>
+  <updated>2013-07-23T19:23:34+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[powを停止させる方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/23/how-to-stop-pow/"/>
+    <updated>2013-07-23T17:39:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/23/how-to-stop-pow</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13
+</span><span class='line'>pow 0.4.1
+</span><span class='line'>Anvir 1.0.2
+</span><span class='line'>[Gems]
+</span><span class='line'>  powder 0.2.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p><code>Mac OSX</code>上で<code>Rails</code>の開発を行う際，<code>pow</code>を利用しているものの，<br/>
+一時的に<code>Nginx</code>等のサーバを建てて使いたい場合に等に，<br/>
+<code>pow</code>のプロセスを停止しておきたい．<br/>
+※<code>kill</code>はしたくない・・</p>
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>Anvir</code>を使う</li>
+<li><code>powder</code>を使う</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3>Anvirを使う</h3>
+
+<p><a href="http://anvilformac.com/">こちらからAnvirをダウンロード</a>し，インストールする．<br/>
+インストールするとMacのステータスバーに<code>Anvir</code>のアイコンが表示される．<br/>
+アイコンをクリックすると，以下のようなミニウインドウが表示される．<br/>
+矢印で示したボタンをクリックすることで，<code>pow</code>のON/OFFを切り替えることができる．</p>
+
+<p><a href="http://lunchub.github.io/images/posts/2013/07/2013-07-23-18-12-58.jpg"><img src="http://lunchub.github.io/images/posts/2013/07/2013-07-23-18-12-58.jpg" alt="Anvir メニュー" /></a></p>
+
+<h3>powderを使う</h3>
+
+<p>gemをインストールする</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install powder
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>コンソールで以下のコマンドを実行することで，<code>pow</code>のON/OFFを切り替えることができる．</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># start pow</span>
+</span><span class='line'>powder up
+</span><span class='line'>
+</span><span class='line'><span class="c"># stop pow</span>
+</span><span class='line'>powder down
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>References</h2>
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iterm2 + tmux上で，Vimの画面のズレを直す方法]]></title>
@@ -1737,101 +1826,6 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 
 <ul>
 <li><a href="http://blog.glidenote.com/blog/2012/01/04/octopress-related-posts/">OctopressでRelated Posts(関連エントリー)を表示させるようにした</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Railsでassetsのログを出力させない]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails/"/>
-    <updated>2013-06-05T17:11:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/05/do-not-log-requesting-assets-on-rails</id>
-    <content type="html"><![CDATA[<h2>Environment</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
-</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Issues</h2>
-
-<p>development環境で作業を行う際、下の画像のように<code>tail -f log/development.log</code>で<br/>
-ログを垂れ流しているのだけど、画面生成の際走るSQLなんかを確認したい時に<br/>
-assetsのログが邪魔すぎる・・・</p>
-
-<p><a href="http://lunchub.github.io/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg"><img src="http://lunchub.github.io/images/posts/2013/06/7662bc00999c167cac1b705a82c3466b.jpg" alt="rails assets log" /></a></p>
-
-<h2>Solution</h2>
-
-<p>ログを見ると、</p>
-
-<ul>
-<li>assetに対するGETログ</li>
-<li>assetの処理ログ</li>
-</ul>
-
-
-<p>の2種類が表示されていることがわかる。<br/>
-これらをまとめて非表示にする方法はないようで、個別に対応する必要がある。</p>
-
-<ul>
-<li>assetに対するGETログ</li>
-</ul>
-
-
-<p><code>app\config\initializers\quiet_assets.rb</code>を作成し、以下のコードをコピペする。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Rack</span><span class="o">::</span><span class="no">Logger</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">call_with_quiet_assets</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">previous_level</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span>
-</span><span class='line'>    <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="ss">Logger</span><span class="p">:</span><span class="ss">:ERROR</span> <span class="k">if</span> <span class="n">env</span><span class="o">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="o">].</span><span class="n">index</span><span class="p">(</span><span class="s2">&quot;/assets/&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">call_without_quiet_assets</span><span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">.</span><span class="n">tap</span> <span class="k">do</span>
-</span><span class='line'>      <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">previous_level</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>  <span class="n">alias_method_chain</span> <span class="ss">:call</span><span class="p">,</span> <span class="ss">:quiet_assets</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>assetの処理ログ</li>
-</ul>
-
-
-<p><code>enviroments/development.rb</code> に以下のコードを追記する。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="kp">false</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Another solution</h2>
-
-<ul>
-<li><code>quiet_assets</code> gemを使用する
-このgemでやっている内容は上記対策と同様です．</li>
-</ul>
-
-
-<h2>References</h2>
-
-<ul>
-<li><a href="https://github.com/rails/rails/issues/4569">config.assets.logger not working</a></li>
 </ul>
 
 ]]></content>
