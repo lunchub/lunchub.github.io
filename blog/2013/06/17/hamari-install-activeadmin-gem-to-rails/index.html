@@ -1,67 +1,555 @@
-<!DOCTYPE html> <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]--><!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]--><!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]--><head><meta charset="utf-8"><meta name="author" content="Daisuke Masuyama"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="[Rails] ActiveAdminのインストール時にハマったエラーとその解決法について"><meta name="keywords" content="Rails, ActiveAdmin, インストール, gem, jquery-ui"><title>[Rails] ActiveAdminのインストールと初期設定でハマったこと - function Blog() {};</title><link rel="canonical" href="http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/"/><link href="/favicon.ico" rel="icon"><link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"><link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml"><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body> <header role="banner"><hgroup><h1><a href="/">function Blog() {};</a></h1><h2>var blog = new Blog();</h2> </hgroup></header> <nav role="navigation"><ul class="subscription" data-subscription="rss"><li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li></ul><form action="http://www.google.co.jp/cse" id="cse-search-box" target="_blank"><fieldset role="serach"> <input type="hidden" name="cx" value="partner-pub-9012297839440845:6470055237"/> <input type="hidden" name="ie" value="UTF-8"/> <input class="search"  name="q" size="55"/></fieldset></form><ul class="main-navigation"><li><a href="/">Top</a></li><li><a href="/profile">Profile</a></li><li><a href="/blog/archives">Archives</a></li></ul></nav><div id="main"><div id="content"><div><article class="ads"><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NCZYP" target="_blank"> <img border="0" width="728" height="90" alt="" src="http://www25.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016017000&mc=1"></a> <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NCZYP" alt=""></div><script><!--
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Daisuke Masuyama">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <meta name="description" content="[Rails] ActiveAdminのインストール時にハマったエラーとその解決法について">
+  <meta name="keywords" content="Rails, ActiveAdmin, インストール, gem, jquery-ui">
+
+  <title>[Rails] ActiveAdminのインストールと初期設定でハマったこと - function Blog() {};</title>
+
+  
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/"/>
+
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
+
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">function Blog() {};</a></h1>
+  
+    <h2>var blog = new Blog();</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+
+
+<form action="http://www.google.co.jp/cse" id="cse-search-box" target="_blank">
+  <fieldset role="serach">
+    <input type="hidden" name="cx" value="partner-pub-9012297839440845:6470055237" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input class="search" type="text" name="q" size="55" />
+  </fieldset>
+</form>
+
+<ul class="main-navigation">
+  <li><a href="/">Top</a></li>
+  <li><a href="/profile">Profile</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+
+  <article class="ads">
+    <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NCZYP" target="_blank">
+    <img border="0" width="728" height="90" alt="" src="http://www25.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016017000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NCZYP" alt="">
+</div>
+
+    <script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
 /* octopress_linkunit_728x15 */
 google_ad_slot = "9423521630";
 google_ad_width = 728;
 google_ad_height = 15;
 //-->
-</script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></article><article class="entry" role="article"> <header><h1 class="entry-title">[Rails] ActiveAdminのインストールと初期設定でハマったこと</h1><p class="meta"><time datetime="2013-06-17T12:43:00+09:00" pubdate data-updated="true">Jun 17<span>th</span>, 2013</time></p><span class="categories"> Categories: [ <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/hamari/'>hamari</a> ] </span><div class="sharing sharing_above"><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border:0"/></a><a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-counturl="">Tweet</a><a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="" class="pocket-btn" data-lang="en"></a></div></header><div class="entry-content"><h2>Environment</h2><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+  </article>
+
+  <article class="entry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">[Rails] ActiveAdminのインストールと初期設定でハマったこと</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-17T12:43:00+09:00" pubdate data-updated="true">Jun 17<span>th</span>, 2013</time>
+
+        
+
+      </p>
+    
+
+    
+
+<span class="categories">
+Categories: [
+  
+    <a class='category' href='/blog/categories/rails/'>Rails</a>, <a class='category' href='/blog/categories/hamari/'>hamari</a>
+  
+]
+</span>
+
+
+
+    
+      <div class="sharing sharing_above">
+
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-counturl="" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="" class="pocket-btn" data-lang="en"></a>
+
+</div>
+
+    
+
+  </header>
+
+
+
+<div class="entry-content"><h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span></pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
 </span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
 </span><span class='line'>Rails 3.2.13
 </span><span class='line'>[gems]
 </span><span class='line'>jquery-rails (3.0.1)
 </span><span class='line'>jquery-ui-rails (4.0.3)
-</span><span class='line'>activeadmin (0.6.0)</span></code></pre></td></tr></table></div></figure><h2>Issues</h2><p>手っ取り早く管理画面を設置したくて<code>activeadmin</code>をインストールしたところ、<br/> 初っ端からコケまくった。</p><h3>“uninitialized constant DashboardController”</h3><p><code>rails g active_admin:install</code>してとりあえず見るかーと、<br/> トップページアクセスしたら出るエラー。</p><h3>“couldn’t find file ‘jquery-ui’”</h3><p><code>jQuery UI</code>が見つからないエラー。<br/> いや、gemでバッチリ指定して入れてるのに・・・<br/> こっちがだいぶハマった。</p><h2>Solution</h2><h3>“uninitialized constant DashboardController”</h3><p>これは<code>routes.rb</code>の書き方が問題らしい。</p><p><code>activeadmin</code>をインストールすると、<code>routes.rb</code>に以下のコードが追加されるのだけど、</p><figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">devise_for</span> <span class="ss">:admin_users</span><span class="p">,</span> <span class="ss">ActiveAdmin</span><span class="p">:</span><span class="ss">:Devise</span><span class="o">.</span><span class="n">config</span>
-</span><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">routes</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure><p>これが<code>routes.rb</code>の中で、rootパスより前にあるとダメらしい・・ｗ<br/> なので、rootパスの記述を上記コードより上に持ってくればOK。</p><figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</span><span class='line'>activeadmin (0.6.0)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p>手っ取り早く管理画面を設置したくて<code>activeadmin</code>をインストールしたところ、<br/>
+初っ端からコケまくった。</p>
+
+<h3>&ldquo;uninitialized constant DashboardController&rdquo;</h3>
+
+<p><code>rails g active_admin:install</code>してとりあえず見るかーと、<br/>
+トップページアクセスしたら出るエラー。</p>
+
+<h3>&ldquo;couldn&rsquo;t find file &lsquo;jquery-ui&rsquo;&rdquo;</h3>
+
+<p><code>jQuery UI</code>が見つからないエラー。<br/>
+いや、gemでバッチリ指定して入れてるのに・・・<br/>
+こっちがだいぶハマった。</p>
+
+<h2>Solution</h2>
+
+<h3>&ldquo;uninitialized constant DashboardController&rdquo;</h3>
+
+<p>これは<code>routes.rb</code>の書き方が問題らしい。</p>
+
+<p><code>activeadmin</code>をインストールすると、<code>routes.rb</code>に以下のコードが追加されるのだけど、</p>
+
+<figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span></pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s1">'index#index'</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">devise_for</span> <span class="ss">:admin_users</span><span class="p">,</span> <span class="ss">ActiveAdmin</span><span class="p">:</span><span class="ss">:Devise</span><span class="o">.</span><span class="n">config</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">devise_for</span> <span class="ss">:admin_users</span><span class="p">,</span> <span class="ss">ActiveAdmin</span><span class="p">:</span><span class="ss">:Devise</span><span class="o">.</span><span class="n">config</span>
 </span><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">routes</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure><h3>“couldn’t find file ‘jquery-ui’”</h3><p>問題は、</p><ul><li><code>activeadmin</code>が<code>jQuery</code>と<code>jQuery UI</code>を使用する</li><li><code>jquery-rails, 3.0.0</code>から<code>jQuery UI</code>が切り離された</li><li><code>activeadmin</code>の<code>application.js</code>内で<code>jQuery UI</code>の呼び方が間違っている</li></ul><h4><code>activeadmin</code>が<code>jQuery</code>と<code>jQuery UI</code>を使用する</h4><p>独自に<code>application.js</code>から<code>jQuery</code>と<code>jQuery UI</code>を呼んでいる</p><h4><code>jquery-rails, 3.0.0</code>から<code>jQuery UI</code>が切り離された</h4><p>フォルダに存在しないものをimportしようとして見つかりませんエラーのパターン。<br/> エラーメッセージでググるとほぼこれに当たる。<br/> そして解決策が<code>jquery-rails</code>のバージョンを<code>2.3.0</code>に下げろというもの。<br/> 要するに<code>jQuery UI</code>が切り離される前のバージョンにしろってことなんだけど、<br/> 自分の場合はこれではうまくいかなかった。</p><h4><code>activeadmin</code>の<code>application.js</code>内で<code>jQuery UI</code>の呼び方が間違っている</h4><p>結局自分の場合はこれが問題だった。<br/> 下のソースを見ると、<code>jquery-ui</code>を呼んでいるのだけど、<br/> これだと名前が解決できないようで、呼び出せない。</p><figure class='code'><figcaption><span>/path/to/rails_app/vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/app/assets/javascripts/active_admin/base.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これが<code>routes.rb</code>の中で、rootパスより前にあるとダメらしい・・ｗ<br/>
+なので、rootパスの記述を上記コードより上に持ってくればOK。</p>
+
+<figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//= require jquery</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s1">&#39;index#index&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">devise_for</span> <span class="ss">:admin_users</span><span class="p">,</span> <span class="ss">ActiveAdmin</span><span class="p">:</span><span class="ss">:Devise</span><span class="o">.</span><span class="n">config</span>
+</span><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">routes</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>&ldquo;couldn&rsquo;t find file &lsquo;jquery-ui&rsquo;&rdquo;</h3>
+
+<p>問題は、</p>
+
+<ul>
+<li><code>activeadmin</code>が<code>jQuery</code>と<code>jQuery UI</code>を使用する</li>
+<li><code>jquery-rails, 3.0.0</code>から<code>jQuery UI</code>が切り離された</li>
+<li><code>activeadmin</code>の<code>application.js</code>内で<code>jQuery UI</code>の呼び方が間違っている</li>
+</ul>
+
+
+<h4><code>activeadmin</code>が<code>jQuery</code>と<code>jQuery UI</code>を使用する</h4>
+
+<p>独自に<code>application.js</code>から<code>jQuery</code>と<code>jQuery UI</code>を呼んでいる</p>
+
+<h4><code>jquery-rails, 3.0.0</code>から<code>jQuery UI</code>が切り離された</h4>
+
+<p>フォルダに存在しないものをimportしようとして見つかりませんエラーのパターン。<br/>
+エラーメッセージでググるとほぼこれに当たる。<br/>
+そして解決策が<code>jquery-rails</code>のバージョンを<code>2.3.0</code>に下げろというもの。<br/>
+要するに<code>jQuery UI</code>が切り離される前のバージョンにしろってことなんだけど、<br/>
+自分の場合はこれではうまくいかなかった。</p>
+
+<h4><code>activeadmin</code>の<code>application.js</code>内で<code>jQuery UI</code>の呼び方が間違っている</h4>
+
+<p>結局自分の場合はこれが問題だった。<br/>
+下のソースを見ると、<code>jquery-ui</code>を呼んでいるのだけど、<br/>
+これだと名前が解決できないようで、呼び出せない。</p>
+
+<figure class='code'><figcaption><span>/path/to/rails_app/vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/app/assets/javascripts/active_admin/base.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//= require jquery</span>
 </span><span class='line'><span class="c1">//= require jquery-ui</span>
 </span><span class='line'><span class="c1">//= require jquery_ujs</span>
 </span><span class='line'>
 </span><span class='line'><span class="c1">//= require active_admin/application</span>
-</span></code></pre></td></tr></table></div></figure><p>そこで、<code>jquery-ui-rails</code>の<a href="https://github.com/joliss/jquery-ui-rails">Githubドキュメント</a>を読むと、</p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>そこで、<code>jquery-ui-rails</code>の<a href="https://github.com/joliss/jquery-ui-rails">Githubドキュメント</a>を読むと、</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span></pre></td><td class='code'><pre><code class='text'><span class='line'>To require all jQuery UI modules,  add the following to your application.js:
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>To require all jQuery UI modules,  add the following to your application.js:
 </span><span class='line'>
 </span><span class='line'>//= require jquery.ui.all
-</span></code></pre></td></tr></table></div></figure><p>と書いてある。 先程とは呼び方が異なっている。</p><p>なので、Gemのassetsの中身を直接書き換え、以下のように変更したところ動くようになった。</p><figure class='code'><figcaption><span>/path/to/rails_app/vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/app/assets/javascripts/active_admin/base.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>と書いてある。
+先程とは呼び方が異なっている。</p>
+
+<p>なので、Gemのassetsの中身を直接書き換え、以下のように変更したところ動くようになった。</p>
+
+<figure class='code'><figcaption><span>/path/to/rails_app/vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/app/assets/javascripts/active_admin/base.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span></pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//= require jquery</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//= require jquery</span>
 </span><span class='line'><span class="c1">//= require jquery.ui.all</span>
 </span><span class='line'><span class="c1">//= require jquery_ujs</span>
 </span><span class='line'>
 </span><span class='line'><span class="c1">//= require active_admin/application</span>
-</span></code></pre></td></tr></table></div></figure><h2>モンキーパッチの当て方がわかりませんorz</h2><p>上記の<code>jQuery UI</code>を呼び出す方法を変更する修正だけど、<br/> 直接Gemのファイルいじるのは間違いなくバッドノウハウのはず。<br/> だからモンキーパッチを当てておきたいのだけど、<br/> ググって出てくる方法はクラスをオーバーライドするものばかりで、<br/> assetsの中身を書き換えたい場合はどうすればいいんだろう？<br/> 誰か知っていたら教えて下さい＞＜；</p><h2>References</h2><ul><li><a href="http://stackoverflow.com/questions/15818446/active-admin-ruby-on-rails-dashboard-controller-error">Active Admin Ruby on rails Dashboard Controller Error</a></li><li><a href="https://github.com/joliss/jquery-ui-rails">[Gem] jquery-ui-rails</a></li></ul></div><section> <footer><div class="sharing sharing_below"><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border:0"/></a><a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-count="vertical" data-counturl="">Tweet</a><a data-pocket-label="pocket" data-pocket-count="vertical" data-save-url="" class="pocket-btn" data-lang="en"></a><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NA7NL" target="_blank"> <img border="0" width="100" height="60" alt="" src="http://www28.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016004000&mc=1"></a> <img border="0" width="1" height="1" src="http://www11.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NA7NL" alt=""></div><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" target="_blank"> <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357194&wid=001&eno=01&mid=s00000012042001004000&mc=1"></a> <img border="0" width="1" height="1" src="http://www13.a8.net/0.gif?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" alt=""></div><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" target="_blank"> <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357193&wid=001&eno=01&mid=s00000001717002028000&mc=1"></a> <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" alt=""></div></div> </footer> </section></article><div class="content-footer"> <section><div class="related_posts"><h1>Related Posts</h1><ul><li><a href="/blog/2013/07/23/how-to-stop-pow/">powを停止させる方法</a></li><li><a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a></li><li><a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a></li><li><a href="/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/">Rails + Unicornの環境でNew Relicにデータが送信されない</a></li><li><a href="/blog/2013/06/26/installing-new-relic-to-centos/">CentOSにNew Relicをインストールする</a></li></ul></div> </section><section class="ads"> <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=kindleaccessory&banner=175NAYGAF8WRS1N6JJR2&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe><iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazoncampaign&banner=1RQ3F7FZE5VSNGCY4N02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe></section><section><p class="meta"> <a class="basic-alignment left previous-link" href="/blog/2013/06/14/github-s-small-css-trick/" title="Previous Post: GitHubが使っているちょっとしたCSSのテクニック">« GitHubが使っているちょっとしたCSSのテクニック</a> <a class="basic-alignment right next-link" href="/blog/2013/06/20/uninitialized-constant-readline-nameerror/" title="Next Post: uninitialized constant Readline (NameError)">uninitialized constant Readline (NameError) »</a></p> </section></div></div><aside class="sidebar"> <section><h1>About Me</h1><p>A little something about me.</p> </section><script><!--
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>モンキーパッチの当て方がわかりませんorz</h2>
+
+<p>上記の<code>jQuery UI</code>を呼び出す方法を変更する修正だけど、<br/>
+直接Gemのファイルいじるのは間違いなくバッドノウハウのはず。<br/>
+だからモンキーパッチを当てておきたいのだけど、<br/>
+ググって出てくる方法はクラスをオーバーライドするものばかりで、<br/>
+assetsの中身を書き換えたい場合はどうすればいいんだろう？<br/>
+誰か知っていたら教えて下さい＞＜；</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/15818446/active-admin-ruby-on-rails-dashboard-controller-error">Active Admin Ruby on rails Dashboard Controller Error</a></li>
+<li><a href="https://github.com/joliss/jquery-ui-rails">[Gem] jquery-ui-rails</a></li>
+</ul>
+
+</div>
+
+
+
+
+
+
+     
+
+    <section>
+      <footer>
+        
+          <div class="sharing sharing_below">
+
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-count="vertical" data-counturl="" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="vertical" data-save-url="" class="pocket-btn" data-lang="en"></a>
+
+  <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NA7NL" target="_blank">
+  <img border="0" width="100" height="60" alt="" src="http://www28.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016004000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www11.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NA7NL" alt="">
+</div>
+
+  <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" target="_blank">
+  <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357194&wid=001&eno=01&mid=s00000012042001004000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www13.a8.net/0.gif?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" alt="">
+</div>
+
+  <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" target="_blank">
+    <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357193&wid=001&eno=01&mid=s00000001717002028000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" alt="">
+</div>
+
+</div>
+
+        
+      </footer>
+    </section>
+
+  </article>
+
+  <div class="content-footer">
+
+    
+      
+  <section>
+    <div class="related_posts">
+    <h1>Related Posts</h1>
+    <ul>
+    
+      <li><a href="/blog/2013/07/23/how-to-stop-pow/">powを停止させる方法</a></li>
+    
+      <li><a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a></li>
+    
+      <li><a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a></li>
+    
+      <li><a href="/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/">Rails + Unicornの環境でNew Relicにデータが送信されない</a></li>
+    
+      <li><a href="/blog/2013/06/26/installing-new-relic-to-centos/">CentOSにNew Relicをインストールする</a></li>
+    
+    </ul>
+    </div>
+  </section>
+
+
+      
+
+    <section class="ads">
+      <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=kindleaccessory&banner=175NAYGAF8WRS1N6JJR2&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+
+
+      <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazoncampaign&banner=1RQ3F7FZE5VSNGCY4N02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+
+
+
+    </section>
+
+     
+
+    <section>
+      <p class="meta">
+        
+          <a class="basic-alignment left previous-link" href="/blog/2013/06/14/github-s-small-css-trick/" title="Previous Post: GitHubが使っているちょっとしたCSSのテクニック">&laquo; GitHubが使っているちょっとしたCSSのテクニック</a>
+        
+        
+          <a class="basic-alignment right next-link" href="/blog/2013/06/20/uninitialized-constant-readline-nameerror/" title="Next Post: uninitialized constant Readline (NameError)">uninitialized constant Readline (NameError) &raquo;</a>
+        
+      </p>
+    </section>
+
+    
+  </div>
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>A little something about me.</p>
+</section>
+
+<script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
 /* octopress_300x250 */
 google_ad_slot = "1959130439";
 google_ad_width = 300;
 google_ad_height = 250;
 //-->
-</script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script><section><h1>Recent Posts</h1><ul id="recent_posts"><li class="post"> <a href="/blog/2013/07/23/how-to-stop-pow/">Powを停止させる方法</a></li><li class="post"> <a href="/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/">Iterm2 + tmux上で，Vimの画面のズレを直す方法</a></li><li class="post"> <a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a></li><li class="post"> <a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a></li><li class="post"> <a href="/blog/2013/07/14/how-to-confirm-aws-access-information/">AWSのアクセス情報を確認する方法</a></li></ul> </section> <section><h1>Monthly Archives</h1><ul id="month-list"><li><a href='/2013/07/'>2013-07 (8)</a></li><li><a href='/2013/06/'>2013-06 (13)</a></li></ul> </section> <section><h1>Categories</h1><ul id="category-list"><li><a href='/blog/categories/aws'>AWS (5)</a></li><li><a href='/blog/categories/centos'>CentOS (2)</a></li><li><a href='/blog/categories/coffeescript'>CoffeeScript (2)</a></li><li><a href='/blog/categories/css3'>CSS3 (1)</a></li><li><a href='/blog/categories/gems'>Gems (2)</a></li><li><a href='/blog/categories/github'>GitHub (1)</a></li><li><a href='/blog/categories/hamari'>Hamari (1)</a></li><li><a href='/blog/categories/hamari'>hamari (4)</a></li><li><a href='/blog/categories/heroku'>Heroku (1)</a></li><li><a href='/blog/categories/mac'>Mac (2)</a></li><li><a href='/blog/categories/mysql'>MySQL (1)</a></li><li><a href='/blog/categories/newrelic'>NewRelic (3)</a></li><li><a href='/blog/categories/octopress'>Octopress (3)</a></li><li><a href='/blog/categories/rails'>Rails (9)</a></li><li><a href='/blog/categories/scribble'>Scribble (1)</a></li><li><a href='/blog/categories/unicorn'>Unicorn (1)</a></li><li><a href='/blog/categories/vim'>Vim (2)</a></li></ul> </section> <script><!--
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/">Inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/23/how-to-stop-pow/">Powを停止させる方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/">Iterm2 + tmux上で，Vimの画面のズレを直す方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Monthly Archives</h1>
+  <ul id="month-list"><li><a href='/2013/07/'>2013-07 (9)</a></li><li><a href='/2013/06/'>2013-06 (13)</a></li></ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/aws'>AWS (5)</a></li><li><a href='/blog/categories/centos'>CentOS (2)</a></li><li><a href='/blog/categories/coffeescript'>CoffeeScript (2)</a></li><li><a href='/blog/categories/css3'>CSS3 (1)</a></li><li><a href='/blog/categories/gems'>Gems (3)</a></li><li><a href='/blog/categories/github'>GitHub (1)</a></li><li><a href='/blog/categories/hamari'>Hamari (1)</a></li><li><a href='/blog/categories/hamari'>hamari (4)</a></li><li><a href='/blog/categories/heroku'>Heroku (1)</a></li><li><a href='/blog/categories/mac'>Mac (2)</a></li><li><a href='/blog/categories/mysql'>MySQL (1)</a></li><li><a href='/blog/categories/newrelic'>NewRelic (3)</a></li><li><a href='/blog/categories/octopress'>Octopress (3)</a></li><li><a href='/blog/categories/rails'>Rails (10)</a></li><li><a href='/blog/categories/scribble'>Scribble (1)</a></li><li><a href='/blog/categories/unicorn'>Unicorn (1)</a></li><li><a href='/blog/categories/vim'>Vim (2)</a></li></ul>
+</section>
+<script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
 /* octopress_aside_300x250_text */
 google_ad_slot = "6389330038";
 google_ad_width = 300;
 google_ad_height = 250;
 //-->
-</script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script><iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazonstudent&banner=075CD8MSNQ5WM9X9HJ02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe> <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=40&l=ur1&category=amazoncampaign&banner=1NERCAR2KGPT14NFBQ02&f=ifr" width="120" height="60" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe><section><h1>Tweets</h1> <a class="twitter-timeline" href="https://twitter.com/lunchub" data-widget-id="344425365097295872"> Tweets by @lunchub </a> </section> </aside></div></div> <footer role="contentinfo"><p> Copyright © 2013 - Daisuke Masuyama - <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span></p></footer><script>!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="http://platform.twitter.com/widgets.js",document.getElementsByTagName("head")[0].appendChild(t)}()</script><script>var _gaq=_gaq||[],pluginUrl="//www.google-analytics.com/plugins/ga/inpage_linkid.js";_gaq.push(["_require","inpage_linkid",pluginUrl]),_gaq.push(["_setAccount","UA-36122922-1"]),_gaq.push(["_trackPageview"]),function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}()</script><script src="http://www.google.co.jp/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script><script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script>!window.jQuery&&document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script><script src="/javascripts/modernizr-2.0.js"></script><script src="/javascripts/octopress.js"></script><script src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async></script><script>!function(t,e){if(!t.getElementById(e)){var n=t.createElement("script");n.id=e,n.src="https://widgets.getpocket.com/v1/j/btn.js?v=1",t.getElementById(e),t.body.appendChild(n)}}(document,"pocket-btn-js")</script><script>$(document).ready(function(){if(!window.jXHR){var t=document.createElement("script");t.type="text/javascript",t.src="/javascripts/libs/jXHR.js";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}!function(t,e,r){var n,s=t.getElementsByTagName(e)[0],a=/^http:/.test(t.location)?"http":"https";t.getElementById(r)||(n=t.createElement(e),n.id=r,n.src=a+"://platform.twitter.com/widgets.js",s.parentNode.insertBefore(n,s))}(document,"script","twitter-wjs")})</script></body></html>
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazonstudent&banner=075CD8MSNQ5WM9X9HJ02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=40&l=ur1&category=amazoncampaign&banner=1NERCAR2KGPT14NFBQ02&f=ifr" width="120" height="60" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+
+
+
+<section>
+  <h1>Tweets</h1>
+  <a class="twitter-timeline" href="https://twitter.com/lunchub" data-widget-id="344425365097295872">
+    Tweets by @lunchub
+  </a>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Daisuke Masuyama -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    var pluginUrl = 
+     '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+    _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+    _gaq.push(['_setAccount', 'UA-36122922-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+<script type="text/javascript" src="http://www.google.co.jp/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+ 
+
+<script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+
+<script type="text/javascript">!function(d, i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document, "pocket-btn-js");</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      if (!window.jXHR){
+          var jxhr = document.createElement('script');
+          jxhr.type = 'text/javascript';
+          jxhr.src = '/javascripts/libs/jXHR.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(jxhr, s);
+      }
+
+      !function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(
+            s)[0],
+          p = /^http:/.test(d.location) ?
+            'http' : 'https';
+        if (!d.getElementById(id)) {
+          js = d.createElement(s);
+          js.id = id;
+          js.src = p + "://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }
+      }(document, "script", "twitter-wjs");
+  });
+</script>
+
+
+</body>
+</html>

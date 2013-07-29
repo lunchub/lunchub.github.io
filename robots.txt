@@ -1,1 +1,4 @@
-User-agent: * Disallow:Sitemap: http://lunchub.github.io/sitemap.xml
+User-agent: *
+Disallow: 
+
+Sitemap: http://lunchub.github.io/sitemap.xml 

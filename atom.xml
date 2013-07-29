@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-24T15:43:26+09:00</updated>
+  <updated>2013-07-29T13:30:29+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,141 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/"/>
+    <updated>2013-07-29T11:41:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13
+</span><span class='line'>[Gems]
+</span><span class='line'>  activeadmin (0.6.0)
+</span><span class='line'>  inherited_resources (1.4.0)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p><code>active_admin</code>をインストールした後から，<code>scaffold</code>や<code>rails g controller</code>を実行すると，必ず自動生成されたコントローラが，<code>InheritedResources</code>を継承した状態になっている．
+<code>inherited_resources</code>を使いたくない場面もあるので，デフォルトでこの状態になるのは好ましくない．</p>
+
+<h3>Factor</h3>
+
+<ul>
+<li><code>active_admin</code>をインストールすると，<code>inherited_resources</code>もインストールされる．</li>
+<li><code>inherited_resources</code>がデフォルトの<code>scaffold</code>の挙動を書き換える</li>
+</ul>
+
+
+<p>以下の<code>config.app_generators</code>の部分で，<code>:inherited_resources_controller</code>を設定している．</p>
+
+<figure class='code'><figcaption><span>vendor/bundle/ruby/1.9.1/gems/inherited_resources-1.4.0/lib/inherited_resources.rb#L25</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Railtie</span> <span class="o">&lt;</span> <span class="o">::</span><span class="ss">Rails</span><span class="p">:</span><span class="ss">:Engine</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">inherited_resources</span> <span class="o">=</span> <span class="no">InheritedResources</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:app_generators</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">app_generators</span><span class="o">.</span><span class="n">scaffold_controller</span> <span class="o">=</span> <span class="ss">:inherited_resources_controller</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">scaffold_controller</span> <span class="o">=</span> <span class="ss">:inherited_resources_controller</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>config/application.rb</code>にコードを追加する</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<p><code>cofig/application.rb</code>に以下のコードを追加する</p>
+
+<figure class='code'><figcaption><span>config/application.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="ss">Rails</span><span class="p">:</span><span class="ss">:Application</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">app_generators</span><span class="o">.</span><span class="n">scaffold_controller</span> <span class="o">=</span> <span class="ss">:scaffold_controller</span> <span class="c1"># 追加</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>:scaffold_controller</code>の元ネタはどこだよということで探してみると，<br/>
+<code>vendor/bundle/ruby/1.9.1/gems/railties-3.2.11/lib/rails/generators.rb</code>で見つかった．</p>
+
+<figure class='code'><figcaption><span>vendor/bundle/ruby/1.9.1/gems/railties-3.2.11/lib/rails/generators.rb#L50</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">DEFAULT_OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="ss">:rails</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'>    <span class="ss">:scaffold_controller</span> <span class="o">=&gt;</span> <span class="ss">:scaffold_controller</span><span class="p">,</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="n">.</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>inherited_resources</code>が書き換えてるのはこの<code>DEFAULT_OPTIONS</code>の値なので，<br/>
+それを元の値である<code>:scaffold_controller</code>に戻せば良い．</p>
+
+<h3>Doubt</h3>
+
+<h4>どうしてこの方法で<code>config</code>の値を再設定できるのか</h4>
+
+<p>Railsの初期化の順序的に<code>config/boot.rb(load gems) -&gt; config/application.rb</code>だから．
+（間違っていたら指摘してください＞＜；）</p>
+
+<h4><code>gems</code>の中での読み込み順</h4>
+
+<p>これって<code>inherited_resources</code>の読み込みが<code>railties</code>より先か後かで挙動が変わるのだろうか・・<br/>
+この辺りの<code>Rails</code>のデフォルトの挙動を上書きする辺りがいまいちしっくりこない・・</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/josevalim/inherited_resources/issues/195">[GitHub] any way to permit &lsquo;rails scaffold&rsquo; to work normally if inherited_resources used by another gem?</a></li>
+<li><a href="http://guides.rubyonrails.org/generators.html">[RailsGuides] generators</a></li>
+<li><a href="http://guides.rubyonrails.org/engines.html">[RailsGuides] engines</a></li>
+</ul>
+
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[powを停止させる方法]]></title>
@@ -1800,34 +1935,6 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 <h2>References</h2>
 
 <p><a href="https://github.com/scrooloose/syntastic/tree/master/syntax_checkers/coffee">[Github]scrooloose/syntastic</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Octopressで関連エントリを表示する方法]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress/"/>
-    <updated>2013-06-07T12:15:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/07/how-to-show-related-posts-in-octopress</id>
-    <content type="html"><![CDATA[<h2>Issues</h2>
-
-<p>参考サイトの手順通りにプラグインを導入しても、<br/>
-関連エントリが表示されない。</p>
-
-<h2>Solution</h2>
-
-<p>プラグインの仕様が変わっていました・・ｗ<br/>
-<a href="https://github.com/LawrenceWoodman/related_posts-jekyll_plugin/commit/bcef5ff59e038d3276c66f710ba2ccc99a9a495e">[GitHub] Switch from categories to tags</a><br/>
-カテゴリではなく、タグを使って関連エントリを探してくるように変更されたようです。<br/>
-なので、tagsにキーワードを登録していけば問題なく関連エントリが表示されます。</p>
-
-<p>カテゴリだと大雑把すぎるということなのかな・・？</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://blog.glidenote.com/blog/2012/01/04/octopress-related-posts/">OctopressでRelated Posts(関連エントリー)を表示させるようにした</a></li>
-</ul>
-
 ]]></content>
   </entry>
   

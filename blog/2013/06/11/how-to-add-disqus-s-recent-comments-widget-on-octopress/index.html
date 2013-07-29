@@ -1,46 +1,474 @@
-<!DOCTYPE html> <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]--><!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]--><!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]--><head><meta charset="utf-8"><meta name="author" content="Daisuke Masuyama"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="OctopressにDISQUSのコメントウィジェットを設置する方法"><meta name="keywords" content="Octopress, DISQUS, 最近のコメント一覧, ウィジェット"><title>OctopressにDISQUSのコメントウィジェットを設置する方法 - function Blog() {};</title><link rel="canonical" href="http://lunchub.github.io/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/"/><link href="/favicon.ico" rel="icon"><link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css"><link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml"><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body> <header role="banner"><hgroup><h1><a href="/">function Blog() {};</a></h1><h2>var blog = new Blog();</h2> </hgroup></header> <nav role="navigation"><ul class="subscription" data-subscription="rss"><li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li></ul><form action="http://www.google.co.jp/cse" id="cse-search-box" target="_blank"><fieldset role="serach"> <input type="hidden" name="cx" value="partner-pub-9012297839440845:6470055237"/> <input type="hidden" name="ie" value="UTF-8"/> <input class="search"  name="q" size="55"/></fieldset></form><ul class="main-navigation"><li><a href="/">Top</a></li><li><a href="/profile">Profile</a></li><li><a href="/blog/archives">Archives</a></li></ul></nav><div id="main"><div id="content"><div><article class="ads"><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NCZYP" target="_blank"> <img border="0" width="728" height="90" alt="" src="http://www25.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016017000&mc=1"></a> <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NCZYP" alt=""></div><script><!--
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Daisuke Masuyama">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <meta name="description" content="OctopressにDISQUSのコメントウィジェットを設置する方法">
+  <meta name="keywords" content="Octopress, DISQUS, 最近のコメント一覧, ウィジェット">
+
+  <title>OctopressにDISQUSのコメントウィジェットを設置する方法 - function Blog() {};</title>
+
+  
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/"/>
+
+  <link href="/favicon.ico" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="function Blog() {};" type="application/atom+xml">
+
+  <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">function Blog() {};</a></h1>
+  
+    <h2>var blog = new Blog();</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+
+
+<form action="http://www.google.co.jp/cse" id="cse-search-box" target="_blank">
+  <fieldset role="serach">
+    <input type="hidden" name="cx" value="partner-pub-9012297839440845:6470055237" />
+    <input type="hidden" name="ie" value="UTF-8" />
+    <input class="search" type="text" name="q" size="55" />
+  </fieldset>
+</form>
+
+<ul class="main-navigation">
+  <li><a href="/">Top</a></li>
+  <li><a href="/profile">Profile</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+
+  <article class="ads">
+    <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NCZYP" target="_blank">
+    <img border="0" width="728" height="90" alt="" src="http://www25.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016017000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NCZYP" alt="">
+</div>
+
+    <script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
 /* octopress_linkunit_728x15 */
 google_ad_slot = "9423521630";
 google_ad_width = 728;
 google_ad_height = 15;
 //-->
-</script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></article><article class="entry" role="article"> <header><h1 class="entry-title">OctopressにDISQUSのコメントウィジェットを設置する方法</h1><p class="meta"><time datetime="2013-06-11T18:27:00+09:00" pubdate data-updated="true">Jun 11<span>th</span>, 2013</time></p><span class="categories"> Categories: [ <a class='category' href='/blog/categories/octopress/'>Octopress</a> ] </span><div class="sharing sharing_above"><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border:0"/></a><a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-counturl="">Tweet</a><a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="" class="pocket-btn" data-lang="en"></a></div></header><div class="entry-content"><h2>Issues</h2><p>OctopressのサイドバーにDISQUSの最近のコメント一覧を表示させたい。</p><h2>Solution</h2><p>以下の手順で設置できたのでメモ。</p><h3>サイドバー表示用HTMLの作成</h3><figure class='code'><figcaption><span>custom/asides/disqus_recent_comments.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+  </article>
+
+  <article class="entry" role="article">
+    
+  <header>
+    
+      <h1 class="entry-title">OctopressにDISQUSのコメントウィジェットを設置する方法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-11T18:27:00+09:00" pubdate data-updated="true">Jun 11<span>th</span>, 2013</time>
+
+        
+
+      </p>
+    
+
+    
+
+<span class="categories">
+Categories: [
+  
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+  
+]
+</span>
+
+
+
+    
+      <div class="sharing sharing_above">
+
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-title="function Blog();" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-counturl="" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="horizontal" data-save-url="" class="pocket-btn" data-lang="en"></a>
+
+</div>
+
+    
+
+  </header>
+
+
+
+<div class="entry-content"><h2>Issues</h2>
+
+<p>OctopressのサイドバーにDISQUSの最近のコメント一覧を表示させたい。</p>
+
+<h2>Solution</h2>
+
+<p>以下の手順で設置できたのでメモ。</p>
+
+<h3>サイドバー表示用HTMLの作成</h3>
+
+<figure class='code'><figcaption><span>custom/asides/disqus_recent_comments.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span></pre></td><td class='code'><pre><code class='html'><span class='line'>{% if site.disqus_short_name %}
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{% if site.disqus_short_name %}
 </span><span class='line'><span class="nt">&lt;section&gt;</span>
 </span><span class='line'>  <span class="nt">&lt;h1&gt;</span>Recent Comments<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"dsq-recentcomments"</span> <span class="na">class=</span><span class="s">"dsq-widget"</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://disqus.com/forums/{{ site.disqus_short_name }}/recent_comments_widget.js?hide_avatars=0"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;dsq-recentcomments&quot;</span> <span class="na">class=</span><span class="s">&quot;dsq-widget&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://disqus.com/forums/{{ site.disqus_short_name }}/recent_comments_widget.js?hide_avatars=0&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
 </span><span class='line'><span class="nt">&lt;/section&gt;</span>
 </span><span class='line'>{% endif %}
-</span></code></pre></td></tr></table></div></figure><h3>_config.ymlの編集</h3><figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>_config.ymlの編集</h3>
+
+<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-<span class='line-number'>5</span></pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># サイドバー上の表示させたい位置に差し込む</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># サイドバー上の表示させたい位置に差し込む</span>
 </span><span class='line'><span class="l-Scalar-Plain">default_asides:[....., custom/asides/disqus_recent_comments.html]</span>
 </span><span class='line'>
 </span><span class='line'><span class="l-Scalar-Plain"># DISQUSのフォーラム名を設定する</span>
 </span><span class='line'><span class="l-Scalar-Plain">disqus_short_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">lunchub</span>
-</span></code></pre></td></tr></table></div></figure><h3>オプション</h3><p>基本的に上記手順で表示できるが、いくつかオプションがある模様。<br/> JavaScriptの呼び出しクエリに適宜付加してください。</p><ul><li>hide_avatars :<ul><li>アバターを表示させないか（<code>1</code>だと非表示、<code>0</code>だと表示）</li><li>自分のコメントは<code>1</code>にすると見えなくなるっぽい？</li></ul></li><li>num_items :<ul><li>コメントを何件表示させるか</li></ul></li><li>excerpt_length :<ul><li>コメントの最大表示文字数</li></ul></li></ul><h2>References</h2><p><a href="http://fusion94.org/blog/2013/01/11/recent-comments-as-an-asides/">Recent Comments as an Asides</a></p></div><section> <footer><div class="sharing sharing_below"><a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border:0"/></a><a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-count="vertical" data-counturl="">Tweet</a><a data-pocket-label="pocket" data-pocket-count="vertical" data-save-url="" class="pocket-btn" data-lang="en"></a><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NA7NL" target="_blank"> <img border="0" width="100" height="60" alt="" src="http://www28.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016004000&mc=1"></a> <img border="0" width="1" height="1" src="http://www11.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NA7NL" alt=""></div><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" target="_blank"> <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357194&wid=001&eno=01&mid=s00000012042001004000&mc=1"></a> <img border="0" width="1" height="1" src="http://www13.a8.net/0.gif?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" alt=""></div><div class="without_image_frame"> <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" target="_blank"> <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357193&wid=001&eno=01&mid=s00000001717002028000&mc=1"></a> <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" alt=""></div></div> </footer> </section></article><div class="content-footer"> <section><div class="related_posts"><h1>Related Posts</h1><ul><li><a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressでテンプレートタグをエスケープする方法</a></li><li><a href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/">Octopressで関連エントリを表示する方法</a></li></ul></div> </section><section class="ads"> <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=kindleaccessory&banner=175NAYGAF8WRS1N6JJR2&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe><iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazoncampaign&banner=1RQ3F7FZE5VSNGCY4N02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe></section><section><p class="meta"> <a class="basic-alignment left previous-link" href="/blog/2013/06/10/hamari-on-coffeescript/" title="Previous Post: CoffeeScriptの書き方がでハマったところ">« CoffeeScriptの書き方がでハマったところ</a> <a class="basic-alignment right next-link" href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/" title="Next Post: Octopressでテンプレートタグをエスケープする方法">Octopressでテンプレートタグをエスケープする方法 »</a></p> </section></div></div><aside class="sidebar"> <section><h1>About Me</h1><p>A little something about me.</p> </section><script><!--
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>オプション</h3>
+
+<p>基本的に上記手順で表示できるが、いくつかオプションがある模様。<br/>
+JavaScriptの呼び出しクエリに適宜付加してください。</p>
+
+<ul>
+<li>hide_avatars :
+
+<ul>
+<li>アバターを表示させないか（<code>1</code>だと非表示、<code>0</code>だと表示）</li>
+<li>自分のコメントは<code>1</code>にすると見えなくなるっぽい？</li>
+</ul>
+</li>
+<li>num_items :
+
+<ul>
+<li>コメントを何件表示させるか</li>
+</ul>
+</li>
+<li>excerpt_length :
+
+<ul>
+<li>コメントの最大表示文字数</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>References</h2>
+
+<p><a href="http://fusion94.org/blog/2013/01/11/recent-comments-as-an-asides/">Recent Comments as an Asides</a></p>
+</div>
+
+
+
+
+
+
+     
+
+    <section>
+      <footer>
+        
+          <div class="sharing sharing_below">
+
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a>
+
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="" data-via="lunchub" data-count="vertical" data-counturl="" >Tweet</a>
+
+  <a data-pocket-label="pocket" data-pocket-count="vertical" data-save-url="" class="pocket-btn" data-lang="en"></a>
+
+  <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+383JQQ+348+2NA7NL" target="_blank">
+  <img border="0" width="100" height="60" alt="" src="http://www28.a8.net/svt/bgt?aid=130709357195&wid=001&eno=01&mid=s00000000404016004000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www11.a8.net/0.gif?a8mat=25TJZH+383JQQ+348+2NA7NL" alt="">
+</div>
+
+  <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" target="_blank">
+  <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357194&wid=001&eno=01&mid=s00000012042001004000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www13.a8.net/0.gif?a8mat=25TJZH+37I44Y+2KX0+5Z6WX" alt="">
+</div>
+
+  <div class="without_image_frame">
+  <a href="http://px.a8.net/svt/ejp?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" target="_blank">
+    <img border="0" width="100" height="60" alt="" src="http://www29.a8.net/svt/bgt?aid=130709357193&wid=001&eno=01&mid=s00000001717002028000&mc=1"></a>
+  <img border="0" width="1" height="1" src="http://www18.a8.net/0.gif?a8mat=25TJZH+36WOJ6+D8Y+C2O5D" alt="">
+</div>
+
+</div>
+
+        
+      </footer>
+    </section>
+
+  </article>
+
+  <div class="content-footer">
+
+    
+      
+  <section>
+    <div class="related_posts">
+    <h1>Related Posts</h1>
+    <ul>
+    
+      <li><a href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/">Octopressでテンプレートタグをエスケープする方法</a></li>
+    
+      <li><a href="/blog/2013/06/07/how-to-show-related-posts-in-octopress/">Octopressで関連エントリを表示する方法</a></li>
+    
+    </ul>
+    </div>
+  </section>
+
+
+      
+
+    <section class="ads">
+      <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=kindleaccessory&banner=175NAYGAF8WRS1N6JJR2&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+
+
+      <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazoncampaign&banner=1RQ3F7FZE5VSNGCY4N02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+
+
+
+    </section>
+
+     
+
+    <section>
+      <p class="meta">
+        
+          <a class="basic-alignment left previous-link" href="/blog/2013/06/10/hamari-on-coffeescript/" title="Previous Post: CoffeeScriptの書き方がでハマったところ">&laquo; CoffeeScriptの書き方がでハマったところ</a>
+        
+        
+          <a class="basic-alignment right next-link" href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/" title="Next Post: Octopressでテンプレートタグをエスケープする方法">Octopressでテンプレートタグをエスケープする方法 &raquo;</a>
+        
+      </p>
+    </section>
+
+    
+  </div>
+</div>
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>A little something about me.</p>
+</section>
+
+<script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
 /* octopress_300x250 */
 google_ad_slot = "1959130439";
 google_ad_width = 300;
 google_ad_height = 250;
 //-->
-</script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script><section><h1>Recent Posts</h1><ul id="recent_posts"><li class="post"> <a href="/blog/2013/07/23/how-to-stop-pow/">Powを停止させる方法</a></li><li class="post"> <a href="/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/">Iterm2 + tmux上で，Vimの画面のズレを直す方法</a></li><li class="post"> <a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a></li><li class="post"> <a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a></li><li class="post"> <a href="/blog/2013/07/14/how-to-confirm-aws-access-information/">AWSのアクセス情報を確認する方法</a></li></ul> </section> <section><h1>Monthly Archives</h1><ul id="month-list"><li><a href='/2013/07/'>2013-07 (8)</a></li><li><a href='/2013/06/'>2013-06 (13)</a></li></ul> </section> <section><h1>Categories</h1><ul id="category-list"><li><a href='/blog/categories/aws'>AWS (5)</a></li><li><a href='/blog/categories/centos'>CentOS (2)</a></li><li><a href='/blog/categories/coffeescript'>CoffeeScript (2)</a></li><li><a href='/blog/categories/css3'>CSS3 (1)</a></li><li><a href='/blog/categories/gems'>Gems (2)</a></li><li><a href='/blog/categories/github'>GitHub (1)</a></li><li><a href='/blog/categories/hamari'>Hamari (1)</a></li><li><a href='/blog/categories/hamari'>hamari (4)</a></li><li><a href='/blog/categories/heroku'>Heroku (1)</a></li><li><a href='/blog/categories/mac'>Mac (2)</a></li><li><a href='/blog/categories/mysql'>MySQL (1)</a></li><li><a href='/blog/categories/newrelic'>NewRelic (3)</a></li><li><a href='/blog/categories/octopress'>Octopress (3)</a></li><li><a href='/blog/categories/rails'>Rails (9)</a></li><li><a href='/blog/categories/scribble'>Scribble (1)</a></li><li><a href='/blog/categories/unicorn'>Unicorn (1)</a></li><li><a href='/blog/categories/vim'>Vim (2)</a></li></ul> </section> <script><!--
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/">Inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/23/how-to-stop-pow/">Powを停止させる方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/">Iterm2 + tmux上で，Vimの画面のズレを直す方法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Monthly Archives</h1>
+  <ul id="month-list"><li><a href='/2013/07/'>2013-07 (9)</a></li><li><a href='/2013/06/'>2013-06 (13)</a></li></ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/aws'>AWS (5)</a></li><li><a href='/blog/categories/centos'>CentOS (2)</a></li><li><a href='/blog/categories/coffeescript'>CoffeeScript (2)</a></li><li><a href='/blog/categories/css3'>CSS3 (1)</a></li><li><a href='/blog/categories/gems'>Gems (3)</a></li><li><a href='/blog/categories/github'>GitHub (1)</a></li><li><a href='/blog/categories/hamari'>Hamari (1)</a></li><li><a href='/blog/categories/hamari'>hamari (4)</a></li><li><a href='/blog/categories/heroku'>Heroku (1)</a></li><li><a href='/blog/categories/mac'>Mac (2)</a></li><li><a href='/blog/categories/mysql'>MySQL (1)</a></li><li><a href='/blog/categories/newrelic'>NewRelic (3)</a></li><li><a href='/blog/categories/octopress'>Octopress (3)</a></li><li><a href='/blog/categories/rails'>Rails (10)</a></li><li><a href='/blog/categories/scribble'>Scribble (1)</a></li><li><a href='/blog/categories/unicorn'>Unicorn (1)</a></li><li><a href='/blog/categories/vim'>Vim (2)</a></li></ul>
+</section>
+<script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
 /* octopress_aside_300x250_text */
 google_ad_slot = "6389330038";
 google_ad_width = 300;
 google_ad_height = 250;
 //-->
-</script><script src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script><iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazonstudent&banner=075CD8MSNQ5WM9X9HJ02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe> <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=40&l=ur1&category=amazoncampaign&banner=1NERCAR2KGPT14NFBQ02&f=ifr" width="120" height="60" scrolling="no" border="0" marginwidth="0" style="border:0" frameborder="0"></iframe><section><h1>Tweets</h1> <a class="twitter-timeline" href="https://twitter.com/lunchub" data-widget-id="344425365097295872"> Tweets by @lunchub </a> </section> </aside></div></div> <footer role="contentinfo"><p> Copyright © 2013 - Daisuke Masuyama - <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span></p></footer><script>!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="http://platform.twitter.com/widgets.js",document.getElementsByTagName("head")[0].appendChild(t)}()</script><script>var _gaq=_gaq||[],pluginUrl="//www.google-analytics.com/plugins/ga/inpage_linkid.js";_gaq.push(["_require","inpage_linkid",pluginUrl]),_gaq.push(["_setAccount","UA-36122922-1"]),_gaq.push(["_trackPageview"]),function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}()</script><script src="http://www.google.co.jp/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script><script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script>!window.jQuery&&document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script><script src="/javascripts/modernizr-2.0.js"></script><script src="/javascripts/octopress.js"></script><script src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async></script><script>!function(t,e){if(!t.getElementById(e)){var n=t.createElement("script");n.id=e,n.src="https://widgets.getpocket.com/v1/j/btn.js?v=1",t.getElementById(e),t.body.appendChild(n)}}(document,"pocket-btn-js")</script><script>$(document).ready(function(){if(!window.jXHR){var t=document.createElement("script");t.type="text/javascript",t.src="/javascripts/libs/jXHR.js";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}!function(t,e,r){var n,s=t.getElementsByTagName(e)[0],a=/^http:/.test(t.location)?"http":"https";t.getElementById(r)||(n=t.createElement(e),n.id=r,n.src=a+"://platform.twitter.com/widgets.js",s.parentNode.insertBefore(n,s))}(document,"script","twitter-wjs")})</script></body></html>
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=12&l=ur1&category=amazonstudent&banner=075CD8MSNQ5WM9X9HJ02&f=ifr" width="300" height="250" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=lunchub-22&o=9&p=40&l=ur1&category=amazoncampaign&banner=1NERCAR2KGPT14NFBQ02&f=ifr" width="120" height="60" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+
+
+
+<section>
+  <h1>Tweets</h1>
+  <a class="twitter-timeline" href="https://twitter.com/lunchub" data-widget-id="344425365097295872">
+    Tweets by @lunchub
+  </a>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Daisuke Masuyama -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    var pluginUrl = 
+     '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+    _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+    _gaq.push(['_setAccount', 'UA-36122922-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+<script type="text/javascript" src="http://www.google.co.jp/coop/cse/brand?form=cse-search-box&amp;lang=ja"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+<script src="/javascripts/octopress.js" type="text/javascript"></script>
+
+ 
+
+<script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+
+<script type="text/javascript">!function(d, i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document, "pocket-btn-js");</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      if (!window.jXHR){
+          var jxhr = document.createElement('script');
+          jxhr.type = 'text/javascript';
+          jxhr.src = '/javascripts/libs/jXHR.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(jxhr, s);
+      }
+
+      !function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(
+            s)[0],
+          p = /^http:/.test(d.location) ?
+            'http' : 'https';
+        if (!d.getElementById(id)) {
+          js = d.createElement(s);
+          js.id = id;
+          js.src = p + "://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }
+      }(document, "script", "twitter-wjs");
+  });
+</script>
+
+
+</body>
+</html>
