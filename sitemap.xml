@@ -16,7 +16,7 @@
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/10/hamari-on-coffeescript/</loc>
-        <lastmod>2013-07-24T15:38:59+09:00</lastmod>
+        <lastmod>2013-07-29T17:23:22+09:00</lastmod>
     </url>
     <url>
         <loc>
@@ -42,13 +42,13 @@
         <loc>
             http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/
         </loc>
-        <lastmod>2013-07-24T15:38:59+09:00</lastmod>
+        <lastmod>2013-07-29T17:23:35+09:00</lastmod>
     </url>
     <url>
         <loc>
             http://lunchub.github.io/blog/2013/06/20/uninitialized-constant-readline-nameerror/
         </loc>
-        <lastmod>2013-07-24T15:38:59+09:00</lastmod>
+        <lastmod>2013-07-29T17:26:26+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-rails/</loc>
@@ -62,7 +62,7 @@
         <loc>
             http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/
         </loc>
-        <lastmod>2013-07-24T15:38:59+09:00</lastmod>
+        <lastmod>2013-07-29T17:23:53+09:00</lastmod>
     </url>
     <url>
         <loc>
@@ -107,12 +107,16 @@
         <lastmod>2013-07-29T13:34:52+09:00</lastmod>
     </url>
     <url>
+        <loc>http://lunchub.github.io/blog/2013/07/29/hamari-on-s3-bucket-name-with-dots/</loc>
+        <lastmod>2013-07-29T17:29:23+09:00</lastmod>
+    </url>
+    <url>
         <loc>http://lunchub.github.io/blog/archives/</loc>
-        <lastmod>2013-07-29T13:34:52+09:00</lastmod>
+        <lastmod>2013-07-29T17:29:23+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/</loc>
-        <lastmod>2013-07-29T13:34:52+09:00</lastmod>
+        <lastmod>2013-07-29T17:29:23+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/profile/</loc>

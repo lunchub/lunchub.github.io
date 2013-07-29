@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-07-29T16:56:59+09:00</updated>
+  <updated>2013-07-29T17:30:47+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Amazon S3のバケット名に"."ドットを含めるとハマる]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/29/hamari-on-s3-bucket-name-with-dots/"/>
+    <updated>2013-07-29T17:05:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/29/hamari-on-s3-bucket-name-with-dots</id>
+    <content type="html"><![CDATA[<h2>Precondition</h2>
+
+<ul>
+<li><a href="http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a></li>
+<li><a href="http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">CarrierWaveからAmazon S3に画像アップロードできない</a></li>
+</ul>
+
+
+<h2>Issues</h2>
+
+<p><code>carrierwave</code> + <code>fog</code>で<code>Amazon S3</code>に画像をアップロードできようになったのはいいものの、<br/>
+いざ画面に<code>Amazon S3</code>上の画像を表示させようとすると、<br/>
+画像が表示されない。</p>
+
+<h3>Factor</h3>
+
+<p>バケット名にドット<code>.</code>が含まれていることで、SSLエラーが発生している。<br/>
+<code>Amazon S3</code>のSSL証明書がワイルドカード<code>*.s3-ap-northeast-1.amazonaws.com</code>だから。<br/>
+これはレベル3ドメインまでの範囲で、ワイルドカードを使っていいよということなので、<br/>
+<code>mysite.com.s3-ap-northeast-1.amazonaws.com</code>みたいなことは出来ませんよということ。</p>
+
+<p><code>サイトドメイン＝バケット名</code>にすればわかりやすいじゃん！<br/>
+と思っていたらとんでも設定で痛い目に合いました。</p>
+
+<h2>Solution</h2>
+
+<p>バケット名にドット<code>.</code>を含めない。</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/carrierwaveuploader/carrierwave/issues/667">[GitHub] SSL Error when access Amazon S3</a></li>
+<li><a href="http://blog.dateofrock.com/2012/02/s3.html">S3のバケット名はよく考えて命名しましょう！</a></li>
+</ul>
+
+
+<p><section class="ads">
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
@@ -1882,59 +1928,6 @@ booleanの返却程度の簡単な処理なら1行にできる前者でも良い
 <p>変換後のソースチェックはここでできます。 &ndash;> <a href="http://js2coffee.org/">js2coffee</a></p>
 
 <h2>References</h2>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[VimでCoffeeScriptのシンタックスチェックを行う方法]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim/"/>
-    <updated>2013-06-10T15:50:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/10/syntax-check-for-coffee-script-on-vim</id>
-    <content type="html"><![CDATA[<h2>Environment</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>Vim 7.3.754</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Issues</h2>
-
-<p>VimでSyntasticを導入しているものの、CoffeeScriptの保存時に
-シンタックスチェックが走らない。</p>
-
-<h2>Solution</h2>
-
-<p>CoffeeScriptとCoffeeLintをインストールしてください(ﾉ´∀｀*)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>npm install -g coffee-script
-</span><span class='line'>npm install -g coffeelint
-</span><span class='line'>
-</span><span class='line'>* -gはグローバルオプション
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>バージョンは<code>1.6.2</code>以上が必要です。</p>
-
-<p>そしてパスを通す。NODE_PATHも一応通しておいたほうがいいらしい。</p>
-
-<figure class='code'><figcaption><span>.zshrc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/local/share/npm/bin:<span class="nv">$PATH</span>
-</span><span class='line'><span class="nb">export </span><span class="nv">NODE_PATH</span><span class="o">=</span>/usr/local/share/npm/lib/node_modules:<span class="nv">$NODE_PATH</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Syntasticのソースを見るとexecutableで<code>coffee</code>と<code>coffeelint</code>コマンドを探しにいっています。<br/>
-コマンドが見つからないエラーはないのかな・・</p>
-
-<h2>References</h2>
-
-<p><a href="https://github.com/scrooloose/syntastic/tree/master/syntax_checkers/coffee">[Github]scrooloose/syntastic</a></p>
 ]]></content>
   </entry>
   
