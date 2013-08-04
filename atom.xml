@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-04T19:46:06+09:00</updated>
+  <updated>2013-08-04T23:48:43+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -164,7 +164,7 @@
 </span><span class='line'>  <span class="n">form</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
 </span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">has_many</span> <span class="ss">:tasks</span> <span class="k">do</span> <span class="o">|</span><span class="n">att</span><span class="o">|</span>
 </span><span class='line'>      <span class="n">att</span><span class="o">.</span><span class="n">input</span> <span class="ss">:_destroy</span><span class="p">,</span>  <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:boolean</span><span class="p">,</span>  <span class="ss">:label</span> <span class="o">=&gt;</span> <span class="s2">&quot;Destroy?&quot;</span>
-</span><span class='line'>      <span class="n">att</span><span class="o">.</span><span class="n">input</span> <span class="ss">:task</span><span class="p">,</span>  <span class="ss">as</span><span class="p">:</span> <span class="ss">:file</span>
+</span><span class='line'>      <span class="n">att</span><span class="o">.</span><span class="n">input</span> <span class="ss">:task</span>
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">actions</span>
@@ -268,7 +268,7 @@
 <p><code>cocoon</code>は、<code>Railsのデフォルトのフォームビルダー</code>, <code>formtastic</code>, <code>simpleform</code>に対応しています。
 前述の自作ヘルパー関数と比べて、<code>gem</code>をインストールするだけで使えるので簡単です。</p>
 
-<p><a href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/"><code>cocoon</code>導入の際ハマった内容も記事</a>にしてあるので、よければ参考にしてください。</p>
+<p><a href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/">cocoon導入の際ハマった内容も記事</a>にしてあるので、よければ参考にしてください。</p>
 
 <p><code>cocoon</code>を使った実装は以下の通り。</p>
 
