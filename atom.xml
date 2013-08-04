@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-04T14:24:43+09:00</updated>
+  <updated>2013-08-04T19:46:06+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,344 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] activeadmin上でhas_many resourcesのフォーム要素を動的に追加、削除するための機能を実装する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails/"/>
+    <updated>2013-08-04T15:17:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13
+</span><span class='line'>[Gems]
+</span><span class='line'>  activeadmin (0.6.0)
+</span><span class='line'>  formtastic (2.2.1)
+</span><span class='line'>  cocoon (1.2.0)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p>activeadminで<code>has_many resources</code>のフォームに対して、動的に子モデルのフォーム要素の追加や削除を行う機能を実装したい。</p>
+
+<h2>Solution</h2>
+
+<p>現状確認している方法は以下の3通り。</p>
+
+<ul>
+<li>activeadminの標準機能（<code>form_builder</code>）を使う
+
+<ul>
+<li>[OK] 動的なフォーム要素の追加</li>
+<li>[NG] 動的なフォーム要素の削除
+
+<ul>
+<li>動的に追加したフォーム要素にのみ、削除ボタンが現れる
+
+<ul>
+<li>既に登録済みのレコードを削除できない
+
+<ul>
+<li><strong>削除機能は自分で実装する必要がある</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>formtastic</code>に自作のhelper関数を組み合わせて使う
+
+<ul>
+<li>[OK] 動的なフォーム要素の追加</li>
+<li>[OK] 動的なフォーム要素の削除</li>
+</ul>
+</li>
+<li><code>cocoon</code>を使う
+
+<ul>
+<li>[OK] 動的なフォーム要素の追加</li>
+<li>[OK] 動的なフォーム要素の削除</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3>モデル側の準備</h3>
+
+<p>何れの方法で実装するにしても、親モデル側に以下の記述をして置く必要がある。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Project</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">attr_accessible</span> <span class="ss">:tasks_attributes</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tasks</span>
+</span><span class='line'>  <span class="n">accepts_nested_attributes_for</span> <span class="ss">:tasks</span><span class="p">,</span>  <span class="ss">:reject_if</span> <span class="o">=&gt;</span> <span class="ss">:all_blank</span><span class="p">,</span>  <span class="ss">:allow_destroy</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><code>:accepts_nested_attributes_for</code></h4>
+
+<p>1つのフォームの中で、親モデルと<code>has_many</code>で関連付けられた、子モデルの同時編集を可能にするための機能。</p>
+
+<h4><code>:reject_if</code></h4>
+
+<p>ここで指定した条件にマッチすれば、子モデルの保存をスルーさせることができる機能。</p>
+
+<p>ここでは<code>:all_blank</code>を指定しているので、全ての項目が未編集のままフォームが送信された場合は、
+子モデルの保存が行われない。</p>
+
+<p><code>:all_blank</code>の他に、<code>lamda</code>や<code>proc</code>、<code>privateメソッド</code>を指定することができる。</p>
+
+<p>状況としては、動的に子モデルのフォーム要素を追加したが、やっぱりいらないやということで、
+未編集のままフォームを送信した場合等に、空のデータのまま子モデルが保存されるのを防ぐことができる。</p>
+
+<h4><code>:allow_destroy</code></h4>
+
+<p>1つのフォームで親モデルと一緒に保存できるようになったはいいけど、削除だってしたいよという場合に使う機能。</p>
+
+<p><code>:allow_destroy</code>を有効にすると、<code>_destroy</code>パラメータを子モデルと一緒に渡すことで、
+削除してくれるようになる。</p>
+
+<p>例えばチェックボックスに<code>project[tasks_attributes][0][_destroy]</code>といった<code>name属性</code>を割り当てて、
+チェックボックスにチェックが入った状態で送信すると、tasks_attributesの0番目の要素が削除される。</p>
+
+<h4><code>:attr_accessible</code></h4>
+
+<p><code>:accepts_nested_attributes_for</code>を指定すると、フォームの中で子モデルの<code>name属性</code>は<code>xxx_attributes</code>（xxxは子モデルの名前）という形で自動的に割り振られる。</p>
+
+<p>しかし、せっかく割り振られた<code>name属性</code>にアクセスできないと、値の変更を行うことができないため、
+予め<code>:attr_accessible</code>にキーを設定しておく。</p>
+
+<h3>activeadminの標準機能（<code>form_builder</code>）を使う</h3>
+
+<p><code>activeadmin</code>にも標準で動的に要素を追加する機能が備わっている。
+しかし、動的に削除する機能は、動的に追加した要素にのみ表示されるようになっており、
+一度保存したデータに対しては削除機能は提供されないので、
+その部分は自分で実装する必要がある。</p>
+
+<p>この削除機能のやっつけ感が否めない・・・
+空データの登録をさせないにも中途半端だし、そもそもそれなら<code>:reject_if</code>があるし・・</p>
+
+<p>ということで、削除機能（チェックボックス）付きの実装は以下の通り。</p>
+
+<figure class='code'><figcaption><span>app/admin/projects.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">activeadmin</span><span class="o">.</span><span class="n">register</span> <span class="no">Project</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">form</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">has_many</span> <span class="ss">:tasks</span> <span class="k">do</span> <span class="o">|</span><span class="n">att</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">att</span><span class="o">.</span><span class="n">input</span> <span class="ss">:_destroy</span><span class="p">,</span>  <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:boolean</span><span class="p">,</span>  <span class="ss">:label</span> <span class="o">=&gt;</span> <span class="s2">&quot;Destroy?&quot;</span>
+</span><span class='line'>      <span class="n">att</span><span class="o">.</span><span class="n">input</span> <span class="ss">:task</span><span class="p">,</span>  <span class="ss">as</span><span class="p">:</span> <span class="ss">:file</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">f</span><span class="o">.</span><span class="n">actions</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>この実装だと動的にフォーム要素は消えないので、そこは<code>jQuery</code>なりでゴリゴリ実装する必要がある。
+この後紹介するRailsCastsのヘルパー関数を自作して埋め込むのも有りだと思う。</p>
+
+<h4>activeadminの実装を見てみる</h4>
+
+<p>子モデルの1レコードずつ、フォーム要素を構築する処理の中で、<code>has_many_form.object.new_record?</code>の場合のみ、
+削除用のJSが仕込まれていることがわかる。やっている内容は当該レコードをラップしているHTMLを<code>remove()</code>するだけ。</p>
+
+<p>動的にフォーム要素を追加するJSを、<code>js_for_has_many</code>から呼び出して、バッファの最後に追加していることがわかる。</p>
+
+<p>これってレコード毎に削除用フラグを管理する<code>hidden</code>タグを埋め込んでおいて、
+削除用JSにフラグの<code>value</code>を<code>true</code>にする処理追加すればいいんじゃないのかなぁ・・</p>
+
+<figure class='code'><figcaption><span>vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/lib/active_admin/form_builder.rb#L.44, L.172</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">has_many</span><span class="p">(</span><span class="n">association</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Add Delete Links</span>
+</span><span class='line'>  <span class="n">form_block</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span> <span class="o">|</span><span class="n">has_many_form</span><span class="o">|</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">has_many_form</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">new_record?</span>
+</span><span class='line'>      <span class="n">contents</span> <span class="o">+=</span> <span class="n">template</span><span class="o">.</span><span class="n">content_tag</span><span class="p">(</span><span class="ss">:li</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>        <span class="n">template</span><span class="o">.</span><span class="n">link_to</span> <span class="no">I18n</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="s1">&#39;active_admin.has_many_delete&#39;</span><span class="p">),</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="ss">:onclick</span> <span class="o">=&gt;</span> <span class="s2">&quot;$(this).closest(&#39;.has_many_fields&#39;).remove(); return false;&quot;</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="s2">&quot;button&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">form_buffers</span><span class="o">.</span><span class="n">last</span> <span class="o">&lt;&lt;</span> <span class="n">with_new_form_buffer</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">template</span><span class="o">.</span><span class="n">content_tag</span> <span class="ss">:div</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="s2">&quot;has_many </span><span class="si">#{</span><span class="n">association</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">form_buffers</span><span class="o">.</span><span class="n">last</span> <span class="o">&lt;&lt;</span> <span class="n">js_for_has_many</span><span class="p">(</span><span class="n">association</span><span class="p">,</span> <span class="n">form_block</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Capture the ADD JS</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">js_for_has_many</span><span class="p">(</span><span class="n">association</span><span class="p">,</span> <span class="n">form_block</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">onclick</span> <span class="o">=</span> <span class="s2">&quot;$(this).before(&#39;</span><span class="si">#{</span><span class="n">js</span><span class="si">}</span><span class="s2">&#39;.replace(/</span><span class="si">#{</span><span class="n">placeholder</span><span class="si">}</span><span class="s2">/g, new Date().getTime())); return false;&quot;</span>
+</span><span class='line'>  <span class="n">text</span>    <span class="o">=</span> <span class="no">I18n</span><span class="o">.</span><span class="n">t</span> <span class="s1">&#39;active_admin.has_many_new&#39;</span><span class="p">,</span> <span class="ss">:model</span> <span class="o">=&gt;</span> <span class="n">assoc_name</span><span class="o">.</span><span class="n">human</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">template</span><span class="o">.</span><span class="n">link_to</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="ss">:onclick</span> <span class="o">=&gt;</span> <span class="n">onclick</span><span class="p">,</span> <span class="ss">:class</span> <span class="o">=&gt;</span> <span class="s2">&quot;button&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">html_safe</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><code>formtastic</code>に自作のhelper関数を組み合わせて使う</h3>
+
+<p>helper関数の作成はRailsCastsと同じもので大丈夫なので、記事下部の<code>References</code>を参照してください。</p>
+
+<p>後述の<code>cocoon</code>との違いは関数名の違いだけなので、ソースは省略します。</p>
+
+<h3><code>cocoon</code>を使う</h3>
+
+<p><code>cocoon</code>は、<code>Railsのデフォルトのフォームビルダー</code>, <code>formtastic</code>, <code>simpleform</code>に対応しています。
+前述の自作ヘルパー関数と比べて、<code>gem</code>をインストールするだけで使えるので簡単です。</p>
+
+<p><a href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/"><code>cocoon</code>導入の際ハマった内容も記事</a>にしてあるので、よければ参考にしてください。</p>
+
+<p><code>cocoon</code>を使った実装は以下の通り。</p>
+
+<figure class='code'><figcaption><span>app/views/admin/projects/_form.html.haml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">semantic_form_for</span> <span class="o">[</span><span class="ss">:admin</span><span class="p">,</span>  <span class="vi">@work</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>  <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">inputs</span> <span class="s2">&quot;&quot;</span> <span class="k">do</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">.</span><span class="n">tasks_fields</span>
+</span><span class='line'>      <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">semantic_fields_for</span> <span class="ss">:tasks</span> <span class="k">do</span> <span class="o">|</span><span class="n">task</span><span class="o">|</span>
+</span><span class='line'>        <span class="o">=</span> <span class="n">render</span> <span class="s1">&#39;task_fields&#39;</span><span class="p">,</span> <span class="ss">:f</span> <span class="o">=&gt;</span> <span class="n">task</span>
+</span><span class='line'>      <span class="o">.</span><span class="n">links</span>
+</span><span class='line'>        <span class="o">=</span> <span class="n">link_to_add_association</span> <span class="s1">&#39;add task&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="ss">:tasks</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">actions</span> <span class="k">do</span>
+</span><span class='line'>    <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">action</span> <span class="ss">:submit</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>app/views/admin/projects/_task_fields.html.haml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">.</span><span class="n">nested</span><span class="o">-</span><span class="n">fields</span>
+</span><span class='line'>  <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">inputs</span> <span class="k">do</span>
+</span><span class='line'>    <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">input</span> <span class="ss">:task</span>
+</span><span class='line'>    <span class="o">=</span> <span class="n">link_to_remove_association</span> <span class="s2">&quot;remove task&quot;</span><span class="p">,</span> <span class="n">f</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>cocoon</code>を導入すると、<code>link_to_add_association</code>と<code>link_to_remove_association</code>関数が使えるようになります。
+<code>formtastic</code> + 自作ヘルパー関数との違いは関数名だけで、引数の使い方も全く同じです。
+<code>link_to_add_association</code>が<code>link_to_add_fields</code>に、
+<code>link_to_remove_association</code>が<code>link_to_remove_fields</code>に対応しています。</p>
+
+<p><code>cocoon</code>自体がRailsCastsの内容を参考にしているのでしょうね。</p>
+
+<h2>Conclusion</h2>
+
+<p>今のところ3番目の<code>cocoon</code>を使った実装が一番簡単じゃないかなーと思います。
+<code>activeadmin</code>は<code>has_many</code>を呼ぶと勝手に、動的なフォーム要素の追加ボタンを差しこんでくれるけど、
+削除機能はイマイチ君・・・</p>
+
+<p><code>activeadmin</code>だけで完結するようになれば良いのだけど・・・</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/form_helpers.html#building-complex-forms">[RailsGuides] Building Complex Forms</a></li>
+<li><a href="http://railscasts.com/episodes/196-nested-model-form-part-1">[RailsCasts] Nested Model Form Part 1</a></li>
+<li><a href="http://railscasts.com/episodes/197-nested-model-form-part-2">[RailsCasts] Nested Model Form Part 2</a></li>
+<li><a href="http://kray.jp/blog/has-many-through-nested-object-forms/">[Rails] Nested Object Forms を使って多対多の関係をスマートに編集 </a></li>
+<li><a href="http://o.inchiki.jp/obbr/81">Railsでネストしたモデルをまとめて受け取って保存する</a></li>
+<li><a href="https://github.com/nathanvda/cocoon">[GitHub] cocoon</a></li>
+</ul>
+
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Rails] ActiveAdmin + cocoon を使い始めた際にハマったこと]]></title>
@@ -1969,89 +2307,6 @@ Jekyllのテンプレートタグが非表示になってしまう。</p>
 <h2>References</h2>
 
 <p><a href="http://stackoverflow.com/questions/15786144/how-to-escape-in-markdown-on-octopress">How to escape {{ in markdown on Octopress?</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[OctopressにDISQUSのコメントウィジェットを設置する方法]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress/"/>
-    <updated>2013-06-11T18:27:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/11/how-to-add-disqus-s-recent-comments-widget-on-octopress</id>
-    <content type="html"><![CDATA[<h2>Issues</h2>
-
-<p>OctopressのサイドバーにDISQUSの最近のコメント一覧を表示させたい。</p>
-
-<h2>Solution</h2>
-
-<p>以下の手順で設置できたのでメモ。</p>
-
-<h3>サイドバー表示用HTMLの作成</h3>
-
-<figure class='code'><figcaption><span>custom/asides/disqus_recent_comments.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>{% if site.disqus_short_name %}
-</span><span class='line'><span class="nt">&lt;section&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;h1&gt;</span>Recent Comments<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;dsq-recentcomments&quot;</span> <span class="na">class=</span><span class="s">&quot;dsq-widget&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://disqus.com/forums/{{ site.disqus_short_name }}/recent_comments_widget.js?hide_avatars=0&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'><span class="nt">&lt;/section&gt;</span>
-</span><span class='line'>{% endif %}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>_config.ymlの編集</h3>
-
-<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># サイドバー上の表示させたい位置に差し込む</span>
-</span><span class='line'><span class="l-Scalar-Plain">default_asides:[....., custom/asides/disqus_recent_comments.html]</span>
-</span><span class='line'>
-</span><span class='line'><span class="l-Scalar-Plain"># DISQUSのフォーラム名を設定する</span>
-</span><span class='line'><span class="l-Scalar-Plain">disqus_short_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">lunchub</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>オプション</h3>
-
-<p>基本的に上記手順で表示できるが、いくつかオプションがある模様。<br/>
-JavaScriptの呼び出しクエリに適宜付加してください。</p>
-
-<ul>
-<li>hide_avatars :
-
-<ul>
-<li>アバターを表示させないか（<code>1</code>だと非表示、<code>0</code>だと表示）</li>
-<li>自分のコメントは<code>1</code>にすると見えなくなるっぽい？</li>
-</ul>
-</li>
-<li>num_items :
-
-<ul>
-<li>コメントを何件表示させるか</li>
-</ul>
-</li>
-<li>excerpt_length :
-
-<ul>
-<li>コメントの最大表示文字数</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>References</h2>
-
-<p><a href="http://fusion94.org/blog/2013/01/11/recent-comments-as-an-asides/">Recent Comments as an Asides</a></p>
 ]]></content>
   </entry>
   
