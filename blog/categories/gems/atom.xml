@@ -1,10 +1,180 @@
-<?xml version="1.0" encoding="utf-8"?> <feed xmlns="http://www.w3.org/2005/Atom"><title><![CDATA[Category: Gems | function Blog() {};]]></title><link href="http://lunchub.github.io/blog/categories/gems/atom.xml" rel="self"/><link href="http://lunchub.github.io/"/> <updated>2013-08-05T00:29:09+09:00</updated> <id>http://lunchub.github.io/</id> <author> <name><![CDATA[Daisuke Masuyama]]></name> </author> <generator uri="http://octopress.org/">Octopress</generator> <entry><title type="html"><![CDATA[[Rails] activeadmin上でhas_many resourcesのフォーム要素を動的に追加、削除するための機能を実装する方法]]></title><link href="http://lunchub.github.io/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails/"/> <updated>2013-08-04T15:17:00+09:00</updated> <id>http://lunchub.github.io/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails</id> <content type="html"><![CDATA[<h2>Environment</h2><p><code> Mac OSX 10.7.5 (Lion) ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2] Rails 3.2.13 [Gems] activeadmin (0.6.0) formtastic (2.2.1) cocoon (1.2.0) </code></p><h2>Issues</h2><p>activeadminで<code>has_many resources</code>のフォームに対して、動的に子モデルのフォーム要素の追加や削除を行う機能を実装したい。</p><h2>Solution</h2><p>現状確認している方法は以下の3通り。</p><ul><li>activeadminの標準機能（<code>form_builder</code>）を使う<ul><li>[OK] 動的なフォーム要素の追加</li><li>[NG] 動的なフォーム要素の削除<ul><li>動的に追加したフォーム要素にのみ、削除ボタンが現れる<ul><li>既に登録済みのレコードを削除できない<ul><li><strong>削除機能は自分で実装する必要がある</strong></li></ul></li></ul></li></ul></li></ul></li><li><code>formtastic</code>に自作のhelper関数を組み合わせて使う<ul><li>[OK] 動的なフォーム要素の追加</li><li>[OK] 動的なフォーム要素の削除</li></ul></li><li><code>cocoon</code>を使う<ul><li>[OK] 動的なフォーム要素の追加</li><li>[OK] 動的なフォーム要素の削除</li></ul></li></ul><h2>How to</h2><h3>モデル側の準備</h3><p>何れの方法で実装するにしても、親モデル側に以下の記述をして置く必要がある。</p><p>```ruby class Project &lt; ActiveRecord::Base attr_accessible :tasks_attributes</p><p> has_many :tasks accepts_nested_attributes_for :tasks, :reject_if => :all_blank, :allow_destroy => true end ```</p><h4><code>:accepts_nested_attributes_for</code></h4><p>1つのフォームの中で、親モデルと<code>has_many</code>で関連付けられた、子モデルの同時編集を可能にするための機能。</p><h4><code>:reject_if</code></h4><p>ここで指定した条件にマッチすれば、子モデルの保存をスルーさせることができる機能。</p><p>ここでは<code>:all_blank</code>を指定しているので、全ての項目が未編集のままフォームが送信された場合は、 子モデルの保存が行われない。</p><p><code>:all_blank</code>の他に、<code>lamda</code>や<code>proc</code>、<code>privateメソッド</code>を指定することができる。</p><p>状況としては、動的に子モデルのフォーム要素を追加したが、やっぱりいらないやということで、 未編集のままフォームを送信した場合等に、空のデータのまま子モデルが保存されるのを防ぐことができる。</p><h4><code>:allow_destroy</code></h4><p>1つのフォームで親モデルと一緒に保存できるようになったはいいけど、削除だってしたいよという場合に使う機能。</p><p><code>:allow_destroy</code>を有効にすると、<code>_destroy</code>パラメータを子モデルと一緒に渡すことで、 削除してくれるようになる。</p><p>例えばチェックボックスに<code>project[tasks_attributes][0][_destroy]</code>といった<code>name属性</code>を割り当てて、 チェックボックスにチェックが入った状態で送信すると、tasks_attributesの0番目の要素が削除される。</p><h4><code>:attr_accessible</code></h4><p><code>:accepts_nested_attributes_for</code>を指定すると、フォームの中で子モデルの<code>name属性</code>は<code>xxx_attributes</code>（xxxは子モデルの名前）という形で自動的に割り振られる。</p><p>しかし、せっかく割り振られた<code>name属性</code>にアクセスできないと、値の変更を行うことができないため、 予め<code>:attr_accessible</code>にキーを設定しておく。</p><h3>activeadminの標準機能（<code>form_builder</code>）を使う</h3><p><code>activeadmin</code>にも標準で動的に要素を追加する機能が備わっている。 しかし、動的に削除する機能は、動的に追加した要素にのみ表示されるようになっており、 一度保存したデータに対しては削除機能は提供されないので、 その部分は自分で実装する必要がある。</p><p>この削除機能のやっつけ感が否めない・・・ 空データの登録をさせないにも中途半端だし、そもそもそれなら<code>:reject_if</code>があるし・・</p><p>ということで、削除機能（チェックボックス）付きの実装は以下の通り。</p><p>```ruby app/admin/projects.rb activeadmin.register Project do form do |f|</p><pre><code>f.has_many :tasks do |att|
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Gems | function Blog() {};]]></title>
+  <link href="http://lunchub.github.io/blog/categories/gems/atom.xml" rel="self"/>
+  <link href="http://lunchub.github.io/"/>
+  <updated>2013-08-06T19:58:23+09:00</updated>
+  <id>http://lunchub.github.io/</id>
+  <author>
+    <name><![CDATA[Daisuke Masuyama]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] activeadmin上でhas_many resourcesのフォーム要素を動的に追加、削除するための機能を実装する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails/"/>
+    <updated>2013-08-04T15:17:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+  activeadmin (0.6.0)
+  formtastic (2.2.1)
+  cocoon (1.2.0)
+</code></p>
+
+<h2>Issues</h2>
+
+<p>activeadminで<code>has_many resources</code>のフォームに対して、動的に子モデルのフォーム要素の追加や削除を行う機能を実装したい。</p>
+
+<h2>Solution</h2>
+
+<p>現状確認している方法は以下の3通り。</p>
+
+<ul>
+<li>activeadminの標準機能（<code>form_builder</code>）を使う
+
+<ul>
+<li>[OK] 動的なフォーム要素の追加</li>
+<li>[NG] 動的なフォーム要素の削除
+
+<ul>
+<li>動的に追加したフォーム要素にのみ、削除ボタンが現れる
+
+<ul>
+<li>既に登録済みのレコードを削除できない
+
+<ul>
+<li><strong>削除機能は自分で実装する必要がある</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>formtastic</code>に自作のhelper関数を組み合わせて使う
+
+<ul>
+<li>[OK] 動的なフォーム要素の追加</li>
+<li>[OK] 動的なフォーム要素の削除</li>
+</ul>
+</li>
+<li><code>cocoon</code>を使う
+
+<ul>
+<li>[OK] 動的なフォーム要素の追加</li>
+<li>[OK] 動的なフォーム要素の削除</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3>モデル側の準備</h3>
+
+<p>何れの方法で実装するにしても、親モデル側に以下の記述をして置く必要がある。</p>
+
+<p>```ruby
+class Project &lt; ActiveRecord::Base
+  attr_accessible :tasks_attributes</p>
+
+<p>  has_many :tasks
+  accepts_nested_attributes_for :tasks,  :reject_if => :all_blank,  :allow_destroy => true
+end
+```</p>
+
+<h4><code>:accepts_nested_attributes_for</code></h4>
+
+<p>1つのフォームの中で、親モデルと<code>has_many</code>で関連付けられた、子モデルの同時編集を可能にするための機能。</p>
+
+<h4><code>:reject_if</code></h4>
+
+<p>ここで指定した条件にマッチすれば、子モデルの保存をスルーさせることができる機能。</p>
+
+<p>ここでは<code>:all_blank</code>を指定しているので、全ての項目が未編集のままフォームが送信された場合は、
+子モデルの保存が行われない。</p>
+
+<p><code>:all_blank</code>の他に、<code>lamda</code>や<code>proc</code>、<code>privateメソッド</code>を指定することができる。</p>
+
+<p>状況としては、動的に子モデルのフォーム要素を追加したが、やっぱりいらないやということで、
+未編集のままフォームを送信した場合等に、空のデータのまま子モデルが保存されるのを防ぐことができる。</p>
+
+<h4><code>:allow_destroy</code></h4>
+
+<p>1つのフォームで親モデルと一緒に保存できるようになったはいいけど、削除だってしたいよという場合に使う機能。</p>
+
+<p><code>:allow_destroy</code>を有効にすると、<code>_destroy</code>パラメータを子モデルと一緒に渡すことで、
+削除してくれるようになる。</p>
+
+<p>例えばチェックボックスに<code>project[tasks_attributes][0][_destroy]</code>といった<code>name属性</code>を割り当てて、
+チェックボックスにチェックが入った状態で送信すると、tasks_attributesの0番目の要素が削除される。</p>
+
+<h4><code>:attr_accessible</code></h4>
+
+<p><code>:accepts_nested_attributes_for</code>を指定すると、フォームの中で子モデルの<code>name属性</code>は<code>xxx_attributes</code>（xxxは子モデルの名前）という形で自動的に割り振られる。</p>
+
+<p>しかし、せっかく割り振られた<code>name属性</code>にアクセスできないと、値の変更を行うことができないため、
+予め<code>:attr_accessible</code>にキーを設定しておく。</p>
+
+<h3>activeadminの標準機能（<code>form_builder</code>）を使う</h3>
+
+<p><code>activeadmin</code>にも標準で動的に要素を追加する機能が備わっている。
+しかし、動的に削除する機能は、動的に追加した要素にのみ表示されるようになっており、
+一度保存したデータに対しては削除機能は提供されないので、
+その部分は自分で実装する必要がある。</p>
+
+<p>この削除機能のやっつけ感が否めない・・・
+空データの登録をさせないにも中途半端だし、そもそもそれなら<code>:reject_if</code>があるし・・</p>
+
+<p>ということで、削除機能（チェックボックス）付きの実装は以下の通り。</p>
+
+<p>```ruby app/admin/projects.rb
+activeadmin.register Project do
+  form do |f|</p>
+
+<pre><code>f.has_many :tasks do |att|
   att.input :_destroy,  :as =&gt; :boolean,  :label =&gt; "Destroy?"
   att.input :task
 end
 
 f.actions
-</code></pre><p> end end ```</p><p>この実装だと動的にフォーム要素は消えないので、そこは<code>jQuery</code>なりでゴリゴリ実装する必要がある。 この後紹介するRailsCastsのヘルパー関数を自作して埋め込むのも有りだと思う。</p><h4>activeadminの実装を見てみる</h4><p>子モデルの1レコードずつ、フォーム要素を構築する処理の中で、<code>has_many_form.object.new_record?</code>の場合のみ、 削除用のJSが仕込まれていることがわかる。やっている内容は当該レコードをラップしているHTMLを<code>remove()</code>するだけ。</p><p>動的にフォーム要素を追加するJSを、<code>js_for_has_many</code>から呼び出して、バッファの最後に追加していることがわかる。</p><p>これってレコード毎に削除用フラグを管理する<code>hidden</code>タグを埋め込んでおいて、 削除用JSにフラグの<code>value</code>を<code>true</code>にする処理追加すればいいんじゃないのかなぁ・・</p><p>```ruby vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/lib/active_admin/form_builder.rb#L.44, L.172 def has_many(association, options = {}, &amp;block) …</p><p> # Add Delete Links form_block = proc do |has_many_form|</p><pre><code>...
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>この実装だと動的にフォーム要素は消えないので、そこは<code>jQuery</code>なりでゴリゴリ実装する必要がある。
+この後紹介するRailsCastsのヘルパー関数を自作して埋め込むのも有りだと思う。</p>
+
+<h4>activeadminの実装を見てみる</h4>
+
+<p>子モデルの1レコードずつ、フォーム要素を構築する処理の中で、<code>has_many_form.object.new_record?</code>の場合のみ、
+削除用のJSが仕込まれていることがわかる。やっている内容は当該レコードをラップしているHTMLを<code>remove()</code>するだけ。</p>
+
+<p>動的にフォーム要素を追加するJSを、<code>js_for_has_many</code>から呼び出して、バッファの最後に追加していることがわかる。</p>
+
+<p>これってレコード毎に削除用フラグを管理する<code>hidden</code>タグを埋め込んでおいて、
+削除用JSにフラグの<code>value</code>を<code>true</code>にする処理追加すればいいんじゃないのかなぁ・・</p>
+
+<p>```ruby vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/lib/active_admin/form_builder.rb#L.44, L.172
+def has_many(association, options = {}, &amp;block)
+  &hellip;</p>
+
+<p>  # Add Delete Links
+  form_block = proc do |has_many_form|</p>
+
+<pre><code>...
 
 if has_many_form.object.new_record?
   contents += template.content_tag(:li) do
@@ -13,65 +183,606 @@ if has_many_form.object.new_record?
 end
 
 ...
-</code></pre><p> end</p><p> form_buffers.last &lt;&lt; with_new_form_buffer do</p><pre><code>template.content_tag :div, :class =&gt; "has_many #{association}" do
+</code></pre>
+
+<p>  end</p>
+
+<p>  form_buffers.last &lt;&lt; with_new_form_buffer do</p>
+
+<pre><code>template.content_tag :div, :class =&gt; "has_many #{association}" do
   ...
 
   form_buffers.last &lt;&lt; js_for_has_many(association, form_block, template)
 end
-</code></pre><p> end end</p><h1>Capture the ADD JS</h1><p>def js_for_has_many(association, form_block, template) …</p><p> onclick = “$(this).before(‘#{js}’.replace(/#{placeholder}/g, new Date().getTime())); return false;” text = I18n.t ‘active_admin.has_many_new’, :model => assoc_name.human</p><p> template.link_to(text, “#”, :onclick => onclick, :class => “button”).html_safe end ```</p><h3><code>formtastic</code>に自作のhelper関数を組み合わせて使う</h3><p>helper関数の作成はRailsCastsと同じもので大丈夫なので、記事下部の<code>References</code>を参照してください。</p><p>後述の<code>cocoon</code>との違いは関数名の違いだけなので、ソースは省略します。</p><h3><code>cocoon</code>を使う</h3><p><code>cocoon</code>は、<code>Railsのデフォルトのフォームビルダー</code>, <code>formtastic</code>, <code>simpleform</code>に対応しています。 前述の自作ヘルパー関数と比べて、<code>gem</code>をインストールするだけで使えるので簡単です。</p><p><a href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/">cocoon導入の際ハマった内容も記事</a>にしてあるので、よければ参考にしてください。</p><p><code>cocoon</code>を使った実装は以下の通り。</p><p>```ruby app/views/admin/projects/_form.html.haml = semantic_form_for [:admin, @work] do |f| = f.inputs “” do</p><pre><code>.tasks_fields
+</code></pre>
+
+<p>  end
+end</p>
+
+<h1>Capture the ADD JS</h1>
+
+<p>def js_for_has_many(association, form_block, template)
+  &hellip;</p>
+
+<p>  onclick = &ldquo;$(this).before(&lsquo;#{js}&rsquo;.replace(/#{placeholder}/g, new Date().getTime())); return false;&rdquo;
+  text    = I18n.t &lsquo;active_admin.has_many_new&rsquo;, :model => assoc_name.human</p>
+
+<p>  template.link_to(text, &ldquo;#&rdquo;, :onclick => onclick, :class => &ldquo;button&rdquo;).html_safe
+end
+```</p>
+
+<h3><code>formtastic</code>に自作のhelper関数を組み合わせて使う</h3>
+
+<p>helper関数の作成はRailsCastsと同じもので大丈夫なので、記事下部の<code>References</code>を参照してください。</p>
+
+<p>後述の<code>cocoon</code>との違いは関数名の違いだけなので、ソースは省略します。</p>
+
+<h3><code>cocoon</code>を使う</h3>
+
+<p><code>cocoon</code>は、<code>Railsのデフォルトのフォームビルダー</code>, <code>formtastic</code>, <code>simpleform</code>に対応しています。
+前述の自作ヘルパー関数と比べて、<code>gem</code>をインストールするだけで使えるので簡単です。</p>
+
+<p><a href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/">cocoon導入の際ハマった内容も記事</a>にしてあるので、よければ参考にしてください。</p>
+
+<p><code>cocoon</code>を使った実装は以下の通り。</p>
+
+<p>```ruby app/views/admin/projects/_form.html.haml
+= semantic_form_for [:admin,  @work] do |f|
+  = f.inputs &ldquo;&rdquo; do</p>
+
+<pre><code>.tasks_fields
   = f.semantic_fields_for :tasks do |task|
     = render 'task_fields', :f =&gt; task
   .links
     = link_to_add_association 'add task', f, :tasks
-</code></pre><p> = f.actions do</p><pre><code>= f.action :submit
-</code></pre><p>```</p><p>```ruby app/views/admin/projects/_task_fields.html.haml .nested-fields = f.inputs do</p><pre><code>= f.input :task
+</code></pre>
+
+<p>  = f.actions do</p>
+
+<pre><code>= f.action :submit
+</code></pre>
+
+<p>```</p>
+
+<p>```ruby app/views/admin/projects/_task_fields.html.haml
+.nested-fields
+  = f.inputs do</p>
+
+<pre><code>= f.input :task
 = link_to_remove_association "remove task", f
-</code></pre><p>```</p><p><code>cocoon</code>を導入すると、<code>link_to_add_association</code>と<code>link_to_remove_association</code>関数が使えるようになります。 <code>formtastic</code> + 自作ヘルパー関数との違いは関数名だけで、引数の使い方も全く同じです。 <code>link_to_add_association</code>が<code>link_to_add_fields</code>に、 <code>link_to_remove_association</code>が<code>link_to_remove_fields</code>に対応しています。</p><p><code>cocoon</code>自体がRailsCastsの内容を参考にしているのでしょうね。</p><h2>Conclusion</h2><p>今のところ3番目の<code>cocoon</code>を使った実装が一番簡単じゃないかなーと思います。 <code>activeadmin</code>は<code>has_many</code>を呼ぶと勝手に、動的なフォーム要素の追加ボタンを差しこんでくれるけど、 削除機能はイマイチ君・・・</p><p><code>activeadmin</code>だけで完結するようになれば良いのだけど・・・</p><h2>References</h2><ul><li><a href="http://guides.rubyonrails.org/form_helpers.html#building-complex-forms">[RailsGuides] Building Complex Forms</a></li><li><a href="http://railscasts.com/episodes/196-nested-model-form-part-1">[RailsCasts] Nested Model Form Part 1</a></li><li><a href="http://railscasts.com/episodes/197-nested-model-form-part-2">[RailsCasts] Nested Model Form Part 2</a></li><li><a href="http://kray.jp/blog/has-many-through-nested-object-forms/">[Rails] Nested Object Forms を使って多対多の関係をスマートに編集 </a></li><li><a href="http://o.inchiki.jp/obbr/81">Railsでネストしたモデルをまとめて受け取って保存する</a></li><li><a href="https://github.com/nathanvda/cocoon">[GitHub] cocoon</a></li></ul><p><section class="ads"><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング"/></a></div><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技"/></a></div></section></p> ]]></content> </entry> <entry><title type="html"><![CDATA[[Rails] ActiveAdmin + cocoon を使い始めた際にハマったこと]]></title><link href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/"/> <updated>2013-08-01T21:25:00+09:00</updated> <id>http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem</id> <content type="html"><![CDATA[<h2>Environment</h2><p><code> Mac OSX 10.7.5 (Lion) ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2] Rails 3.2.13 [Gems] activeadmin (0.6.0) formtastic (2.2.1) cocoon (1.2.0) </code></p><h2>Issues</h2><ul><li><p><code>Missing partial</code> エラー</p></li><li><p><code>undefined local variable or method</code> エラー</p></li><li><p><code>link_to_add_association</code>の永久ループ</p></li><li><p>show画面やedit画面にアップロードした画像を表示させたい</p><ul><li>アップロードできても確認ができないとねえ・・</li><li>これは<code>cocoon</code>というより<code>formtastic</code>の使い方の問題かな</li></ul></li></ul><h2>Solution &amp; How to</h2><h3>Missing partial エラー</h3><h4>partialに分割する必要がある</h4><p><code>render_association</code>で呼び出すため。</p><p><code>link_to_add_association -&gt; render_association</code> ```ruby vendor/bundle/ruby/1.9.1/gems/cocoon-1.2.0/lib/cocoon/view_helpers.rb#L.34</p><pre><code>def render_association(association, f, new_object, render_options={}, custom_partial=nil)
+</code></pre>
+
+<p>```</p>
+
+<p><code>cocoon</code>を導入すると、<code>link_to_add_association</code>と<code>link_to_remove_association</code>関数が使えるようになります。
+<code>formtastic</code> + 自作ヘルパー関数との違いは関数名だけで、引数の使い方も全く同じです。
+<code>link_to_add_association</code>が<code>link_to_add_fields</code>に、
+<code>link_to_remove_association</code>が<code>link_to_remove_fields</code>に対応しています。</p>
+
+<p><code>cocoon</code>自体がRailsCastsの内容を参考にしているのでしょうね。</p>
+
+<h2>Conclusion</h2>
+
+<p>今のところ3番目の<code>cocoon</code>を使った実装が一番簡単じゃないかなーと思います。
+<code>activeadmin</code>は<code>has_many</code>を呼ぶと勝手に、動的なフォーム要素の追加ボタンを差しこんでくれるけど、
+削除機能はイマイチ君・・・</p>
+
+<p><code>activeadmin</code>だけで完結するようになれば良いのだけど・・・</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/form_helpers.html#building-complex-forms">[RailsGuides] Building Complex Forms</a></li>
+<li><a href="http://railscasts.com/episodes/196-nested-model-form-part-1">[RailsCasts] Nested Model Form Part 1</a></li>
+<li><a href="http://railscasts.com/episodes/197-nested-model-form-part-2">[RailsCasts] Nested Model Form Part 2</a></li>
+<li><a href="http://kray.jp/blog/has-many-through-nested-object-forms/">[Rails] Nested Object Forms を使って多対多の関係をスマートに編集 </a></li>
+<li><a href="http://o.inchiki.jp/obbr/81">Railsでネストしたモデルをまとめて受け取って保存する</a></li>
+<li><a href="https://github.com/nathanvda/cocoon">[GitHub] cocoon</a></li>
+</ul>
+
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] ActiveAdmin + cocoon を使い始めた際にハマったこと]]></title>
+    <link href="http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/"/>
+    <updated>2013-08-01T21:25:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+  activeadmin (0.6.0)
+  formtastic (2.2.1)
+  cocoon (1.2.0)
+</code></p>
+
+<h2>Issues</h2>
+
+<ul>
+<li><p><code>Missing partial</code> エラー</p></li>
+<li><p><code>undefined local variable or method</code> エラー</p></li>
+<li><p><code>link_to_add_association</code>の永久ループ</p></li>
+<li><p>show画面やedit画面にアップロードした画像を表示させたい</p>
+
+<ul>
+<li>アップロードできても確認ができないとねえ・・</li>
+<li>これは<code>cocoon</code>というより<code>formtastic</code>の使い方の問題かな</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Solution &amp; How to</h2>
+
+<h3>Missing partial エラー</h3>
+
+<h4>partialに分割する必要がある</h4>
+
+<p><code>render_association</code>で呼び出すため。</p>
+
+<p><code>link_to_add_association -&gt; render_association</code>
+```ruby vendor/bundle/ruby/1.9.1/gems/cocoon-1.2.0/lib/cocoon/view_helpers.rb#L.34</p>
+
+<pre><code>def render_association(association, f, new_object, render_options={}, custom_partial=nil)
   partial = get_partial_path(custom_partial, association)
   ...
 end
-</code></pre><p>```</p><h4>partialの名前に注意（単数形であること）</h4><p><code>get_partial_path</code>が単数系を期待しているため。</p><p><code>link_to_add_association -&gt; render_association -&gt; get_partial_path</code> ```ruby vendor/bundle/ruby/1.9.1/gems/cocoon-1.2.0/lib/cocoon/view_helpers.rb#L.98</p><pre><code>def get_partial_path(partial, association)
+</code></pre>
+
+<p>```</p>
+
+<h4>partialの名前に注意（単数形であること）</h4>
+
+<p><code>get_partial_path</code>が単数系を期待しているため。</p>
+
+<p><code>link_to_add_association -&gt; render_association -&gt; get_partial_path</code>
+```ruby vendor/bundle/ruby/1.9.1/gems/cocoon-1.2.0/lib/cocoon/view_helpers.rb#L.98</p>
+
+<pre><code>def get_partial_path(partial, association)
   partial ? partial : association.to_s.singularize + "_fields"
 end
-</code></pre><p>```</p><h3>undefined local variable or method エラー</h3><p><code>link_to_add_association</code>と同じパーシャルを使うので、<code>link_to_add_association</code>の引数と同じ名前のローカル変数を割り当てなくてはいけない。</p><p>当然パーシャル側の変数も合わせる。</p><p>```haml _form.html.haml</p><pre><code>.attachments_fields
+</code></pre>
+
+<p>```</p>
+
+<h3>undefined local variable or method エラー</h3>
+
+<p><code>link_to_add_association</code>と同じパーシャルを使うので、<code>link_to_add_association</code>の引数と同じ名前のローカル変数を割り当てなくてはいけない。</p>
+
+<p>当然パーシャル側の変数も合わせる。</p>
+
+<p>```haml _form.html.haml</p>
+
+<pre><code>.attachments_fields
   = f.semantic_fields_for :attachments do |att|
     = render 'attachment_fields',  :f =&gt; att # attを f に割り当てる
   .links
     = link_to_add_association 'add image',  f,  :attachments # f を割り当てる
-</code></pre><p>```</p><p>```haml _attachment_fields.html.haml</p><pre><code>.nested-fields
+</code></pre>
+
+<p>```</p>
+
+<p>```haml _attachment_fields.html.haml</p>
+
+<pre><code>.nested-fields
   = f.inputs do # f に固定する
     = f.input :attachment, as: :file
     = link_to_remove_association "remove image", f
-</code></pre><p>```</p><h3>link_to_add_associationの永久ループ</h3><p><code>link_to_add_association</code>の置き場所がまずかった。</p><p><code>f.semantic_fields_for</code>と同じ階層にいなくてはいけない。</p><p>```haml NG pattern</p><pre><code>  = f.semantic_fields_for :attachments do |att|
+</code></pre>
+
+<p>```</p>
+
+<h3>link_to_add_associationの永久ループ</h3>
+
+<p><code>link_to_add_association</code>の置き場所がまずかった。</p>
+
+<p><code>f.semantic_fields_for</code>と同じ階層にいなくてはいけない。</p>
+
+<p>```haml NG pattern</p>
+
+<pre><code>  = f.semantic_fields_for :attachments do |att|
     = render 'attachment_fields', :f =&gt; att
     .links
       = link_to_add_association 'add image', f, :attachments
-</code></pre><p><code> </code>haml OK pattern</p><pre><code>  = f.semantic_fields_for :attachments do |att|
+</code></pre>
+
+<p><code>
+</code>haml OK pattern</p>
+
+<pre><code>  = f.semantic_fields_for :attachments do |att|
     = render 'attachment_fields', :f =&gt; att
   .links
     = link_to_add_association 'add image', f, :attachments
-</code></pre><p>```</p><h3>show画面やedit画面にアップロードした画像を表示させたい</h3><h4>show画面の場合</h4><p><code>image_tag</code>を使った。 ```ruby app/admin/works.rb ActiveAdmin.register Work do show do |work|</p><pre><code>div work.title
+</code></pre>
+
+<p>```</p>
+
+<h3>show画面やedit画面にアップロードした画像を表示させたい</h3>
+
+<h4>show画面の場合</h4>
+
+<p><code>image_tag</code>を使った。
+```ruby app/admin/works.rb
+ActiveAdmin.register Work do
+  show do |work|</p>
+
+<pre><code>div work.title
 work.attachments.each do |att|
   div image_tag att.attachment_url.to_s
 end
-</code></pre><p> end … end ```</p><h4>edit画面の場合</h4><p><code>formtastic</code>の領域なので、<code>template_tag</code>を使った。 ```haml app/views/admin/works/_attachment_fields.html.haml = f.inputs do</p><pre><code>= f.input :attachment, as: :file
+</code></pre>
+
+<p>  end
+  &hellip;
+end
+```</p>
+
+<h4>edit画面の場合</h4>
+
+<p><code>formtastic</code>の領域なので、<code>template_tag</code>を使った。
+```haml app/views/admin/works/_attachment_fields.html.haml
+  = f.inputs do</p>
+
+<pre><code>= f.input :attachment, as: :file
 = f.template.image_tag f.object.attachment_url.presence || nil
 = link_to_remove_association "remove image", f
-</code></pre><p>```</p><h2>Mutter</h2><p>なんか・・<code>link_to_add_association</code>に依存しすぎな気がする・・</p><h2>References</h2><ul><li><a href="https://github.com/nathanvda/cocoon">[GitHub] cocoon</a></li></ul><p><section class="ads"><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング"/></a></div><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技"/></a></div></section></p> ]]></content> </entry> <entry><title type="html"><![CDATA[inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title><link href="http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/"/> <updated>2013-07-29T11:41:00+09:00</updated> <id>http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources</id> <content type="html"><![CDATA[<h2>Environment</h2><p><code> Mac OSX 10.7.5 (Lion) ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2] Rails 3.2.13 [Gems] activeadmin (0.6.0) inherited_resources (1.4.0) </code></p><h2>Issues</h2><p><code>active_admin</code>をインストールした後から，<code>scaffold</code>や<code>rails g controller</code>を実行すると，必ず自動生成されたコントローラが，<code>InheritedResources</code>を継承した状態になっている． <code>inherited_resources</code>を使いたくない場面もあるので，デフォルトでこの状態になるのは好ましくない．</p><h3>Factor</h3><ul><li><code>active_admin</code>をインストールすると，<code>inherited_resources</code>もインストールされる．</li><li><code>inherited_resources</code>がデフォルトの<code>scaffold</code>の挙動を書き換える</li></ul><p>以下の<code>config.app_generators</code>の部分で，<code>:inherited_resources_controller</code>を設定している． ```ruby vendor/bundle/ruby/1.9.1/gems/inherited_resources-1.4.0/lib/inherited_resources.rb#L25 class Railtie &lt; ::Rails::Engine config.inherited_resources = InheritedResources if config.respond_to?(:app_generators)</p><pre><code>config.app_generators.scaffold_controller = :inherited_resources_controller
-</code></pre><p> else</p><pre><code>config.generators.scaffold_controller = :inherited_resources_controller
-</code></pre><p> end end ```</p><h2>Solution</h2><ul><li><code>config/application.rb</code>にコードを追加する</li></ul><h2>How to</h2><p><code>cofig/application.rb</code>に以下のコードを追加する <code>ruby config/application.rb class Application &lt; Rails::Application config.app_generators.scaffold_controller = :scaffold_controller # 追加 end </code></p><p><code>:scaffold_controller</code>の元ネタはどこだよということで探してみると，<br/> <code>vendor/bundle/ruby/1.9.1/gems/railties-3.2.11/lib/rails/generators.rb</code>で見つかった．</p><p>```ruby vendor/bundle/ruby/1.9.1/gems/railties-3.2.11/lib/rails/generators.rb#L50 DEFAULT_OPTIONS = { :rails => {</p><pre><code>....
+</code></pre>
+
+<p>```</p>
+
+<h2>Mutter</h2>
+
+<p>なんか・・<code>link_to_add_association</code>に依存しすぎな気がする・・</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/nathanvda/cocoon">[GitHub] cocoon</a></li>
+</ul>
+
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/"/>
+    <updated>2013-07-29T11:41:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+  activeadmin (0.6.0)
+  inherited_resources (1.4.0)
+</code></p>
+
+<h2>Issues</h2>
+
+<p><code>active_admin</code>をインストールした後から，<code>scaffold</code>や<code>rails g controller</code>を実行すると，必ず自動生成されたコントローラが，<code>InheritedResources</code>を継承した状態になっている．
+<code>inherited_resources</code>を使いたくない場面もあるので，デフォルトでこの状態になるのは好ましくない．</p>
+
+<h3>Factor</h3>
+
+<ul>
+<li><code>active_admin</code>をインストールすると，<code>inherited_resources</code>もインストールされる．</li>
+<li><code>inherited_resources</code>がデフォルトの<code>scaffold</code>の挙動を書き換える</li>
+</ul>
+
+
+<p>以下の<code>config.app_generators</code>の部分で，<code>:inherited_resources_controller</code>を設定している．
+```ruby vendor/bundle/ruby/1.9.1/gems/inherited_resources-1.4.0/lib/inherited_resources.rb#L25
+class Railtie &lt; ::Rails::Engine
+  config.inherited_resources = InheritedResources
+  if config.respond_to?(:app_generators)</p>
+
+<pre><code>config.app_generators.scaffold_controller = :inherited_resources_controller
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>config.generators.scaffold_controller = :inherited_resources_controller
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>config/application.rb</code>にコードを追加する</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<p><code>cofig/application.rb</code>に以下のコードを追加する
+<code>ruby config/application.rb
+class Application &lt; Rails::Application
+  config.app_generators.scaffold_controller = :scaffold_controller # 追加
+end
+</code></p>
+
+<p><code>:scaffold_controller</code>の元ネタはどこだよということで探してみると，<br/>
+<code>vendor/bundle/ruby/1.9.1/gems/railties-3.2.11/lib/rails/generators.rb</code>で見つかった．</p>
+
+<p>```ruby vendor/bundle/ruby/1.9.1/gems/railties-3.2.11/lib/rails/generators.rb#L50
+DEFAULT_OPTIONS = {
+  :rails => {</p>
+
+<pre><code>....
 :scaffold_controller =&gt; :scaffold_controller,
 ...
-</code></pre><p> }, …. } <code>`` </code>inherited_resources<code>が書き換えてるのはこの</code>DEFAULT_OPTIONS<code>の値なので， それを元の値である</code>:scaffold_controller`に戻せば良い．</p><h3>Doubt</h3><h4>どうしてこの方法で<code>config</code>の値を再設定できるのか</h4><p>Railsの初期化の順序的に<code>config/boot.rb(load gems) -&gt; config/application.rb</code>だから． （間違っていたら指摘してください＞＜；）</p><h4><code>gems</code>の中での読み込み順</h4><p>これって<code>inherited_resources</code>の読み込みが<code>railties</code>より先か後かで挙動が変わるのだろうか・・<br/> この辺りの<code>Rails</code>のデフォルトの挙動を上書きする辺りがいまいちしっくりこない・・</p><h2>References</h2><ul><li><a href="https://github.com/josevalim/inherited_resources/issues/195">[GitHub] any way to permit ‘rails scaffold’ to work normally if inherited_resources used by another gem?</a></li><li><a href="http://guides.rubyonrails.org/generators.html">[RailsGuides] generators</a></li><li><a href="http://guides.rubyonrails.org/engines.html">[RailsGuides] engines</a></li></ul><p><section class="ads"><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング"/></a></div><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技"/></a></div></section></p> ]]></content> </entry> <entry><title type="html"><![CDATA[CarrierWaveからAmazon S3に画像アップロードできない]]></title><link href="http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/"/> <updated>2013-07-14T20:18:00+09:00</updated> <id>http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3</id> <content type="html"><![CDATA[<h2>Environment</h2><p><code> Mac OSX 10.7.5 (Lion) ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2] Rails 3.2.13 [Gems] CarrierWave (0.8.0) fog (1.12.1) </code></p><h2>Issues</h2><p><a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a>等という記事を書いておきながら，<br/> 以下のエラーが表示され，全くアップロードができない．</p><p><code> bad URI(is not URI?) </code></p><h2>Solution</h2><p>Carrierwaveの設定(initializer)を見直す．</p><ul><li><code>fog_credentials</code>の<code>:host</code>と<code>:endpoint</code>は特に指定がない場合はコメントアウトする</li></ul><p>例えば以下の設定ファイルだとエラーで死にます．</p><p>``` ruby config/initializer/carrierwave.rb CarrierWave.configure do |config| config.fog_credentials = {</p><pre><code>:provider               =&gt; 'AWS',                           # required
+</code></pre>
+
+<p>  },
+  &hellip;.
+}
+<code>``
+</code>inherited_resources<code>が書き換えてるのはこの</code>DEFAULT_OPTIONS<code>の値なので，  
+それを元の値である</code>:scaffold_controller`に戻せば良い．</p>
+
+<h3>Doubt</h3>
+
+<h4>どうしてこの方法で<code>config</code>の値を再設定できるのか</h4>
+
+<p>Railsの初期化の順序的に<code>config/boot.rb(load gems) -&gt; config/application.rb</code>だから．
+（間違っていたら指摘してください＞＜；）</p>
+
+<h4><code>gems</code>の中での読み込み順</h4>
+
+<p>これって<code>inherited_resources</code>の読み込みが<code>railties</code>より先か後かで挙動が変わるのだろうか・・<br/>
+この辺りの<code>Rails</code>のデフォルトの挙動を上書きする辺りがいまいちしっくりこない・・</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="https://github.com/josevalim/inherited_resources/issues/195">[GitHub] any way to permit &lsquo;rails scaffold&rsquo; to work normally if inherited_resources used by another gem?</a></li>
+<li><a href="http://guides.rubyonrails.org/generators.html">[RailsGuides] generators</a></li>
+<li><a href="http://guides.rubyonrails.org/engines.html">[RailsGuides] engines</a></li>
+</ul>
+
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CarrierWaveからAmazon S3に画像アップロードできない]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/"/>
+    <updated>2013-07-14T20:18:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+  CarrierWave (0.8.0)
+  fog (1.12.1)
+</code></p>
+
+<h2>Issues</h2>
+
+<p><a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">CarrierWaveでアップロード先をAmazon S3に設定する方法</a>等という記事を書いておきながら，<br/>
+以下のエラーが表示され，全くアップロードができない．</p>
+
+<p><code>
+bad URI(is not URI?)
+</code></p>
+
+<h2>Solution</h2>
+
+<p>Carrierwaveの設定(initializer)を見直す．</p>
+
+<ul>
+<li><code>fog_credentials</code>の<code>:host</code>と<code>:endpoint</code>は特に指定がない場合はコメントアウトする</li>
+</ul>
+
+
+<p>例えば以下の設定ファイルだとエラーで死にます．</p>
+
+<p>``` ruby config/initializer/carrierwave.rb
+CarrierWave.configure do |config|
+  config.fog_credentials = {</p>
+
+<pre><code>:provider               =&gt; 'AWS',                           # required
 :aws_access_key_id      =&gt; ENV["AWS_S3_KEY_ID"],            # required
 :aws_secret_access_key  =&gt; ENV["AWS_S3_SECRET_ACCESS_KEY"], # required
 :region                 =&gt; 'ap-northeast-1',                # optional,  defaults to 'us-east-1'
 :host                   =&gt; '',                              # optional,  defaults to nil
 :endpoint               =&gt; ''                               # optional,  defaults to nil
-</code></pre><p> } config.fog_directory = ‘myapp-carrierwave’ # required config.fog_public = false # optional, defaults to true config.fog_attributes = {‘Cache-Control’=>‘max-age=82800’} # optional, defaults to {} end ```</p><p>これのどこが問題かというと，<code>fog_credentials</code>の<code>:host</code>と<code>:endpoint</code>が<code>empty string</code>であるところ，<br/> ソースのコメントを見ると（元ソースはCarrierWaveのドキュメントから），<br/> optionalと書いてある．<br/> つまりここは何も書かなくても動くんだ！という認識だったのだけど，そこが甘かった．<br/> <code>何も書かなくていい ≠ empty string</code>ということなので，ここには<code>nil</code>を指定するか，<br/> 行ごとコメントアウトしておかなければならない．</p><p>CarrierwaveからFogへのエラースタックを追いかけて行くと，</p><p><code>ruby lib/fog/aws/storage.rb 411 @scheme = options[:scheme] || DEFAULT_SCHEME 412 @port = options[:port] || DEFAULT_SCHEME_PORT[@scheme] 413 @path_style = options[:path_style] || false 414 end 415 416 @connection = Fog::Connection.new("#{@scheme}://#{@host}:#{@port}#{@path}", @persistent, @connection_options) 417 end 418 419 def reload 420 @connection.reset 421 end </code></p><p><code>options</code>で渡ってくる値が<code>nil</code>であれば<code>DEFAULT_</code>値が指定される．<br/> しかしここで<code>empty string</code>が渡ってくると，<code>@scheme</code>等の値が<code>empty string</code>になってしまう．<br/> その結果<code>@connection</code>の組立に失敗して，アップロード先が見つからねーと怒られるみたいです．</p><p>私の場合は，特にこれらの値の指定は不要だったため，<br/> 行ごとコメントアウトしたところ，うまくアップロードできるようになりました！:)</p><h2>References</h2><ul><li><a href="http://stackoverflow.com/questions/15717368/uploading-image-to-s3-using-carrierwave-and-fogs-bad-uri">[Stackoverflow] uploading image to s3 using carrierwave and fogs bad uri</a></li><li><a href="https://github.com/carrierwaveuploader/carrierwave">[GitHub] CarrierWave</a></li></ul><p><section class="ads"><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング"/></a></div><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技"/></a></div></section></p> ]]></content> </entry> <entry><title type="html"><![CDATA[CarrierWaveでアップロード先をAmazon S3に設定する方法]]></title><link href="http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/"/> <updated>2013-07-14T17:25:00+09:00</updated> <id>http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3</id> <content type="html"><![CDATA[<h2>Environment</h2><p><code> Mac OSX 10.7.5 (Lion) ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2] Rails 3.2.13 [Gems] CarrierWave (0.8.0) fog (1.12.1) </code></p><h2>Precondition</h2><ul><li><p><code>Amazon S3</code>を利用するためには，<code>Amazon Web Services (AWS)</code>への登録が必要です．</p><ul><li><a href="/blog/2013/07/13/how-to-register-for-aws/">AWSへの登録記事はこちら</a></li></ul></li><li><p><code>CarrierWave</code>の設定時に，<code>Amazon S3</code>のBucket情報が必要なため，Bucketが作成されていなければなりません．</p><ul><li><a href="/blog/2013/07/14/how-to-create-bucket-on-amazon-s3/">Amazon S3にBucketを作成する方法はこちら</a></li></ul></li></ul><h2>Issues</h2><p>CarrierWaveのアップロード先をAmazon S3に設定したい．</p><p>Herokuを使ってRailsアプリを運用しているものの, Herokuではファイルをサーバ上に保存することができないため，<br/> 画像アップロード等は別のサーバに行う必要があります．<br/> そこで今回は，非常に低価格でクラウドストレージを扱うことのできる<code>Amazon S3</code>をアップロード先に指定しました．</p><h2>How to</h2><h3>Gemを追加する</h3><p><code>text Gemfile gem "fog", "~&gt; 1.3.1" </code></p><h3>initializerを追加する</h3><p>ここに<code>Amazon S3</code>の情報を設定します．<br/> ``` ruby config/initializer/carrierwave.rb CarrierWave.configure do |config| config.fog_credentials = {</p><pre><code>:provider               =&gt; 'AWS',                           # required
+</code></pre>
+
+<p>  }
+  config.fog_directory  = &lsquo;myapp-carrierwave&rsquo;                # required
+  config.fog_public     = false                              # optional,  defaults to true
+  config.fog_attributes = {&lsquo;Cache-Control&rsquo;=>&lsquo;max-age=82800&rsquo;} # optional,  defaults to {}
+end
+```</p>
+
+<p>これのどこが問題かというと，<code>fog_credentials</code>の<code>:host</code>と<code>:endpoint</code>が<code>empty string</code>であるところ，<br/>
+ソースのコメントを見ると（元ソースはCarrierWaveのドキュメントから），<br/>
+optionalと書いてある．<br/>
+つまりここは何も書かなくても動くんだ！という認識だったのだけど，そこが甘かった．<br/>
+<code>何も書かなくていい ≠ empty string</code>ということなので，ここには<code>nil</code>を指定するか，<br/>
+行ごとコメントアウトしておかなければならない．</p>
+
+<p>CarrierwaveからFogへのエラースタックを追いかけて行くと，</p>
+
+<p><code>ruby lib/fog/aws/storage.rb
+  411             @scheme     = options[:scheme]      || DEFAULT_SCHEME
+  412             @port       = options[:port]        || DEFAULT_SCHEME_PORT[@scheme]
+  413             @path_style = options[:path_style]  || false
+  414           end
+  415
+  416           @connection = Fog::Connection.new("#{@scheme}://#{@host}:#{@port}#{@path}",  @persistent,  @connection_options)
+  417         end
+  418
+  419         def reload
+  420           @connection.reset
+  421         end
+</code></p>
+
+<p><code>options</code>で渡ってくる値が<code>nil</code>であれば<code>DEFAULT_</code>値が指定される．<br/>
+しかしここで<code>empty string</code>が渡ってくると，<code>@scheme</code>等の値が<code>empty string</code>になってしまう．<br/>
+その結果<code>@connection</code>の組立に失敗して，アップロード先が見つからねーと怒られるみたいです．</p>
+
+<p>私の場合は，特にこれらの値の指定は不要だったため，<br/>
+行ごとコメントアウトしたところ，うまくアップロードできるようになりました！:)</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/15717368/uploading-image-to-s3-using-carrierwave-and-fogs-bad-uri">[Stackoverflow] uploading image to s3 using carrierwave and fogs bad uri</a></li>
+<li><a href="https://github.com/carrierwaveuploader/carrierwave">[GitHub] CarrierWave</a></li>
+</ul>
+
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CarrierWaveでアップロード先をAmazon S3に設定する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/"/>
+    <updated>2013-07-14T17:25:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+  CarrierWave (0.8.0)
+  fog (1.12.1)
+</code></p>
+
+<h2>Precondition</h2>
+
+<ul>
+<li><p><code>Amazon S3</code>を利用するためには，<code>Amazon Web Services (AWS)</code>への登録が必要です．</p>
+
+<ul>
+<li><a href="/blog/2013/07/13/how-to-register-for-aws/">AWSへの登録記事はこちら</a></li>
+</ul>
+</li>
+<li><p><code>CarrierWave</code>の設定時に，<code>Amazon S3</code>のBucket情報が必要なため，Bucketが作成されていなければなりません．</p>
+
+<ul>
+<li><a href="/blog/2013/07/14/how-to-create-bucket-on-amazon-s3/">Amazon S3にBucketを作成する方法はこちら</a></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Issues</h2>
+
+<p>CarrierWaveのアップロード先をAmazon S3に設定したい．</p>
+
+<p>Herokuを使ってRailsアプリを運用しているものの, Herokuではファイルをサーバ上に保存することができないため，<br/>
+画像アップロード等は別のサーバに行う必要があります．<br/>
+そこで今回は，非常に低価格でクラウドストレージを扱うことのできる<code>Amazon S3</code>をアップロード先に指定しました．</p>
+
+<h2>How to</h2>
+
+<h3>Gemを追加する</h3>
+
+<p><code>text Gemfile
+gem "fog",  "~&gt; 1.3.1"
+</code></p>
+
+<h3>initializerを追加する</h3>
+
+<p>ここに<code>Amazon S3</code>の情報を設定します．<br/>
+``` ruby config/initializer/carrierwave.rb
+CarrierWave.configure do |config|
+  config.fog_credentials = {</p>
+
+<pre><code>:provider               =&gt; 'AWS',                           # required
 :aws_access_key_id      =&gt; ENV["AWS_S3_KEY_ID"],            # required
 :aws_secret_access_key  =&gt; ENV["AWS_S3_SECRET_ACCESS_KEY"], # required
 :region                 =&gt; 'ap-northeast-1',                # optional,  defaults to 'us-east-1'
 # :host                   =&gt; '',                              # optional,  defaults to nil
 # :endpoint               =&gt; ''                               # optional,  defaults to nil
-</code></pre><p> } config.fog_directory = ‘myapp-carrierwave’ # required config.fog_public = false # optional, defaults to true config.fog_attributes = {‘Cache-Control’=>‘max-age=82800’} # optional, defaults to {} end ```</p><ul><li>IDとシークレットアクセスキーは，環境変数に設定しておいたほうが良いです．<ul><li>ベタ書きだとGitHubにソースコードをアップしている際等に危険です．</li></ul></li><li><code>:region</code>の入力は任意ですが，'tokyo'リージョンを使用している場合は変更が必要です． => <code>ap-northeast-1</code></li><li><code>config.fog_directory</code>はBucketの名前です．</li><li><code>config.fog_public</code>は<code>false</code>に設定しておくことで，Rails経由でのアクセスしか<code>Amazon S3</code>上のファイルにアクセスできなくなります．</li></ul><h3>Uploaderクラスのプロパティ値を変更する</h3><p>``` ruby APP_ROOT_PATH/app/uploaders/image_uploader.rb</p><h1>encoding: utf-8</h1><p>class ImageUploader &lt; CarrierWave::Uploader::Base # storage :file storage :fog end ```</p><h2>References</h2><p><a href="https://github.com/carrierwaveuploader/carrierwave">[GitHub] carrierwave</a></p><p><section class="ads"><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング"/></a></div><div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技"/></a></div></section></p> ]]></content> </entry> </feed>
+</code></pre>
+
+<p>  }
+  config.fog_directory  = &lsquo;myapp-carrierwave&rsquo;                # required
+  config.fog_public     = false                              # optional,  defaults to true
+  config.fog_attributes = {&lsquo;Cache-Control&rsquo;=>&lsquo;max-age=82800&rsquo;} # optional,  defaults to {}
+end
+```</p>
+
+<ul>
+<li>IDとシークレットアクセスキーは，環境変数に設定しておいたほうが良いです．
+
+<ul>
+<li>ベタ書きだとGitHubにソースコードをアップしている際等に危険です．</li>
+</ul>
+</li>
+<li><code>:region</code>の入力は任意ですが，'tokyo'リージョンを使用している場合は変更が必要です． => <code>ap-northeast-1</code></li>
+<li><code>config.fog_directory</code>はBucketの名前です．</li>
+<li><code>config.fog_public</code>は<code>false</code>に設定しておくことで，Rails経由でのアクセスしか<code>Amazon S3</code>上のファイルにアクセスできなくなります．</li>
+</ul>
+
+
+<h3>Uploaderクラスのプロパティ値を変更する</h3>
+
+<p>``` ruby APP_ROOT_PATH/app/uploaders/image_uploader.rb</p>
+
+<h1>encoding: utf-8</h1>
+
+<p>class ImageUploader &lt; CarrierWave::Uploader::Base
+  # storage :file
+  storage :fog
+end
+```</p>
+
+<h2>References</h2>
+
+<p><a href="https://github.com/carrierwaveuploader/carrierwave">[GitHub] carrierwave</a></p>
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
+  
+</feed>
