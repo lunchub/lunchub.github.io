@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scribble | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/scribble/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-06T19:58:23+09:00</updated>
+  <updated>2013-08-26T20:40:14+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] formtasticでSELECTタグを生成する際、SELECTタグの先頭に空行を自動挿入させない方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/08/26/without-blank-fields-in-select-tag-on-formtastic/"/>
+    <updated>2013-08-26T20:12:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/08/26/without-blank-fields-in-select-tag-on-formtastic</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+[Gems]
+  formtastic (2.2.1)
+</code></p>
+
+<h2>Issues</h2>
+
+<p><code>formtastic</code>を使用してSELECTタグを生成する際に、SELECTタグの先頭に空行を自動挿入させたくない。</p>
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>:include_blank</code>オプションを使う</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3><code>:include_blank</code>オプションを使う</h3>
+
+<p>こんな感じにする。
+<code>
+= f.input :author, :as =&gt; :select, :include_blank =&gt; false
+</code></p>
+
+<p>これがREADMEに載っていない理由は謎。</p>
+
+<h2>References</h2>
+
+<p><a href="https://github.com/justinfrench/formtastic/blob/master/lib/formtastic/helpers/input_helper.rb">[GitHub] formtastic source</a></p>
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AWSのアクセス情報を確認する方法]]></title>

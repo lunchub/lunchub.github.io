@@ -121,12 +121,18 @@
         <lastmod>2013-08-06T19:57:33+09:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://lunchub.github.io/blog/2013/08/26/without-blank-fields-in-select-tag-on-formtastic/
+        </loc>
+        <lastmod>2013-08-26T20:37:51+09:00</lastmod>
+    </url>
+    <url>
         <loc>http://lunchub.github.io/blog/archives/</loc>
-        <lastmod>2013-08-04T23:48:35+09:00</lastmod>
+        <lastmod>2013-08-26T20:37:51+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/</loc>
-        <lastmod>2013-08-04T23:48:35+09:00</lastmod>
+        <lastmod>2013-08-26T20:37:51+09:00</lastmod>
     </url>
     <url>
         <loc>http://lunchub.github.io/profile/</loc>
