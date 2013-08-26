@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Unicorn | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/unicorn/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-26T20:40:14+09:00</updated>
+  <updated>2013-08-26T20:45:32+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
+    <title type="html"><![CDATA[[Rails] Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/"/>
     <updated>2013-06-26T18:38:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn</id>

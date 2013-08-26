@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-26T20:40:14+09:00</updated>
+  <updated>2013-08-26T20:45:32+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -660,7 +660,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
+    <title type="html"><![CDATA[[Rails] inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
     <link href="http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/"/>
     <updated>2013-07-29T11:41:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources</id>
@@ -958,7 +958,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[CarrierWaveからAmazon S3に画像アップロードできない]]></title>
+    <title type="html"><![CDATA[[Rails] CarrierWaveからAmazon S3に画像アップロードできない]]></title>
     <link href="http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/"/>
     <updated>2013-07-14T20:18:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3</id>
@@ -1091,7 +1091,7 @@ optionalと書いてある．<br/>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[CarrierWaveでアップロード先をAmazon S3に設定する方法]]></title>
+    <title type="html"><![CDATA[[Rails] CarrierWaveでアップロード先をAmazon S3に設定する方法]]></title>
     <link href="http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/"/>
     <updated>2013-07-14T17:25:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3</id>
@@ -1515,7 +1515,7 @@ optionalと書いてある．<br/>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
+    <title type="html"><![CDATA[[Rails] Rails + Unicornの環境でNew Relicにデータが送信されない]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn/"/>
     <updated>2013-06-26T18:38:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/26/hamari-on-installing-new-relic-to-rails-with-unicorn</id>
@@ -1790,7 +1790,7 @@ optionalと書いてある．<br/>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[RailsにNew Relicをインストールする]]></title>
+    <title type="html"><![CDATA[[Rails] RailsにNew Relicをインストールする]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-rails/"/>
     <updated>2013-06-26T16:01:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/26/installing-new-relic-to-rails</id>
@@ -1863,7 +1863,7 @@ optionalと書いてある．<br/>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[uninitialized constant Readline (NameError)]]></title>
+    <title type="html"><![CDATA[[Rails] uninitialized constant Readline (NameError)]]></title>
     <link href="http://lunchub.github.io/blog/2013/06/20/uninitialized-constant-readline-nameerror/"/>
     <updated>2013-06-20T15:56:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/06/20/uninitialized-constant-readline-nameerror</id>

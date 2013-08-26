@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Gems | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/gems/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-26T20:40:14+09:00</updated>
+  <updated>2013-08-26T20:45:32+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -512,7 +512,7 @@ end
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
+    <title type="html"><![CDATA[[Rails] inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法]]></title>
     <link href="http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/"/>
     <updated>2013-07-29T11:41:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources</id>
@@ -624,7 +624,7 @@ DEFAULT_OPTIONS = {
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[CarrierWaveからAmazon S3に画像アップロードできない]]></title>
+    <title type="html"><![CDATA[[Rails] CarrierWaveからAmazon S3に画像アップロードできない]]></title>
     <link href="http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/"/>
     <updated>2013-07-14T20:18:00+09:00</updated>
     <id>http://lunchub.github.io/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3</id>
