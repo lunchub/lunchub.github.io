@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-26T20:45:32+09:00</updated>
+  <updated>2013-09-03T22:04:04+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,94 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] モデルを登録する際に、他のモデルを同時に登録する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/08/30/how-to-save-model-together-with-related-model/"/>
+    <updated>2013-08-30T22:47:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/08/30/how-to-save-model-together-with-related-model</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<p><code>
+Mac OSX 10.7.5 (Lion)
+ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+Rails 3.2.13
+</code></p>
+
+<h2>Issues</h2>
+
+<p>モデルAの登録を行った際に、同時にモデルBの登録も行いたい。</p>
+
+<p>例：<br/>
+モデル「Task」とモデル「Notice」がある前提で、
+「Task」を追加した際に、「Notice」に「Task」が追加されたという内容を追加したい。</p>
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>ActiveRecord Callbacks</code>を使う
+
+<ul>
+<li>今回使用したのは<code>after_create</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3><code>ActiveRecord Callbacks</code>を使う</h3>
+
+<p><code>ActiveRecord</code>には豊富な<code>コールバック関数</code>が用意されていて、
+モデルの<code>登録</code> <code>更新</code> <code>検証</code> <code>削除</code>（厳密にはその前後）といったタイミングにおいて実行されるようになっている。</p>
+
+<p>そこで、<code>コールバック関数</code>に実行したい処理を登録しておくと、
+適切なタイミングで、処理を実行させることができる。</p>
+
+<p>また、実行したい処理は、複数登録することもできる。
+その場合、実行順序がトリッキーな感じなので参考リンクを参照。</p>
+
+<p>具体的には以下のコードで、「Task」を登録した際に、「Notice」に「Task」が追加されたという内容を登録できる。</p>
+
+<p>```ruby
+class Task &lt; ActiveRecord::Base
+  &hellip;
+  after_create :create_notice</p>
+
+<p>  def create_notice</p>
+
+<pre><code>notice = Notice.new
+notice.content = 'タスクを追加しました。'
+notice.save
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>Doubt</h3>
+
+<ul>
+<li><code>:dependent =&gt; :destroy</code>もこの仕組み使っているのだろうか</li>
+</ul>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/active_record_callbacks.html">[RailsGuides] Active Record Callbacks</a></li>
+<li><a href="http://techracho.bpsinc.jp/baba/2013_08_19/12657">Rails 4でcallback(before/after/around action)の実行順序おさらい</a></li>
+</ul>
+
+
+<p><section class="ads">
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Rails] formtasticでSELECTタグを生成する際、SELECTタグの先頭に空行を自動挿入させない方法]]></title>
@@ -613,79 +701,6 @@ DEFAULT_OPTIONS = {
 <li><a href="http://guides.rubyonrails.org/engines.html">[RailsGuides] engines</a></li>
 </ul>
 
-
-<p><section class="ads">
-<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
-
-<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
-
-</section></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[powを停止させる方法]]></title>
-    <link href="http://lunchub.github.io/blog/2013/07/23/how-to-stop-pow/"/>
-    <updated>2013-07-23T17:39:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/07/23/how-to-stop-pow</id>
-    <content type="html"><![CDATA[<h2>Environment</h2>
-
-<p><code>
-Mac OSX 10.7.5 (Lion)
-ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
-Rails 3.2.13
-pow 0.4.1
-Anvir 1.0.2
-[Gems]
-  powder 0.2.0
-</code></p>
-
-<h2>Issues</h2>
-
-<p><code>Mac OSX</code>上で<code>Rails</code>の開発を行う際，<code>pow</code>を利用しているものの，<br/>
-一時的に<code>Nginx</code>等のサーバを建てて使いたい場合に等に，<br/>
-<code>pow</code>のプロセスを停止しておきたい．<br/>
-※<code>kill</code>はしたくない・・</p>
-
-<h2>Solution</h2>
-
-<ul>
-<li><code>Anvir</code>を使う</li>
-<li><code>powder</code>を使う</li>
-</ul>
-
-
-<h2>How to</h2>
-
-<h3>Anvirを使う</h3>
-
-<p><a href="http://anvilformac.com/">こちらからAnvirをダウンロード</a>し，インストールする．<br/>
-インストールするとMacのステータスバーに<code>Anvir</code>のアイコンが表示される．<br/>
-アイコンをクリックすると，以下のようなミニウインドウが表示される．<br/>
-矢印で示したボタンをクリックすることで，<code>pow</code>のON/OFFを切り替えることができる．</p>
-
-<p><a href="/images/posts/2013/07/2013-07-23-18-12-58.jpg"><img src="/images/posts/2013/07/2013-07-23-18-12-58.jpg" alt="Anvir メニュー" /></a></p>
-
-<h3>powderを使う</h3>
-
-<p>gemをインストールする
-<code>bash
-gem install powder
-</code></p>
-
-<p>コンソールで以下のコマンドを実行することで，<code>pow</code>のON/OFFを切り替えることができる．
-```bash</p>
-
-<h1>start pow</h1>
-
-<p>powder up</p>
-
-<h1>stop pow</h1>
-
-<p>powder down
-```</p>
-
-<h2>References</h2>
 
 <p><section class="ads">
 <div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>

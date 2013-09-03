@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-08-26T20:45:32+09:00</updated>
+  <updated>2013-09-03T22:04:04+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Rails] モデルを登録する際に、他のモデルを同時に登録する方法]]></title>
+    <link href="http://lunchub.github.io/blog/2013/08/30/how-to-save-model-together-with-related-model/"/>
+    <updated>2013-08-30T22:47:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/08/30/how-to-save-model-together-with-related-model</id>
+    <content type="html"><![CDATA[<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<p>モデルAの登録を行った際に、同時にモデルBの登録も行いたい。</p>
+
+<p>例：<br/>
+モデル「Task」とモデル「Notice」がある前提で、
+「Task」を追加した際に、「Notice」に「Task」が追加されたという内容を追加したい。</p>
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>ActiveRecord Callbacks</code>を使う
+
+<ul>
+<li>今回使用したのは<code>after_create</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3><code>ActiveRecord Callbacks</code>を使う</h3>
+
+<p><code>ActiveRecord</code>には豊富な<code>コールバック関数</code>が用意されていて、
+モデルの<code>登録</code> <code>更新</code> <code>検証</code> <code>削除</code>（厳密にはその前後）といったタイミングにおいて実行されるようになっている。</p>
+
+<p>そこで、<code>コールバック関数</code>に実行したい処理を登録しておくと、
+適切なタイミングで、処理を実行させることができる。</p>
+
+<p>また、実行したい処理は、複数登録することもできる。
+その場合、実行順序がトリッキーな感じなので参考リンクを参照。</p>
+
+<p>具体的には以下のコードで、「Task」を登録した際に、「Notice」に「Task」が追加されたという内容を登録できる。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Task</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="n">after_create</span> <span class="ss">:create_notice</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create_notice</span>
+</span><span class='line'>    <span class="n">notice</span> <span class="o">=</span> <span class="no">Notice</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>    <span class="n">notice</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="s1">&#39;タスクを追加しました。&#39;</span>
+</span><span class='line'>    <span class="n">notice</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Doubt</h3>
+
+<ul>
+<li><code>:dependent =&gt; :destroy</code>もこの仕組み使っているのだろうか</li>
+</ul>
+
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://guides.rubyonrails.org/active_record_callbacks.html">[RailsGuides] Active Record Callbacks</a></li>
+<li><a href="http://techracho.bpsinc.jp/baba/2013_08_19/12657">Rails 4でcallback(before/after/around action)の実行順序おさらい</a></li>
+</ul>
+
+
+<p><section class="ads"></p>
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
+
+
+
+
+<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
+
+
+<p></section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Rails] formtasticでSELECTタグを生成する際、SELECTタグの先頭に空行を自動挿入させない方法]]></title>
@@ -2276,61 +2378,6 @@ Media Queriesで指定されているプロパティでオーバーライドさ�
 <li><a href="https://developer.mozilla.org/ja/docs/Web/Guide/CSS/Using_CSS_transforms">[MDN] CSS transforms の利用</a></li>
 <li><a href="http://www.css-lecture.com/log/css3/css3-transform.html">CSS3 変形処理を行う transform プロパティ</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[MySQLでUPDATE文のSETの値は行ごとに評価されている?]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/"/>
-    <updated>2013-06-13T19:56:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query</id>
-    <content type="html"><![CDATA[<h2>Issues</h2>
-
-<p>あるテーブルのカラムの値を書き換えたい場合は、<br/>
-単純に</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">UPDATE</span> <span class="ss">`table`</span> <span class="kt">SET</span> <span class="ss">`column`</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>という形でSQLを実行すれば良い。</p>
-
-<p>ここでvalueをランダムな値にしたい場合は、<br/>
-サブクエリを使って</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">UPDATE</span> <span class="ss">`table`</span> <span class="kt">SET</span> <span class="ss">`column`</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nf">ROUND</span><span class="p">(</span><span class="nf">RAND</span><span class="p">()</span><span class="o">*</span><span class="mi">10</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>にするのだけど、<br/>
-問題はこのサブクエリって行ごとに評価されるのかなという疑問があった。</p>
-
-<p>結論としては行ごとに評価されるのだけど、マニュアルみてもいまいちしっくりしない。
-Referencesに載せた内容だとなんとなく行ごとに評価されるんだなというのはわかるのだけど。。</p>
-
-<p>すごく基礎的なところがわかっていない気がする・・</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://dev.mysql.com/doc/refman/5.1/ja/update.html">UPDATE 構文</a></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>もし式の中で tbl_name からカラムにアクセスするなら、UPDATE はカラムの現在の値を利用します。
-</span><span class='line'>例えば、次のステートメントは age カラムを現在の値よりも1大きく設定します。
-</span><span class='line'>UPDATE persondata SET age=age+1;
-</span><span class='line'>単一テーブル UPDATE 割り当ては通常左から右に評価されます。
-</span><span class='line'>複合テーブルの更新に関しては、割り当てが特定の順番で行われるという保証はありません。
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
