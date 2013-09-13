@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scribble | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/scribble/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-09-03T22:04:04+09:00</updated>
+  <updated>2013-09-13T21:30:38+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,67 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[zshでrakeコマンドを実行するとエラーになる]]></title>
+    <link href="http://lunchub.github.io/blog/2013/09/13/how-to-avoid-rake-command-error-with-zsh/"/>
+    <updated>2013-09-13T20:18:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/09/13/how-to-avoid-rake-command-error-with-zsh</id>
+    <content type="html"><![CDATA[<h2>Issues</h2>
+
+<p><code>zsh</code>で<code>rake</code>コマンドを実行すると以下のようなエラーが表示される。</p>
+
+<p><code>bash zsh
+$ rake some_task:create[some_param]
+zsh: no matches found: some_task:create[some_param]
+</code></p>
+
+<h3>Factor</h3>
+
+<p><code>zsh</code>では<code>[]</code>がワイルドカード扱いとなってしまうため。
+上記の例だと次のような意味になる。</p>
+
+<p><code>text
+rake some_task:creates
+rake some_task:createo
+rake some_task:createm
+rake some_task:createe
+rake some_task:create_
+rake some_task:createp
+rake some_task:createa
+rake some_task:creater
+rake some_task:createa
+rake some_task:createm
+</code></p>
+
+<h2>Solution</h2>
+
+<ul>
+<li><code>[]</code>の前にバックスラッシュ<code>\</code>を置くことで回避する</li>
+<li>コマンド自体をシングルクォートで囲む</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<h3><code>[]</code>の前にバックスラッシュ<code>\</code>を置くことで回避する</h3>
+
+<p><code>bash zsh
+$ rake some_task:create\[some_param\]
+</code></p>
+
+<h3>コマンド自体をシングルクォートで囲む</h3>
+
+<p><code>bash zsh
+$ rake 'some_task:create[some_param]'
+</code></p>
+
+<h2>References</h2>
+
+<p><section class="ads">
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Rails] formtasticでSELECTタグを生成する際、SELECTタグの先頭に空行を自動挿入させない方法]]></title>
