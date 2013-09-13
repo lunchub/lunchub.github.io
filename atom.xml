@@ -4,7 +4,7 @@
   <title><![CDATA[function Blog() {};]]></title>
   <link href="http://lunchub.github.io/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-09-13T21:45:17+09:00</updated>
+  <updated>2013-09-13T22:25:16+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[how to improve generating a post faster on octopress]]></title>
+    <link href="http://lunchub.github.io/blog/2013/09/13/how-to-improve-generating-a-post-faster-on-octopress/"/>
+    <updated>2013-09-13T21:45:00+09:00</updated>
+    <id>http://lunchub.github.io/blog/2013/09/13/how-to-improve-generating-a-post-faster-on-octopress</id>
+    <content type="html"><![CDATA[<h2>Precondition</h2>
+
+<h2>Scribble</h2>
+
+<h2>Environment</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
+</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
+</span><span class='line'>Rails 3.2.13</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Issues</h2>
+
+<h3>Factor</h3>
+
+<h2>Solution</h2>
+
+<h2>How to</h2>
+
+<h3>Doubt</h3>
+
+<h2>Mutter</h2>
+
+<h2>Conclusion</h2>
+
+<h2>Recommended</h2>
+
+<h2>References</h2>
+
+<p><section class="ads">
+</section></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[zshでrakeコマンドを実行するとエラーになる]]></title>
@@ -2145,164 +2187,6 @@ Rubyだけで完結させようって主旨なのかな？<br/>
 <ul>
 <li><a href="https://github.com/luislavena/rb-readline/commit/d8b49a061eeb710c47bc92cc610e8f489c4fd447">[GitHub] Unload Readline before loading rb-readline</a></li>
 <li><a href="http://stackoverflow.com/questions/16288331/rails-3-uninitialized-constant-irbreadlineinputmethodreadline-nameerror-i">[stackoverflow] Rails 3: uninitialized constant IRB::ReadlineInputMethod::Readline (NameError) in Heroku</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Rails] ActiveAdminのインストールと初期設定でハマったこと]]></title>
-    <link href="http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/"/>
-    <updated>2013-06-17T12:43:00+09:00</updated>
-    <id>http://lunchub.github.io/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails</id>
-    <content type="html"><![CDATA[<h2>Environment</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Mac OSX 10.7.5 (Lion)
-</span><span class='line'>ruby 1.9.3p392 (2013-02-22 revision 39386) [x86_64-darwin11.4.2]
-</span><span class='line'>Rails 3.2.13
-</span><span class='line'>[gems]
-</span><span class='line'>jquery-rails (3.0.1)
-</span><span class='line'>jquery-ui-rails (4.0.3)
-</span><span class='line'>activeadmin (0.6.0)</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Issues</h2>
-
-<p>手っ取り早く管理画面を設置したくて<code>activeadmin</code>をインストールしたところ、<br/>
-初っ端からコケまくった。</p>
-
-<h3>&ldquo;uninitialized constant DashboardController&rdquo;</h3>
-
-<p><code>rails g active_admin:install</code>してとりあえず見るかーと、<br/>
-トップページアクセスしたら出るエラー。</p>
-
-<h3>&ldquo;couldn&rsquo;t find file &lsquo;jquery-ui&rsquo;&rdquo;</h3>
-
-<p><code>jQuery UI</code>が見つからないエラー。<br/>
-いや、gemでバッチリ指定して入れてるのに・・・<br/>
-こっちがだいぶハマった。</p>
-
-<h2>Solution</h2>
-
-<h3>&ldquo;uninitialized constant DashboardController&rdquo;</h3>
-
-<p>これは<code>routes.rb</code>の書き方が問題らしい。</p>
-
-<p><code>activeadmin</code>をインストールすると、<code>routes.rb</code>に以下のコードが追加されるのだけど、</p>
-
-<figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">devise_for</span> <span class="ss">:admin_users</span><span class="p">,</span> <span class="ss">ActiveAdmin</span><span class="p">:</span><span class="ss">:Devise</span><span class="o">.</span><span class="n">config</span>
-</span><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">routes</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これが<code>routes.rb</code>の中で、rootパスより前にあるとダメらしい・・ｗ<br/>
-なので、rootパスの記述を上記コードより上に持ってくればOK。</p>
-
-<figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s1">&#39;index#index&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">devise_for</span> <span class="ss">:admin_users</span><span class="p">,</span> <span class="ss">ActiveAdmin</span><span class="p">:</span><span class="ss">:Devise</span><span class="o">.</span><span class="n">config</span>
-</span><span class='line'><span class="no">ActiveAdmin</span><span class="o">.</span><span class="n">routes</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>&ldquo;couldn&rsquo;t find file &lsquo;jquery-ui&rsquo;&rdquo;</h3>
-
-<p>問題は、</p>
-
-<ul>
-<li><code>activeadmin</code>が<code>jQuery</code>と<code>jQuery UI</code>を使用する</li>
-<li><code>jquery-rails, 3.0.0</code>から<code>jQuery UI</code>が切り離された</li>
-<li><code>activeadmin</code>の<code>application.js</code>内で<code>jQuery UI</code>の呼び方が間違っている</li>
-</ul>
-
-
-<h4><code>activeadmin</code>が<code>jQuery</code>と<code>jQuery UI</code>を使用する</h4>
-
-<p>独自に<code>application.js</code>から<code>jQuery</code>と<code>jQuery UI</code>を呼んでいる</p>
-
-<h4><code>jquery-rails, 3.0.0</code>から<code>jQuery UI</code>が切り離された</h4>
-
-<p>フォルダに存在しないものをimportしようとして見つかりませんエラーのパターン。<br/>
-エラーメッセージでググるとほぼこれに当たる。<br/>
-そして解決策が<code>jquery-rails</code>のバージョンを<code>2.3.0</code>に下げろというもの。<br/>
-要するに<code>jQuery UI</code>が切り離される前のバージョンにしろってことなんだけど、<br/>
-自分の場合はこれではうまくいかなかった。</p>
-
-<h4><code>activeadmin</code>の<code>application.js</code>内で<code>jQuery UI</code>の呼び方が間違っている</h4>
-
-<p>結局自分の場合はこれが問題だった。<br/>
-下のソースを見ると、<code>jquery-ui</code>を呼んでいるのだけど、<br/>
-これだと名前が解決できないようで、呼び出せない。</p>
-
-<figure class='code'><figcaption><span>/path/to/rails_app/vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/app/assets/javascripts/active_admin/base.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//= require jquery</span>
-</span><span class='line'><span class="c1">//= require jquery-ui</span>
-</span><span class='line'><span class="c1">//= require jquery_ujs</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//= require active_admin/application</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>そこで、<code>jquery-ui-rails</code>の<a href="https://github.com/joliss/jquery-ui-rails">Githubドキュメント</a>を読むと、</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>To require all jQuery UI modules,  add the following to your application.js:
-</span><span class='line'>
-</span><span class='line'>//= require jquery.ui.all
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>と書いてある。
-先程とは呼び方が異なっている。</p>
-
-<p>なので、Gemのassetsの中身を直接書き換え、以下のように変更したところ動くようになった。</p>
-
-<figure class='code'><figcaption><span>/path/to/rails_app/vendor/bundle/ruby/1.9.1/gems/activeadmin-0.6.0/app/assets/javascripts/active_admin/base.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">//= require jquery</span>
-</span><span class='line'><span class="c1">//= require jquery.ui.all</span>
-</span><span class='line'><span class="c1">//= require jquery_ujs</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//= require active_admin/application</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>モンキーパッチの当て方がわかりませんorz</h2>
-
-<p>上記の<code>jQuery UI</code>を呼び出す方法を変更する修正だけど、<br/>
-直接Gemのファイルいじるのは間違いなくバッドノウハウのはず。<br/>
-だからモンキーパッチを当てておきたいのだけど、<br/>
-ググって出てくる方法はクラスをオーバーライドするものばかりで、<br/>
-assetsの中身を書き換えたい場合はどうすればいいんだろう？<br/>
-誰か知っていたら教えて下さい＞＜；</p>
-
-<h2>References</h2>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/15818446/active-admin-ruby-on-rails-dashboard-controller-error">Active Admin Ruby on rails Dashboard Controller Error</a></li>
-<li><a href="https://github.com/joliss/jquery-ui-rails">[Gem] jquery-ui-rails</a></li>
 </ul>
 
 ]]></content>

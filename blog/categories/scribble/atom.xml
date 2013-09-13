@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scribble | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/scribble/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-09-13T21:45:17+09:00</updated>
+  <updated>2013-09-13T22:25:35+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -116,10 +116,8 @@ Rails 3.2.13
 <p><a href="https://github.com/justinfrench/formtastic/blob/master/lib/formtastic/helpers/input_helper.rb">[GitHub] formtastic source</a></p>
 
 <p><section class="ads">
-<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4774146633/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51%2BUj1CI5tL._SX280_CR0,0,280,230_.jpg" alt="Ruby on Rails 3 アプリケーションプログラミング" /></a></div>
-
-<div class="amzimg"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4797363827/lunchub-22/" rel="nofollow" target="_blank"><img src="http://ecx.images-amazon.com/images/I/51hvKPIWmdL._SX280_CR2,75,278,230_.jpg" alt="Rails3レシピブック 190の技" /></a></div>
-
+{% include custom/ads/amazon_book_300x250_rails_guide.html %}
+{% include custom/ads/amazon_book_300x250_rails_recipe.html %}
 </section></p>
 ]]></content>
   </entry>
