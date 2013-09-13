@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | function Blog() {};]]></title>
   <link href="http://lunchub.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://lunchub.github.io/"/>
-  <updated>2013-09-13T22:25:35+09:00</updated>
+  <updated>2013-09-13T22:25:54+09:00</updated>
   <id>http://lunchub.github.io/</id>
   <author>
     <name><![CDATA[Daisuke Masuyama]]></name>
@@ -70,7 +70,7 @@ iterm2 Build 1.0.0.20130624
 
 <h2>References</h2>
 
-<p>{% tweet <a href="https://twitter.com/todashuta/status/357059805220839424">https://twitter.com/todashuta/status/357059805220839424</a> %}</p>
+<p><div class='embed tweet'>Tweet could not be processed</div></p>
 
 <p><section class="ads">
 </section></p>
