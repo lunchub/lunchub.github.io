@@ -11,13 +11,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <meta name="description" content="MySQLでUPDATE文のSETの値は行ごとに評価されているのかという疑問について">
-  <meta name="keywords" content="MySQL, UPDATE, SET, サブクエリ, ランダム, ステートメント">
+  <meta name="description" content="Octopressで記事の生成を高速化する方法について">
+  <meta name="keywords" content="Octopress, 高速化, rake, isolate">
 
-  <title>MySQLでUPDATE文のSETの値は行ごとに評価されている? - function Blog() {};</title>
+  <title>Octopressで記事の生成を高速化する方法 - function Blog() {};</title>
 
   
-  <link rel="canonical" href="http://lunchub.github.io/blog/2013/06/13/mysql-evaluate-set-value-each-row-in-update-query/"/>
+  <link rel="canonical" href="http://lunchub.github.io/blog/2013/09/13/how-to-improve-generating-a-post-faster-on-octopress/"/>
 
   <link href="/favicon.ico" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -101,13 +101,13 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   
 
 
-<time datetime="2013-06-13T19:56:00+09:00" pubdate data-updated="true">Jun 13<span>th</span>, 2013</time>
+<time datetime="2013-09-13T21:45:00+09:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
         
 
 <span class="categories">
 Categories: [
   
-    <a class='category' href='/blog/categories/mysql/'>MySQL</a>
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
   
 ]
 </span>
@@ -120,7 +120,7 @@ Categories: [
     
 
     
-      <h1 class="entry-title">MySQLでUPDATE文のSETの値は行ごとに評価されている?</h1>
+      <h1 class="entry-title">Octopressで記事の生成を高速化する方法</h1>
     
 
     
@@ -131,51 +131,77 @@ Categories: [
 
 <div class="entry-content"><h2>Issues</h2>
 
-<p>あるテーブルのカラムの値を書き換えたい場合は、<br/>
-単純に</p>
+<p><code>Octopress</code>で新しい記事を作成したり、既存の記事の編集の際に、<code>rake preview</code>や<code>rake generate</code>の実行に非常に時間が
+かかってしまい、編集の効率が悪い。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">UPDATE</span> <span class="ss">`table`</span> <span class="kt">SET</span> <span class="ss">`column`</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
+<h3>Factor</h3>
 
+<p><code>Octopress</code>は、<code>preview</code>や<code>generate</code>の際、<code>source/_posts</code>配下にある記事を全て静的なHTMLへと再生成してしまうため。
+記事の数が増えるほど、生成にかかる時間が増してしまうため。</p>
 
-<p>という形でSQLを実行すれば良い。</p>
-
-<p>ここでvalueをランダムな値にしたい場合は、<br/>
-サブクエリを使って</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='mysql'><span class='line'><span class="k">UPDATE</span> <span class="ss">`table`</span> <span class="kt">SET</span> <span class="ss">`column`</span> <span class="o">=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="nf">ROUND</span><span class="p">(</span><span class="nf">RAND</span><span class="p">()</span><span class="o">*</span><span class="mi">10</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>にするのだけど、<br/>
-問題はこのサブクエリって行ごとに評価されるのかなという疑問があった。</p>
-
-<p>結論としては行ごとに評価されるのだけど、マニュアルみてもいまいちしっくりしない。
-Referencesに載せた内容だとなんとなく行ごとに評価されるんだなというのはわかるのだけど。。</p>
-
-<p>すごく基礎的なところがわかっていない気がする・・</p>
-
-<h2>References</h2>
+<h2>Solution</h2>
 
 <ul>
-<li><a href="http://dev.mysql.com/doc/refman/5.1/ja/update.html">UPDATE 構文</a></li>
+<li><code>rake isolate[filename]</code>と、<code>rake integrate</code>を使用する</li>
 </ul>
 
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<h2>How to</h2>
+
+<h3><code>rake isolate[filename]</code>と、<code>rake integrate</code>を使用する</h3>
+
+<h4>rake isolate[filename]</h4>
+
+<p><code>rake isolate[filename]</code>は、<code>filename</code>に指定したファイル名と一致しない記事ファイルを、
+全て<code>source/_stash</code>に退避してくれる。これにより、<code>preview</code>や<code>generate</code>の際、生成のために参照する記事数が
+圧倒的に少なくなるため、生成に要する時間が短縮される。</p>
+
+<p>この<code>filename</code>に指定するファイル名は部分一致が可能なので、ファイル名をフルで指定する必要はない。
+例えばこの記事のファイル名は<code>2013-09-13-how-to-improve-generating-a-post-faster-on-octopress.markdown</code>なので、
+<code>faster-on-octopress</code>とでも指定しておけば問題ない。</p>
+
+<h4>rake integrate</h4>
+
+<p><code>rake integrate</code>は前述の<code>rake isolate[filename]</code>で退避したファイルを全て<code>source/_posts</code>に戻してくれる。</p>
+
+<h2>Conclusion</h2>
+
+<p>新規記事の作成や、記事の更新の手順は以下の通り。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>もし式の中で tbl_name からカラムにアクセスするなら、UPDATE はカラムの現在の値を利用します。
-</span><span class='line'>例えば、次のステートメントは age カラムを現在の値よりも1大きく設定します。
-</span><span class='line'>UPDATE persondata SET age=age+1;
-</span><span class='line'>単一テーブル UPDATE 割り当ては通常左から右に評価されます。
-</span><span class='line'>複合テーブルの更新に関しては、割り当てが特定の順番で行われるという保証はありません。
-</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>新規記事 or 更新対象記事 のファイル名（filename）を確認する。
+</span><span class='line'>↓
+</span><span class='line'>rake isolate[filename]
+</span><span class='line'>↓
+</span><span class='line'>rake preview や rake generate を使用しながら対象記事を編集する
+</span><span class='line'>↓
+</span><span class='line'>rake integrate
+</span><span class='line'>↓
+</span><span class='line'>rake gen_deploy</span></code></pre></td></tr></table></div></figure>
 
+
+<p>この方法はあくまで「新規記事の作成」と「記事の更新」を高速化するものなので、
+記事の生成処理自体が早くなるわけではなく、最終的な<code>rake gen_deploy</code>は早くならないのが微妙なところ。</p>
+
+<p>一応別の記事で解説予定の、「高速化パッチの当たったRuby」を使用することで生成速度はだいぶ改善される。</p>
+
+<h2>Mutter</h2>
+
+<p>記事のタイムスタンプをチェックするとかで、この回避策使わなくていいようにできないのかなあ・・<br/>
+差分がなければスルーして欲しいところ。</p>
+
+<h2>References</h2>
+
+<p><section class="ads">
+</section></p>
 </div>
 
 
@@ -250,10 +276,6 @@ Referencesに載せた内容だとなんとなく行ごとに評価されるん�
     <section>
       <p class="meta">
         
-          <a class="basic-alignment left previous-link" href="/blog/2013/06/11/how-to-espace-jekyll-template-tag/" title="Previous Post: Octopressでテンプレートタグをエスケープする方法">&laquo; Octopressでテンプレートタグをエスケープする方法</a>
-        
-        
-          <a class="basic-alignment right next-link" href="/blog/2013/06/14/github-s-small-css-trick/" title="Next Post: GitHubが使っているちょっとしたCSSのテクニック">GitHubが使っているちょっとしたCSSのテクニック &raquo;</a>
         
       </p>
     </section>
@@ -286,43 +308,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     <ul id="popular_posts">
       
       <li class="post">
-          <a href="/blog/2013/06/17/hamari-install-activeadmin-gem-to-rails/">[Rails] ActiveAdminのインストールと初期設定でハマったこと</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/06/20/uninitialized-constant-readline-nameerror/">[Rails] uninitialized constant Readline (NameError)</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/07/14/how-to-use-carrierwave-with-amazon-s3/">[Rails] CarrierWaveでアップロード先をAmazon S3に設定する方法</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails/">[Rails] activeadmin上でhas_many resourcesのフォーム要素を動的に追加、削除するための機能を実装する方法</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/06/05/do-not-log-requesting-assets-on-rails/">[Rails] assetsのログを出力させない</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">[Rails] CarrierWaveからAmazon S3に画像アップロードできない</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/">[Rails] ActiveAdmin + cocoon を使い始めた際にハマったこと</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/06/26/installing-new-relic-to-rails/">[Rails] RailsにNew Relicをインストールする</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/">iterm2 + tmux上で，Vimの画面のズレを直す方法</a>
-      </li>
-      
-      <li class="post">
-          <a href="/blog/2013/07/11/how-to-show-keycastr-window-on-all-desktop-on-mac/">[Mac] KeyCastrを全てのデスクトップで表示する</a>
+          <a href="/blog/2013/09/13/how-to-improve-generating-a-post-faster-on-octopress/">Octopressで記事の生成を高速化する方法</a>
       </li>
       
     </ul>
@@ -332,54 +318,18 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/09/13/how-to-avoid-rake-command-error-with-zsh/">Zshでrakeコマンドを実行するとエラーになる</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/30/how-to-save-model-together-with-related-model/">[Rails] モデルを登録する際に、他のモデルを同時に登録する方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/26/without-blank-fields-in-select-tag-on-formtastic/">[Rails] formtasticでSELECTタグを生成する際、SELECTタグの先頭に空行を自動挿入させない方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/04/how-to-impletemt-add-and-remove-feature-for-has_many-resources-in-active-admin-on-rails/">[Rails] Activeadmin上でhas_many Resourcesのフォーム要素を動的に追加、削除するための機能を実装する方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/01/hamari-on-starting-to-use-cocoon-gem/">[Rails] ActiveAdmin + Cocoon を使い始めた際にハマったこと</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/29/hamari-on-s3-bucket-name-with-dots/">Amazon S3のバケット名に"."ドットを含めるとハマる</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/29/how-to-disable-the-scaffold-behavior-that-has-changed-by-inherited_resources/">[Rails] Inherited_resourcesによって変更された，scaffoldの挙動を元に戻す方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/23/how-to-stop-pow/">Powを停止させる方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/16/how-to-fix-shear-in-vim-with-iterm2-and-tmux/">Iterm2 + tmux上で，Vimの画面のズレを直す方法</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/14/hamari-on-carrierwave-with-amazon-s3/">[Rails] CarrierWaveからAmazon S3に画像アップロードできない</a>
+        <a href="/blog/2013/09/13/how-to-improve-generating-a-post-faster-on-octopress/">Octopressで記事の生成を高速化する方法</a>
       </li>
     
   </ul>
 </section>
 <section>
   <h1>Monthly Archives</h1>
-  <ul id="month-list"><li><a href='/2013/09/'>2013-09 (1)</a></li><li><a href='/2013/08/'>2013-08 (4)</a></li><li><a href='/2013/07/'>2013-07 (10)</a></li><li><a href='/2013/06/'>2013-06 (13)</a></li></ul>
+  <ul id="month-list"><li><a href='/2013/09/'>2013-09 (1)</a></li></ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/aws'>AWS (6)</a></li><li><a href='/blog/categories/centos'>CentOS (2)</a></li><li><a href='/blog/categories/coffeescript'>CoffeeScript (2)</a></li><li><a href='/blog/categories/css3'>CSS3 (1)</a></li><li><a href='/blog/categories/gems'>Gems (6)</a></li><li><a href='/blog/categories/github'>GitHub (1)</a></li><li><a href='/blog/categories/hamari'>Hamari (7)</a></li><li><a href='/blog/categories/heroku'>Heroku (1)</a></li><li><a href='/blog/categories/mac'>Mac (2)</a></li><li><a href='/blog/categories/mysql'>MySQL (1)</a></li><li><a href='/blog/categories/newrelic'>NewRelic (3)</a></li><li><a href='/blog/categories/octopress'>Octopress (3)</a></li><li><a href='/blog/categories/rails'>Rails (15)</a></li><li><a href='/blog/categories/scribble'>Scribble (3)</a></li><li><a href='/blog/categories/unicorn'>Unicorn (1)</a></li><li><a href='/blog/categories/vim'>Vim (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/octopress'>Octopress (1)</a></li></ul>
 </section>
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-9012297839440845";
